@@ -1,10 +1,14 @@
 package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.DoorIdentity;
 
+import android.graphics.Point;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.Wall.ModularDoor;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesPositionner;
 
 /**
  * This little class is designed to store the global informations of a door : its direction and coordinates.
@@ -35,6 +39,13 @@ public class DoorIdentity {
     @NonNull
     public ZdecimalCoordinates getZdecimalCoordinates() {
         return zdecimalCoordinates;
+    }
+
+    @Nullable
+    public Point getDoorIdentityCenter() {
+        WallsOfSquare.Direction doorDirection = getDirection();
+        ZdecimalCoordinates doorSquareCoordinates = getZdecimalCoordinates();
+        return ZdecimalCoordinatesPositionner.getCenterSideOfDirection(doorSquareCoordinates, doorDirection);
     }
 
 }

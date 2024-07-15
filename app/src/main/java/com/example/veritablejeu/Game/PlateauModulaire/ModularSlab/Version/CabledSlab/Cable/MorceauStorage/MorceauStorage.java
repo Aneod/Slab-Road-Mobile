@@ -22,13 +22,21 @@ public class MorceauStorage implements IMorceauStorage {
         return completeCable.getBoard();
     }
 
-    public void generate_and_print() {
+    public void firstPrinting() {
+        generate();
+        print();
+    }
+
+    public void generate() {
         Set<Morceau> fillMorceaux = CablePrinter.createAllMorceaux(completeCable, false);
         fillMorceauSet.addAll(fillMorceaux);
-
         Set<Morceau> bordersMorceaux = CablePrinter.createAllMorceaux(completeCable, true);
         bordersMorceauSet.addAll(bordersMorceaux);
+    }
 
+    public void regenerate() {
+        delete();
+        generate();
         print();
     }
 

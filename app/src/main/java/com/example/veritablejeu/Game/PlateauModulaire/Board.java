@@ -12,7 +12,6 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.PlateauModulaire.Deprime.BoardFraming;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.GroupOfBlobsOfBoard;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.DoorIdentity.DoorIdentity;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.CabledSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.OrangeSlab;
@@ -207,7 +206,7 @@ public class Board extends FrameLayout {
         groupOfSlabs.stream()
                 .filter(modularSlab -> modularSlab instanceof CabledSlab)
                 .flatMap(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable2().stream())
-                .forEach(completeCable -> completeCable.getMorceauStorage().generate_and_print());
+                .forEach(completeCable -> completeCable.getMorceauStorage().firstPrinting());
     }
 
     public void showFence() {

@@ -12,6 +12,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularObject;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePrinter;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.MorceauStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesPositionner;
 import com.example.veritablejeu.OutilsEnEnum.Elevation;
 import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
@@ -33,11 +34,11 @@ public class Morceau extends ModularObject {
     private final MorceauStorage morceauStorage;
 
     public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull ZdecimalCoordinates from, @NonNull ZdecimalCoordinates to, int couleur, boolean borders) {
-        this(morceauStorage, CablePrinter.getCenterOf(from), CablePrinter.getCenterOf(to), couleur, borders);
+        this(morceauStorage, ZdecimalCoordinatesPositionner.getCenterOf(from), ZdecimalCoordinatesPositionner.getCenterOf(to), couleur, borders);
     }
 
     public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull ZdecimalCoordinates from, @NonNull Point to, int couleur, boolean borders) {
-        this(morceauStorage, CablePrinter.getCenterOf(from), to, couleur, borders);
+        this(morceauStorage, ZdecimalCoordinatesPositionner.getCenterOf(from), to, couleur, borders);
     }
 
     public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull Point from, @NonNull Point to, int couleur, boolean borders) {
@@ -46,9 +47,9 @@ public class Morceau extends ModularObject {
 
         int distance = getDistanceBetween(from, to);
         int largeur = distance + TOTAL_HEIGHT;
-        int halfHeight = TOTAL_HEIGHT / 2;
-        int leftMargin = from.x - halfHeight;
-        int topMargin = from.y - halfHeight;
+        int halfH = TOTAL_HEIGHT / 2;
+        int leftMargin = from.x - halfH;
+        int topMargin = from.y - halfH;
 
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 largeur, TOTAL_HEIGHT, leftMargin, topMargin
@@ -56,8 +57,8 @@ public class Morceau extends ModularObject {
         setLayoutParams(layoutParams);
         setElevation(Elevation.Cable.getElevation());
 
-        setPivotX(halfHeight);
-        setPivotY(halfHeight);
+        setPivotX(halfH);
+        setPivotY(halfH);
         float angleDegPositif = (float) getAngle(from, to);
         setRotation(angleDegPositif);
 
@@ -117,7 +118,7 @@ public class Morceau extends ModularObject {
     public List<PetiteFenetreFlottante2.StringRunnablePair> getEditPropositions() {
         List<PetiteFenetreFlottante2.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Outline", this::enableDisableCableOutline));
-        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", morceauStorage::delete, true));
+        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", morceauStorage::delete, Color.RED, true));
         return propositions;
     }
 

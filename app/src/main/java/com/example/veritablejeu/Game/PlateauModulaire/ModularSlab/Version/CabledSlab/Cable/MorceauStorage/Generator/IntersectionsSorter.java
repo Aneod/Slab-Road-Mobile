@@ -12,19 +12,21 @@ import java.util.Set;
 public class IntersectionsSorter {
 
     /**
-     * Tri la liste des points d'intersection d'un chemin de câble pour que le câble passe
-     * par chaque point mais de proche en proche.
-     * @return un liste des points d'intersection triée de proche en proche.
+     * Sort the given {@link ZdecimalCoordinates} for create a coherent path, starting with
+     * the first given parameter, who is also a coordinate.
+     * @param firstCoordinate the starting point of the path.
+     * @param squaresSteps all others coordinates to sort.
+     * @return a sorted list of givens coordinates.
      */
     @NonNull
-    public static ArrayList<ZdecimalCoordinates> sort(ZdecimalCoordinates slabOriginSquareCoordintes, Set<ZdecimalCoordinates> squaresSteps) {
+    public static ArrayList<ZdecimalCoordinates> sort(ZdecimalCoordinates firstCoordinate, Set<ZdecimalCoordinates> squaresSteps) {
         Set<ZdecimalCoordinates> copy = new HashSet<>(squaresSteps);
         ArrayList<ZdecimalCoordinates> finalList = new ArrayList<>();
-        finalList.add(slabOriginSquareCoordintes);
-        ZdecimalCoordinates currentStep = slabOriginSquareCoordintes;
+        finalList.add(firstCoordinate);
+        ZdecimalCoordinates currentStep = firstCoordinate;
 
         while(!copy.isEmpty()) {
-            ZdecimalCoordinates nearestStep = trouverLePointLePlusProche(currentStep, copy);
+            ZdecimalCoordinates nearestStep = findNearestCoordinate(currentStep, copy);
             copy.remove(nearestStep);
             finalList.add(nearestStep);
             currentStep = nearestStep;
@@ -34,11 +36,12 @@ public class IntersectionsSorter {
     }
 
     /**
-     * A partir d'un point donné et d'une liste d'autres points, on trouve lequel est le plus
-     * proche du point donné.
-     * @return le numéro du point de la liste le plus proche du point actuel.
+     * Among some coordinates, find the nearest one of another specific coordinate.
+     * @param current the specific coordinate.
+     * @param squaresSteps all coordinates among which one is the nearest the 'current'.
+     * @return the nearest coordinates among the given ones.
      */
-    private static ZdecimalCoordinates trouverLePointLePlusProche(ZdecimalCoordinates current, @NonNull Set<ZdecimalCoordinates> squaresSteps) {
+    private static ZdecimalCoordinates findNearestCoordinate(ZdecimalCoordinates current, @NonNull Set<ZdecimalCoordinates> squaresSteps) {
         if(squaresSteps.isEmpty()) return current;
 
         ZdecimalCoordinates nearestStep = current;
