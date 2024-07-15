@@ -7,10 +7,13 @@ import androidx.annotation.NonNull;
 public class LongToReadableTime {
 
     /**
-     * Prend le long en paramètre et en resort un String dans un format lisible tel que :
-     * 01h 23m 04s 675ms
-     * @param elapsedTime une période de temps en long.
-     * @return un String.
+     * Take a long who containes a number of nano-secondes and transform it on something like :
+     * 01h 23m 45s 678ms.
+     * <br>
+     * If the given number is negative, this method will returns the correct equivalent,
+     * even if the result is also negative.
+     * @param elapsedTime the number of nano-secondes.
+     * @return a readable String.
      */
     @NonNull
     @SuppressLint("DefaultLocale")

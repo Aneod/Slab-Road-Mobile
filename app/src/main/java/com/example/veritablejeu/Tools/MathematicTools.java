@@ -44,27 +44,27 @@ public class MathematicTools {
         return (int) longValue;
     }
 
-    public static int getDistanceX(Point from, Point to) {
+    public static int getDeltaX(Point from, Point to) {
         if(from == null || to == null) return 0;
         return to.x - from.x;
     }
 
-    public static int getDistanceY(Point from, Point to) {
+    public static int getDeltaY(Point from, Point to) {
         if(from == null || to == null) return 0;
         return to.y - from.y;
     }
 
     public static int getDistance(Point from, Point to) {
         if(from == null || to == null) return 0;
-        int dx = getDistanceX(from, to);
-        int dy = getDistanceY(from, to);
+        int dx = getDeltaX(from, to);
+        int dy = getDeltaY(from, to);
         return (int) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
     }
 
     public static double getAngle(Point from, Point to) {
         if(from == null || to == null) return 0.0;
-        int dx = getDistanceX(from, to);
-        int dy = getDistanceY(from, to);
+        int dx = getDeltaX(from, to);
+        int dy = getDeltaY(from, to);
         double angleRad = Math.atan2(dy, dx);
         double angleDeg = angleRad * 180 / Math.PI;
         if(angleDeg < 0) {
