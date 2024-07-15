@@ -90,17 +90,10 @@ public class CablePart extends BoardElement {
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        if(cableParentIsConnectedToADoor()) {
-            propositions.add(new LittleWindow.StringRunnablePair("Disconnect door", cable::disconnectDoor, true));
-        }
         propositions.add(new LittleWindow.StringRunnablePair("Modify", this::enableCableEditing, true));
         propositions.add(new LittleWindow.StringRunnablePair("Outline", this::swapCableOutline));
         propositions.add(new LittleWindow.StringRunnablePair("Delete", cable::delete, Color.RED, true));
         return propositions;
-    }
-
-    private boolean cableParentIsConnectedToADoor() {
-        return cable.getComponentsStorage().isConnectedToADoor();
     }
 
     private void swapCableOutline() {

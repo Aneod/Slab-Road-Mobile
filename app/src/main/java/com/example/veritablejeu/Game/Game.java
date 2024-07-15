@@ -235,13 +235,15 @@ public class Game extends AppCompatActivity implements IGame {
      * <p>
      *     How cables are modify ?
      *     <br>
-     *     There are only <u>three actions</u> :
+     *     There are only <u>four actions</u> :
      *     <br>
-     *     Click on a <b>square with intersection</b> : Remove the both {@link CablePart} who compose the intersection.
+     *     Click on a <b>square with intersection</b> : Remove the intersection.
      *     <br>
      *     Click on a <b>square without intersection</b> : Create an intersection on this square.
      *     <br>
-     *     Click on a <b>door</b> : Connect the cable to the clicked door.
+     *     Click on a <b>none connected door</b> : Connect the cable to the clicked door.
+     *     <br>
+     *     Click on the <b>connected door</b> : Disconnect the door to the cable.
      *     <br>
      *     For each actions the graphic cable will be refreshed.
      * </p>
@@ -249,6 +251,5 @@ public class Game extends AppCompatActivity implements IGame {
      */
     public void enableCableEditing(Cable cable) {
         // TODO
-
     }
 }
