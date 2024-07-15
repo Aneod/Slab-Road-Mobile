@@ -18,7 +18,7 @@ import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux.EtoilesNiveauxNormaux;
-import com.example.veritablejeu.OutilsEnEnum.LongToReadableTime;
+import com.example.veritablejeu.Tools.LongToReadableTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

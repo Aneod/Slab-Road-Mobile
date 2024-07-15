@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.PopUp.BoutonDePopUp.BoutonDePopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 public class Question extends ContenuPopUp {
 

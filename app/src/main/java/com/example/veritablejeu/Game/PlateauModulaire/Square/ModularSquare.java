@@ -25,8 +25,8 @@ import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.Zdecim
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesManager;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 import org.jetbrains.annotations.Contract;
 

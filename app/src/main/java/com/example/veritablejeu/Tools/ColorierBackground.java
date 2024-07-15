@@ -1,6 +1,5 @@
-package com.example.veritablejeu.OutilsEnEnum;
+package com.example.veritablejeu.Tools;
 
-import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 
 import androidx.annotation.NonNull;

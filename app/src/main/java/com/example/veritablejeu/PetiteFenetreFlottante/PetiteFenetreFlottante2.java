@@ -13,9 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;

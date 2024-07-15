@@ -1,4 +1,4 @@
-package com.example.veritablejeu.OutilsEnEnum;
+package com.example.veritablejeu.Tools;
 
 public enum Elevation {
     PopUp, Fenetre, Blob, Cable, PointIntersection, Porte, Mur, Dalle, Square, SpecSquare, Bulle;

@@ -1,4 +1,4 @@
-package com.example.veritablejeu.OutilsEnEnum;
+package com.example.veritablejeu.Tools;
 
 import android.content.res.Resources;
 

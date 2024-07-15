@@ -14,8 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.TextePopUp;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
 public class Message extends ContenuPopUp {

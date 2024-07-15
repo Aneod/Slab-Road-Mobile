@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.PageInstruction;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
 public class ImageInstruction extends androidx.appcompat.widget.AppCompatImageView implements IImageInstruction {

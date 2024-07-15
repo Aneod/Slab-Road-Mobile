@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Game.InGame.InGame;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.OutilsMathematiques;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.MathematicTools;
 
 @SuppressLint("ViewConstructor")
 public class FeuArtifice extends View implements IFeuArtifice {
@@ -40,8 +40,8 @@ public class FeuArtifice extends View implements IFeuArtifice {
 
     @Override
     public void declencher(int startOffSet) {
-        int dureeAnimation = OutilsMathematiques.random_ouvert(750, 1750);
-        int latenceAnimation = OutilsMathematiques.random_ouvert(0, 1500);
+        int dureeAnimation = MathematicTools.random_open(750, 1750);
+        int latenceAnimation = MathematicTools.random_open(0, 1500);
 
         ObjectAnimator boomAnimation = ObjectAnimator.ofPropertyValuesHolder(
                 this,

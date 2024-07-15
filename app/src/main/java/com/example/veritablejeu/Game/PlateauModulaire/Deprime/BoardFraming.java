@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 
 import org.jetbrains.annotations.Contract;
 

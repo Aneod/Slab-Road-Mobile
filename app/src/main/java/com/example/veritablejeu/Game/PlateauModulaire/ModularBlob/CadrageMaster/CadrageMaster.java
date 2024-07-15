@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.ModularBlob;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 public class CadrageMaster extends FrameLayout implements ICadrageMaster {
 

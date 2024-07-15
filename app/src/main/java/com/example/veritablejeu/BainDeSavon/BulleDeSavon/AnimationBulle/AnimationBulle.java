@@ -7,8 +7,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.OutilsEnEnum.OutilsMathematiques;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.MathematicTools;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.BainDeSavon.BulleDeSavon.BulleDeSavon;
 
 public class AnimationBulle implements IAnimationBulle {
@@ -19,8 +19,8 @@ public class AnimationBulle implements IAnimationBulle {
 
     @NonNull
     private ValueAnimator get_xTranslation_animation(int hauteurAParcourir, int dureeTotale) {
-        int sens = OutilsMathematiques.random_ouvert(-1, 1);
-        int vitesseDeVariationSurX = OutilsMathematiques.random_ouvert(20, 100);
+        int sens = MathematicTools.random_open(-1, 1);
+        int vitesseDeVariationSurX = MathematicTools.random_open(20, 100);
 
         ValueAnimator sinAnimator = ValueAnimator.ofFloat(0, -hauteurAParcourir);
         sinAnimator.setDuration(dureeTotale);
@@ -50,8 +50,8 @@ public class AnimationBulle implements IAnimationBulle {
 
     public AnimationBulle(@NonNull BulleDeSavon bulle) {
         this.bulleDeSavon = bulle;
-        int hauteurAParcourir = OutilsMathematiques.random_ouvert(ScreenUtils.getScreenHeight() * 2/10, ScreenUtils.getScreenHeight() * 9/10);
-        int dureeTotale = OutilsMathematiques.random_ouvert(15000, 25000);
+        int hauteurAParcourir = MathematicTools.random_open(ScreenUtils.getScreenHeight() * 2/10, ScreenUtils.getScreenHeight() * 9/10);
+        int dureeTotale = MathematicTools.random_open(15000, 25000);
 
         animator = get_yTranslation_scale_animation(hauteurAParcourir, dureeTotale);
         sinAnimator = get_xTranslation_animation(hauteurAParcourir, dureeTotale);

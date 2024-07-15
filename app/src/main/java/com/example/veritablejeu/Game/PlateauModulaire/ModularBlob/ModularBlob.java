@@ -15,8 +15,8 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
 
 import java.util.ArrayList;

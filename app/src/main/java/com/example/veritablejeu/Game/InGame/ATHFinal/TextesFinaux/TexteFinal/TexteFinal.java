@@ -10,8 +10,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Game.InGame.InGame;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
 public class TexteFinal extends AppCompatTextView implements ITexteFinal {

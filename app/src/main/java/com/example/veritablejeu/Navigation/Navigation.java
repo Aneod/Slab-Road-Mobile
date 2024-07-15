@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonPrincipal.BoutonPrincipal;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonSecondaire.BoutonSecondaire;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
 import java.util.List;

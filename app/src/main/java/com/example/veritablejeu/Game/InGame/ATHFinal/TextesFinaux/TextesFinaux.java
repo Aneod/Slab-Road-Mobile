@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.Game.InGame.ATHFinal.TextesFinaux.TexteFinal.TexteFinal;
 import com.example.veritablejeu.Game.InGame.InGame;
-import com.example.veritablejeu.OutilsEnEnum.LongToReadableTime;
+import com.example.veritablejeu.Tools.LongToReadableTime;
 
 public class TextesFinaux extends FrameLayout implements ITextesFinaux {
 

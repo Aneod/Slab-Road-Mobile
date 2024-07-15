@@ -2,21 +2,15 @@ package com.example.veritablejeu.Game.PlateauModulaire;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.GradientDrawable;
-import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.Game.Editeur.Editeur;
-import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.Game.PlateauModulaire.Deprime.OnTouchForElement;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
 
 import java.util.ArrayList;

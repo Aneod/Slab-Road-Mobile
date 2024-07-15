@@ -7,10 +7,9 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenu;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuJusteLogo;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuLeger;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.R;
 
 @SuppressLint("ViewConstructor")

@@ -1,8 +1,10 @@
-package com.example.veritablejeu.OutilsEnEnum;
+package com.example.veritablejeu.Tools;
+
+import android.graphics.Point;
 
 import java.util.Random;
 
-public class OutilsMathematiques {
+public class MathematicTools {
 
     /**
      * Renvoie une entier aléatoire dans l'intervalle [min, max].
@@ -10,7 +12,7 @@ public class OutilsMathematiques {
      * @param max le maximum inclus.
      * @return un entier.
      */
-    public static int random_ouvert(int min, int max) {
+    public static int random_open(int min, int max) {
         Random random = new Random();
         return min + random.nextInt(max - min + 1);
     }
@@ -21,7 +23,7 @@ public class OutilsMathematiques {
      * @param max la valeur maximale (exclue)
      * @return un float aléatoire dans l'intervalle [min, max[.
      */
-    public static float random_float_semiOuvert(float min, float max) {
+    public static float random_float_halfOpen(float min, float max) {
         Random random = new Random();
         return min + random.nextFloat() * (max - min);
     }
@@ -40,5 +42,34 @@ public class OutilsMathematiques {
             return Integer.MAX_VALUE;
         }
         return (int) longValue;
+    }
+
+    public static int getDistanceX(Point from, Point to) {
+        if(from == null || to == null) return 0;
+        return to.x - from.x;
+    }
+
+    public static int getDistanceY(Point from, Point to) {
+        if(from == null || to == null) return 0;
+        return to.y - from.y;
+    }
+
+    public static int getDistance(Point from, Point to) {
+        if(from == null || to == null) return 0;
+        int dx = getDistanceX(from, to);
+        int dy = getDistanceY(from, to);
+        return (int) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+    }
+
+    public static double getAngle(Point from, Point to) {
+        if(from == null || to == null) return 0.0;
+        int dx = getDistanceX(from, to);
+        int dy = getDistanceY(from, to);
+        double angleRad = Math.atan2(dy, dx);
+        double angleDeg = angleRad * 180 / Math.PI;
+        if(angleDeg < 0) {
+            return angleDeg + 360.0;
+        }
+        return angleDeg;
     }
 }

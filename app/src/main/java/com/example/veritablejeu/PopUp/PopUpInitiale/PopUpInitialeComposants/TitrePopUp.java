@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 
 @SuppressLint("ViewConstructor")
 public class TitrePopUp extends androidx.appcompat.widget.AppCompatTextView {

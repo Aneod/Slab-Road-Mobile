@@ -14,7 +14,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.Zdecim
  * This little class is designed to store the global informations of a door : its direction and coordinates.
  * With this informations it's possible to find the corresponding door on a board.
  */
-public class DoorIdentity {
+public class DoorIdentity implements IDoorIdentity {
 
     private final WallsOfSquare.Direction direction;
     private final ZdecimalCoordinates zdecimalCoordinates;
@@ -24,6 +24,19 @@ public class DoorIdentity {
         this.zdecimalCoordinates = zdecimalCoordinates;
     }
 
+    @Override
+    @NonNull
+    public WallsOfSquare.Direction getDirection() {
+        return direction;
+    }
+
+    @Override
+    @NonNull
+    public ZdecimalCoordinates getZdecimalCoordinates() {
+        return zdecimalCoordinates;
+    }
+
+    @Override
     public boolean sameOf(ModularDoor modularDoor) {
         if(modularDoor == null) {
             return false;
@@ -31,21 +44,10 @@ public class DoorIdentity {
         return modularDoor.getSquareCoordinates().equals(zdecimalCoordinates) && modularDoor.getDirection().equals(direction);
     }
 
-    @NonNull
-    public WallsOfSquare.Direction getDirection() {
-        return direction;
-    }
-
-    @NonNull
-    public ZdecimalCoordinates getZdecimalCoordinates() {
-        return zdecimalCoordinates;
-    }
-
+    @Override
     @Nullable
     public Point getDoorIdentityCenter() {
-        WallsOfSquare.Direction doorDirection = getDirection();
-        ZdecimalCoordinates doorSquareCoordinates = getZdecimalCoordinates();
-        return ZdecimalCoordinatesPositionner.getCenterSideOfDirection(doorSquareCoordinates, doorDirection);
+        return ZdecimalCoordinatesPositionner.getCenterSideOfDirection(zdecimalCoordinates, direction);
     }
 
 }

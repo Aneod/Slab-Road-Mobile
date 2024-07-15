@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.ModularBlob;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
 
 import java.util.Random;

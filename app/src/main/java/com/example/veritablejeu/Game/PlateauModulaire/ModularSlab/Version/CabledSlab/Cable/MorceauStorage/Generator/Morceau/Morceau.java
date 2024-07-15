@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Morceau;
+package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -9,13 +9,13 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.PlateauModulaire.ModularObject;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePrinter;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.MorceauStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesPositionner;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
+import com.example.veritablejeu.Tools.MathematicTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Morceau extends ModularObject {
         super(morceauStorage.getBoard());
         this.morceauStorage = morceauStorage;
 
-        int distance = getDistanceBetween(from, to);
+        int distance = MathematicTools.getDistance(from, to);
         int largeur = distance + TOTAL_HEIGHT;
         int halfH = TOTAL_HEIGHT / 2;
         int leftMargin = from.x - halfH;
@@ -59,7 +59,7 @@ public class Morceau extends ModularObject {
 
         setPivotX(halfH);
         setPivotY(halfH);
-        float angleDegPositif = (float) getAngle(from, to);
+        float angleDegPositif = (float) MathematicTools.getAngle(from, to);
         setRotation(angleDegPositif);
 
         addVisualCable(distance, couleur, borders);
@@ -80,35 +80,6 @@ public class Morceau extends ModularObject {
         addView(visualCable);
     }
 
-    private int getDeltaXBetween(Point from, Point to) {
-        if(from == null || to == null) return 0;
-        return to.x - from.x;
-    }
-
-    private int getDeltaYBetween(Point from, Point to) {
-        if(from == null || to == null) return 0;
-        return to.y - from.y;
-    }
-
-    private int getDistanceBetween(Point from, Point to) {
-        if(from == null || to == null) return 0;
-        int dx = getDeltaXBetween(from, to);
-        int dy = getDeltaYBetween(from, to);
-        return (int) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-    }
-
-    private double getAngle(Point from, Point to) {
-        if(from == null || to == null) return 0.0;
-        int dx = getDeltaXBetween(from, to);
-        int dy = getDeltaYBetween(from, to);
-        double angleRad = Math.atan2(dy, dx);
-        double angleDeg = angleRad * 180 / Math.PI;
-        if(angleDeg < 0) {
-            return angleDeg + 360.0;
-        }
-        return angleDeg;
-    }
-
     @Override
     public void enableInGameListeners() {
 
@@ -118,11 +89,11 @@ public class Morceau extends ModularObject {
     public List<PetiteFenetreFlottante2.StringRunnablePair> getEditPropositions() {
         List<PetiteFenetreFlottante2.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Outline", this::enableDisableCableOutline));
-        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", morceauStorage::delete, Color.RED, true));
+        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", morceauStorage::deleteCable, Color.RED, true));
         return propositions;
     }
 
-    public void enableDisableCableOutline() {
+    private void enableDisableCableOutline() {
         morceauStorage.getBoard().getGame().enableDisableCableOutline();
     }
 }

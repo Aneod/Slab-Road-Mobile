@@ -22,15 +22,15 @@ import com.example.veritablejeu.LevelFile.LevelFile;
 import com.example.veritablejeu.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.BoutonNouveauNiveau;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxMondial.PanneauDeNiveauxMondial;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux.PanneauDeNiveauxNormaux;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.PanneauDeNiveauxPersonel;
 import com.example.veritablejeu.Menu.PagePrincipale.PanneauDeBoutonsRedirection;
-import com.example.veritablejeu.OutilsEnEnum.ColorierBackground;
+import com.example.veritablejeu.Tools.ColorierBackground;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 

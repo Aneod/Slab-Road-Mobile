@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Menu.MainActivity;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.R;
 

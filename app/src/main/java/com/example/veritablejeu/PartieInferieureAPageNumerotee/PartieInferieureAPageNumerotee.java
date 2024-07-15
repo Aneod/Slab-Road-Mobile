@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
 
 @SuppressLint("ViewConstructor")

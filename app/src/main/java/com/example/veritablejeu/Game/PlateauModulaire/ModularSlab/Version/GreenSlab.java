@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 
 @SuppressLint("ViewConstructor")
 public class GreenSlab extends ModularSlab {

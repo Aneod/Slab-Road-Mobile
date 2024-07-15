@@ -7,8 +7,8 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.PopUp.PopUpInitiale.PopUpInitialeComposants.CroixPopUp;
 import com.example.veritablejeu.PopUp.PopUpInitiale.PopUpInitialeComposants.TitrePopUp;
 

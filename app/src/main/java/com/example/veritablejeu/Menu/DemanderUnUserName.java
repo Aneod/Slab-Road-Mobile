@@ -17,9 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.DataBases.FireStore.Pseudo.DatabaseFirestorePseudo;
 import com.example.veritablejeu.DataBases.Local.UserData;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
+import com.example.veritablejeu.Tools.ScreenUtils;
 
 import org.jetbrains.annotations.Contract;
 

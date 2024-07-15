@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
 public class ContainerDeFleche extends FrameLayout {

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 public class Icons extends FrameLayout {
 

@@ -27,7 +27,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.Deprime.BoardsMovements;
 import com.example.veritablejeu.Game.PlateauModulaire.StringColorConverter;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.OutilsEnEnum.ColorierBackground;
+import com.example.veritablejeu.Tools.ColorierBackground;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;
@@ -206,7 +206,13 @@ public class Game extends AppCompatActivity implements IGame {
      */
     public void setCableOutline(boolean enable) {
         this.cableOutline = enable;
-        plateauModulaireSet.forEach(Board::refreshCables);
+        for(Board board : plateauModulaireSet) {
+            if(cableOutline) {
+                board.printCableOutlines();
+            } else {
+                board.hideCableOutlines();
+            }
+        }
     }
 
     public void enableDisableCableOutline() {

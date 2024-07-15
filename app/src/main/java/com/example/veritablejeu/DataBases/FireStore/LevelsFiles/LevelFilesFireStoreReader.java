@@ -2,7 +2,7 @@ package com.example.veritablejeu.DataBases.FireStore.LevelsFiles;
 
 import com.example.veritablejeu.DataBases.FireStore.DataBaseFireStore;
 import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.OutilsEnEnum.OutilsMathematiques;
+import com.example.veritablejeu.Tools.MathematicTools;
 import com.google.firebase.firestore.AggregateQuery;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
@@ -39,7 +39,7 @@ public class LevelFilesFireStoreReader implements ILevelFilesFireStoreReader {
             if (task.isSuccessful()) {
                 AggregateQuerySnapshot snapshot = task.getResult();
                 long count = snapshot.getCount();
-                int count_int = OutilsMathematiques.long_to_int(count);
+                int count_int = MathematicTools.long_to_int(count);
                 countCallback.onCallback(count_int);
             }
         });

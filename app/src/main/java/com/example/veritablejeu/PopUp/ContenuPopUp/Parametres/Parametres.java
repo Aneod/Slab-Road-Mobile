@@ -9,7 +9,7 @@ import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 import java.util.List;
 

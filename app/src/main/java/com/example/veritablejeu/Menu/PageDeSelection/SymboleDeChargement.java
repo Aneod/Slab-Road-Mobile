@@ -10,7 +10,7 @@ import android.view.animation.RotateAnimation;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 @SuppressLint("ViewConstructor")
 public class SymboleDeChargement extends View {

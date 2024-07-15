@@ -1,4 +1,4 @@
-package com.example.veritablejeu.OutilsEnEnum;
+package com.example.veritablejeu.Tools;
 
 public enum CouleurDuJeu {
     GrisClair, BleuClair, BleuFonce, Rouge, Jaune, Orange, Vert, Violet, Mauve;

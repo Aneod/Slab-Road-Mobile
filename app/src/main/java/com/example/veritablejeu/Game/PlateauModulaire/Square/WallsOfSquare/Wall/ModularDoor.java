@@ -14,7 +14,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.Cabled
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.WallsOfSquare;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
 import com.example.veritablejeu.sequentialCode.Code;
 

@@ -9,7 +9,7 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Editeur.SelectionElement.Association_Image_Modele.Association_Image_Modele;
 import com.example.veritablejeu.Game.Editeur.SelectionElement.BoutonModele.BoutonModele;
 import com.example.veritablejeu.Game.Editeur.SelectionElement.Categories.Modeles.Modele;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.veritablejeu.OutilsEnEnum.LayoutParams;
+package com.example.veritablejeu.Tools.LayoutParams;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 

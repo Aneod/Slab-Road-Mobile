@@ -6,7 +6,7 @@ import android.graphics.Color;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.PageInstruction;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
 public class ParagrapheInstruction extends androidx.appcompat.widget.AppCompatTextView implements IParagrapheInstruction {

@@ -9,11 +9,6 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.Cabled
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.CableCodeDiscrambler.CableCodeDiscrambler;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.CabledSlab;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.Wall.ModularDoor;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.Wall.ModularWall;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.WallsOfSquare;
-import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
 
 public class Cable implements ICable {
 
@@ -52,14 +47,17 @@ public class Cable implements ICable {
         CableCodeDiscrambler.descrypt(this, code);
     }
 
+    @Override
     public Board getBoard() {
         return componentsStorage.getSlab().getBoard();
     }
 
+    @Override
     public ComponentsStorage getComponentsStorage() {
         return componentsStorage;
     }
 
+    @Override
     public MorceauStorage getMorceauStorage() {
         return morceauStorage;
     }
@@ -74,11 +72,11 @@ public class Cable implements ICable {
         this.doorIdentity = doorIdentity;
     }
 
-    /**
-     * Try to add a door once the board have all their doors.
-     */
-    public void addCorrespondingDoor() {
-        componentsStorage.connectCorrespondingDoor(doorIdentity);
+    @Override
+    public void delete() {
+        componentsStorage.disconnectDoor();
+        componentsStorage.getSlab().removeCable(this);
+        morceauStorage.deleteMorceaux();
     }
 
 }

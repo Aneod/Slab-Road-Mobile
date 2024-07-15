@@ -5,10 +5,7 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Editeur.SelectionElement.Categories.TypeCategorie;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 
 public enum Modele {
     Square, Fantome, Gomme,

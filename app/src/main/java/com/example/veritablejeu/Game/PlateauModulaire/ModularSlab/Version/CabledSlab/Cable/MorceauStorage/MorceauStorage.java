@@ -1,68 +1,95 @@
 package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePrinter;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.MorceauxGenerator;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Morceau.Morceau;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau.Morceau;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class MorceauStorage implements IMorceauStorage {
 
-    private final Cable completeCable;
+    private final Cable cable;
     private final Set<Morceau> fillMorceauSet = new HashSet<>();
     private final Set<Morceau> bordersMorceauSet = new HashSet<>();
 
-    public MorceauStorage(Cable completeCable) {
-        this.completeCable = completeCable;
+    public MorceauStorage(Cable cable) {
+        this.cable = cable;
     }
 
+    @Override
     public Board getBoard() {
-        return completeCable.getBoard();
+        return cable.getBoard();
     }
 
-    public void firstPrinting() {
-        generate();
-        print();
-    }
-
-    public void generate() {
-        Set<Morceau> fillMorceaux = CablePrinter.createAllMorceaux(completeCable, false);
-        fillMorceauSet.addAll(fillMorceaux);
-        Set<Morceau> bordersMorceaux = CablePrinter.createAllMorceaux(completeCable, true);
-        bordersMorceauSet.addAll(bordersMorceaux);
-    }
-
-    public void regenerate() {
-        delete();
-        generate();
-        print();
-    }
-
-    public void refresh() {
-        remove();
-        print();
-    }
-
+    @Override
     public void print() {
-        Board board = getBoard();
+        deleteMorceaux();
         boolean borders = getBoard().getGame().isCableOutline();
         if(borders) {
-            bordersMorceauSet.forEach(board::addView);
+            printBorder();
         }
-        fillMorceauSet.forEach(board::addView);
+        printFill();
     }
 
-    public void remove() {
+    @Override
+    public void removeBorders() {
         Board board = getBoard();
-        fillMorceauSet.forEach(board::removeView);
         bordersMorceauSet.forEach(board::removeView);
     }
 
-    public void delete() {
+    private void removeFill() {
+        Board board = getBoard();
+        fillMorceauSet.forEach(board::removeView);
+    }
+
+    @Override
+    public void addBorders() {
+        removeFill();
+        printBorder();
+        printFill();
+    }
+
+    private void printBorder() {
+        if(bordersMorceauSet.isEmpty()) {
+            generateBorder();
+        }
+        bordersMorceauSet.forEach(getBoard()::addView);
+    }
+
+    private void printFill() {
+        if(fillMorceauSet.isEmpty()) {
+            generateFill();
+        }
+        fillMorceauSet.forEach(getBoard()::addView);
+    }
+
+    private void generateFill() {
+        Set<Morceau> fillMorceaux = MorceauxGenerator.createAllMorceaux(cable, false);
+        fillMorceauSet.addAll(fillMorceaux);
+    }
+
+    private void generateBorder() {
+        Set<Morceau> bordersMorceaux = MorceauxGenerator.createAllMorceaux(cable, true);
+        bordersMorceauSet.addAll(bordersMorceaux);
+    }
+
+    @Override
+    public void deleteCable() {
+        cable.delete();
+    }
+
+    @Override
+    public void deleteMorceaux() {
         remove();
         fillMorceauSet.clear();
         bordersMorceauSet.clear();
+    }
+
+    private void remove() {
+        Board board = getBoard();
+        fillMorceauSet.forEach(board::removeView);
+        bordersMorceauSet.forEach(board::removeView);
     }
 }

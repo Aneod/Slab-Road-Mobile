@@ -12,7 +12,7 @@ import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.Manuel;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
 import com.example.veritablejeu.PopUp.PopUpInitiale.PopUpInitiale;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
+import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
 
 import org.jetbrains.annotations.Contract;

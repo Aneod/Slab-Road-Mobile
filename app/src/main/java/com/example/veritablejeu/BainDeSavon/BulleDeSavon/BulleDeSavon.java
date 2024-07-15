@@ -9,10 +9,10 @@ import android.view.ViewParent;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.OutilsEnEnum.Elevation;
-import com.example.veritablejeu.OutilsEnEnum.OutilsMathematiques;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.Elevation;
+import com.example.veritablejeu.Tools.MathematicTools;
+import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.BainDeSavon.BulleDeSavon.AnimationBulle.AnimationBulle;
 import com.example.veritablejeu.R;
 
@@ -23,16 +23,16 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
     private final AnimationBulle animationBulle = new AnimationBulle(this);
 
     private void setOpaciteRandom() {
-        float opacity =  OutilsMathematiques.random_float_semiOuvert(.1f, .3f);
+        float opacity =  MathematicTools.random_float_halfOpen(.1f, .3f);
         this.setAlpha(opacity);
     }
 
     private int getPositionXAleatoire() {
-        return OutilsMathematiques.random_ouvert(0, ScreenUtils.getScreenWidth());
+        return MathematicTools.random_open(0, ScreenUtils.getScreenWidth());
     }
 
     private int getPositionYAleatoire() {
-        return OutilsMathematiques.random_ouvert(ScreenUtils.getScreenHeight() * 3/10, ScreenUtils.getScreenHeight() * 12/10);
+        return MathematicTools.random_open(ScreenUtils.getScreenHeight() * 3/10, ScreenUtils.getScreenHeight() * 12/10);
     }
 
     private void setLayoutParam() {
@@ -50,7 +50,7 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
         ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
         constraintLayout.addView(this);
 
-        groupe = OutilsMathematiques.random_ouvert(0, 1);
+        groupe = MathematicTools.random_open(0, 1);
         setLayoutParam();
         setOpaciteRandom();
         setElevation(Elevation.Bulle.getElevation());

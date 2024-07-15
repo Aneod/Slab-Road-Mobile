@@ -11,7 +11,6 @@ import androidx.core.util.Consumer;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.PlateauModulaire.Deprime.BoardFraming;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.GroupOfBlobsOfBoard;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.DoorIdentity.DoorIdentity;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.CabledSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.OrangeSlab;
@@ -26,7 +25,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacter;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.R;
 
 import java.util.HashSet;
@@ -197,16 +196,16 @@ public class Board extends FrameLayout {
     private void connectDoors_and_cables() {
         groupOfSlabs.stream()
                 .filter(CabledSlab.class::isInstance)
-                .map(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable2())
+                .map(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable())
                 .flatMap(Set::stream)
-                .forEach(Cable::addCorrespondingDoor);
+                .forEach(cable -> cable.getComponentsStorage().connectCorrespondingDoor(cable.getDoorIdentity()));
     }
 
     private void printCables() {
         groupOfSlabs.stream()
                 .filter(modularSlab -> modularSlab instanceof CabledSlab)
-                .flatMap(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable2().stream())
-                .forEach(completeCable -> completeCable.getMorceauStorage().firstPrinting());
+                .flatMap(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable().stream())
+                .forEach(completeCable -> completeCable.getMorceauStorage().print());
     }
 
     public void showFence() {
@@ -295,10 +294,6 @@ public class Board extends FrameLayout {
         return null;
     }
 
-    public Set<ModularSlab> getGroupOfSlabs() {
-        return groupOfSlabs;
-    }
-
     public void addSlab(ModularSlab modularSlab) {
         groupOfSlabs.add(modularSlab);
     }
@@ -333,10 +328,16 @@ public class Board extends FrameLayout {
                 .forEach(modularWall -> ((ModularDoor) modularWall).unsealing());
     }
 
-    public void refreshCables() {
+    public void printCableOutlines() {
         groupOfSlabs.stream()
                 .filter(modularSlab -> modularSlab instanceof CabledSlab)
-                .forEach(modularSlab -> ((CabledSlab) modularSlab).refreshCables());
+                .forEach(modularSlab -> ((CabledSlab) modularSlab).printCableOutlines());
+    }
+
+    public void hideCableOutlines() {
+        groupOfSlabs.stream()
+                .filter(modularSlab -> modularSlab instanceof CabledSlab)
+                .forEach(modularSlab -> ((CabledSlab) modularSlab).hideCableOutlines());
     }
 
     @Nullable

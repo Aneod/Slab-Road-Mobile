@@ -8,7 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.Manuel;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction.ImageInstruction;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.ComposantsDePageInstruction.ParagrapheInstruction.ParagrapheInstruction;
-import com.example.veritablejeu.OutilsEnEnum.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.ModificateurDePage.ModificateurDePage;
 
 @SuppressLint("ViewConstructor")

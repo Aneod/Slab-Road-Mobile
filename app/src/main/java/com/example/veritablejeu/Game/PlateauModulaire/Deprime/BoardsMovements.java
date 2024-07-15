@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.StatusBar;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;

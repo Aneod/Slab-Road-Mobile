@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.Game.InGame.ATHFinal.BoutonsFinaux.BoutonFInal.BoutonFinal;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
-import com.example.veritablejeu.OutilsEnEnum.ScreenUtils;
+import com.example.veritablejeu.Tools.ScreenUtils;
 
 import java.util.HashSet;
 import java.util.List;

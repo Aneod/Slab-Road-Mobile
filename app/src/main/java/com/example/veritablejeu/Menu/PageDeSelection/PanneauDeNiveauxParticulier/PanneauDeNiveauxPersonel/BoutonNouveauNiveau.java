@@ -6,15 +6,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.DataBases.Local.UserData;
 import com.example.veritablejeu.LevelFile.LevelCategory;
 import com.example.veritablejeu.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuLeger;
 import com.example.veritablejeu.Menu.MainActivity;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.R;
-
-import java.util.Date;
 
 public class BoutonNouveauNiveau extends FrameLayout {
 

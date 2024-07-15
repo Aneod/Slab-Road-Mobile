@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.CreateSimpleBackground;
-import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 
 @SuppressLint("ViewConstructor")
 public class Ghost extends ModularSquare {
