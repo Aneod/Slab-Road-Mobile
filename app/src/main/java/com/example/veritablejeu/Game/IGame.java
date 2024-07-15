@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
 
 public interface IGame {
 

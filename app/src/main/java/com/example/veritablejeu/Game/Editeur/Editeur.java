@@ -4,9 +4,8 @@ import android.os.Bundle;
 
 import com.example.veritablejeu.Game.Editeur.SelectionElement.SelectionElement;
 import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.Game.PlateauModulaire.Board;
+import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.NavigationEditeur;
-import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
 
 public class Editeur extends Game {
 

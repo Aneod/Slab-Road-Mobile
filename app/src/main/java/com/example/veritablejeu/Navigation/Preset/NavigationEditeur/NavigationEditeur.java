@@ -5,7 +5,7 @@ import android.graphics.Point;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Editeur.Editeur;
-import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
+import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Input_NomDuNiveau.Input_NomDuNiveau;
@@ -21,7 +21,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private final Editeur editeur;
     private final Input_NomDuNiveau inputNomDuNiveau;
-    public final PetiteFenetreFlottante2 petiteFenetreFlottante;
+    public final LittleWindow petiteFenetreFlottante;
 
     private void propositionQuitter() {
         PopUp popUp = editeur.getPopUp();
@@ -51,12 +51,12 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         }
 
         PopUp popUp = editeur.getPopUp();
-        PetiteFenetreFlottante2 petiteFenetreFlottante2 = editeur.getPetiteFenetreFlottante();
-        List<PetiteFenetreFlottante2.StringRunnablePair> propositions = new ArrayList<>();
+        LittleWindow petiteFenetreFlottante2 = editeur.getPetiteFenetreFlottante();
+        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(
-                new PetiteFenetreFlottante2.StringRunnablePair("Couleurs de fond", popUp::afficherManuel));
+                new LittleWindow.StringRunnablePair("Couleurs de fond", popUp::afficherManuel));
         propositions.add(
-                new PetiteFenetreFlottante2.StringRunnablePair("Particules de fond", () -> {
+                new LittleWindow.StringRunnablePair("Particules de fond", () -> {
                     //popUp.afficherParametres(editeur.getPlateauModifiable());
                 }));
         petiteFenetreFlottante2.set(new Point(leftMargin, topMargin), propositions);
@@ -115,7 +115,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         List<Association_Symbole_Fonction> associations = getAssociations();
         setContenu(associations);
         inputNomDuNiveau = new Input_NomDuNiveau(editeur, this);
-        this.petiteFenetreFlottante = new PetiteFenetreFlottante2(editeur);
+        this.petiteFenetreFlottante = new LittleWindow(editeur);
     }
 
     @Override

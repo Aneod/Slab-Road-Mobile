@@ -6,9 +6,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
-import com.example.veritablejeu.Game.PlateauModulaire.Board;
+import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.LevelFile.LevelCategory;
-import com.example.veritablejeu.DataBases.FireStore.DataBaseFireStore;
 import com.example.veritablejeu.LevelFile.LevelFile;
 import com.example.veritablejeu.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.DataBases.Local.UserData;

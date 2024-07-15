@@ -21,9 +21,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
-import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
-import com.example.veritablejeu.Game.PlateauModulaire.Board;
-import com.example.veritablejeu.Game.PlateauModulaire.BoardsMovements.BoardsMovements;
+import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Game.Board.Board;
+import com.example.veritablejeu.Game.Board.BoardsMovements.BoardsMovements;
 import com.example.veritablejeu.Tools.StringColorConverter;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.PopUp.PopUp;
@@ -40,7 +40,7 @@ public class Game extends AppCompatActivity implements IGame {
     protected LevelFile levelFile;
 
     protected PopUp popUp;
-    protected PetiteFenetreFlottante2 petiteFenetreFlottante;
+    protected LittleWindow petiteFenetreFlottante;
     public final Chronometre chronometre = new Chronometre();
     public int nombreDeCoups = 0;
     protected BoardsMovements onToucheListenerPlateauModulaire;
@@ -59,7 +59,7 @@ public class Game extends AppCompatActivity implements IGame {
     }
 
     private void ajouterFenetre() {
-        petiteFenetreFlottante = new PetiteFenetreFlottante2(this);
+        petiteFenetreFlottante = new LittleWindow(this);
         petiteFenetreFlottante.attachToActivity(this);
     }
 
@@ -110,7 +110,7 @@ public class Game extends AppCompatActivity implements IGame {
         return popUp;
     }
 
-    public PetiteFenetreFlottante2 getPetiteFenetreFlottante() {
+    public LittleWindow getPetiteFenetreFlottante() {
         return petiteFenetreFlottante;
     }
 

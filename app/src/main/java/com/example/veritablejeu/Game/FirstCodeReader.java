@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
-import com.example.veritablejeu.Game.PlateauModulaire.Board;
+import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.sequentialCode.Code;
 
