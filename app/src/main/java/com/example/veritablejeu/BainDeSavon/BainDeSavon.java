@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.veritablejeu.BainDeSavon.BulleDeSavon.BulleDeSavon;
-import com.example.veritablejeu.Game.PlateauModulaire.StringColorConverter;
+import com.example.veritablejeu.Tools.StringColorConverter;
 
 import java.util.HashSet;
 

@@ -4,7 +4,8 @@ import static org.junit.Assert.*;
 
 import android.graphics.Color;
 
-import org.checkerframework.checker.units.qual.C;
+import com.example.veritablejeu.Tools.StringColorConverter;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;

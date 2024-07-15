@@ -2,8 +2,8 @@ package com.example.veritablejeu.Game.PlateauModulaire;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.BestItinerary;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularBlob.ModularBlob;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.ModularBlob.BestItinerary;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesManager;
 

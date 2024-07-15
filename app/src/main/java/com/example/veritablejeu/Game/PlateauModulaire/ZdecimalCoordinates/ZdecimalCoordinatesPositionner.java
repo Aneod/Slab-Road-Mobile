@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.WallsOfSquare;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.ModularSquare;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 
 /**

@@ -2,8 +2,8 @@ package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularCable;
 
 import static org.junit.Assert.*;
 
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.DoorIdentity.DoorIdentity;
-import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.WallsOfSquare;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.DoorIdentity.DoorIdentity;
+import com.example.veritablejeu.Game.PlateauModulaire.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
 
 import org.junit.Test;
