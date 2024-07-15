@@ -70,6 +70,11 @@ public class CabledSlab extends ModularSlab {
         connectedCable.remove(cable);
     }
 
+    public void removeAllCables() {
+        Set<Cable> toDelete = new HashSet<>(connectedCable);
+        toDelete.forEach(Cable::delete);
+    }
+
     public void printCableOutlines() {
         connectedCable.forEach(completeCable -> completeCable.getMorceauStorage().addBorders());
     }
@@ -141,5 +146,11 @@ public class CabledSlab extends ModularSlab {
         }
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        removeAllCables();
     }
 }

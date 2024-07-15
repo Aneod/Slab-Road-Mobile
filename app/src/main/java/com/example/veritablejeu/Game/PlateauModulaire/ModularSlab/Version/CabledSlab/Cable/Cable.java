@@ -43,7 +43,7 @@ public class Cable implements ICable {
      *             {@link CableCodeDiscrambler#descrypt(Cable, String)} documentation.
      */
     public Cable(@NonNull CabledSlab cabledSlab, @Nullable String code){
-        this.componentsStorage = new ComponentsStorage(cabledSlab);
+        this.componentsStorage = new ComponentsStorage(this, cabledSlab);
         CableCodeDiscrambler.descrypt(this, code);
     }
 

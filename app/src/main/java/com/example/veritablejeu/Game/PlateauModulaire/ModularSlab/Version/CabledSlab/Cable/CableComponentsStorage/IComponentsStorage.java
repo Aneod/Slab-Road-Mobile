@@ -65,4 +65,9 @@ public interface IComponentsStorage {
      */
     void disconnectDoor();
 
+    /**
+     * Delete the cable.
+     */
+    void deleteCable();
+
 }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.PlateauModulaire.CreateSimpleBackground;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @SuppressLint("ViewConstructor")
 public class ModularDoor extends ModularWall {
@@ -31,7 +33,6 @@ public class ModularDoor extends ModularWall {
     private static final int DEFAULT_FILL_COLOR = Color.WHITE;
 
     private final int necessarySlabNumber;
-    private final Set<ModularSlab> connectedSlab = new HashSet<>();
     private final Set<ComponentsStorage> connectedCables = new HashSet<>();
     protected WallAspect wallAspect;
     protected boolean subjectToSealing = false;
@@ -95,11 +96,10 @@ public class ModularDoor extends ModularWall {
         verify();
     }
 
-    public void addConnectedSlab(ModularSlab modularSlab) {
-        if(modularSlab == null) {
-            return;
-        }
-        connectedSlab.add(modularSlab);
+    public Set<ModularSlab> getConnectedSlab() {
+        return connectedCables.stream()
+                .map(ComponentsStorage::getSlab)
+                .collect(Collectors.toSet());
     }
 
     public void addConnectedCable(ComponentsStorage modularCable) {
@@ -113,6 +113,11 @@ public class ModularDoor extends ModularWall {
         connectedCables.remove(modularCable);
     }
 
+    public void deleteAllConnectedCables() {
+        Set<ComponentsStorage> toDelete = new HashSet<>(connectedCables);
+        toDelete.forEach(ComponentsStorage::deleteCable);
+    }
+
     @Override
     public boolean isTraversable() {
         return !sealed && isOpenWithoutMaster();
@@ -123,7 +128,7 @@ public class ModularDoor extends ModularWall {
     }
 
     private long getHowManyActiveSlabs_withoutMaster() {
-        return connectedSlab.stream()
+        return getConnectedSlab().stream()
                 .filter(ModularSlab::isActive_withoutMaster)
                 .count();
     }
@@ -134,7 +139,7 @@ public class ModularDoor extends ModularWall {
     }
 
     private long getHowManyActiveSlabs() {
-        return connectedSlab.stream()
+        return getConnectedSlab().stream()
                 .filter(ModularSlab::isActive)
                 .count();
     }
@@ -177,5 +182,11 @@ public class ModularDoor extends ModularWall {
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Sealing", this::sealUnseal, true));
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        deleteAllConnectedCables();
     }
 }
