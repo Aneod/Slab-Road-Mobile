@@ -1,0 +1,9 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.VeritableJeu" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="fontFamily">@font/inter_light</item>
+    </style>
+
+    <style name="Theme.VeritableJeu" parent="Base.Theme.VeritableJeu" />
+
+</resources>

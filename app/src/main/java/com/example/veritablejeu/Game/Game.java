@@ -1,0 +1,219 @@
+package com.example.veritablejeu.Game;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.TransitionDrawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.veritablejeu.BainDeSavon.BainDeSavon;
+import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
+import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
+import com.example.veritablejeu.Game.PlateauModulaire.Board;
+import com.example.veritablejeu.Game.PlateauModulaire.Deprime.BoardsMovements;
+import com.example.veritablejeu.Game.PlateauModulaire.StringColorConverter;
+import com.example.veritablejeu.Menu.MainActivity;
+import com.example.veritablejeu.PopUp.PopUp;
+import com.example.veritablejeu.OutilsEnEnum.ColorierBackground;
+import com.example.veritablejeu.R;
+
+import java.util.ArrayList;
+import java.util.Objects;
+
+public class Game extends AppCompatActivity implements IGame {
+
+    protected ConstraintLayout container;
+
+    protected LevelFile levelFile;
+
+    protected PopUp popUp;
+    protected PetiteFenetreFlottante2 petiteFenetreFlottante;
+    public final Chronometre chronometre = new Chronometre();
+    public int nombreDeCoups = 0;
+    protected BoardsMovements onToucheListenerPlateauModulaire;
+    protected final ArrayList<Board> plateauModulaireSet = new ArrayList<>();
+    private Board plateauADeplacer;
+    private int[] backgroundColors = new int[]{Color.WHITE, Color.WHITE};
+    private boolean cableOutline = false;
+
+
+    public Game() {}
+
+    private void ajouterPopUp() {
+        popUp = PopUp.getInstance(this);
+        popUp.setConstraintLayout(this);
+        popUp.setVisibility(View.GONE);
+    }
+
+    private void ajouterFenetre() {
+        petiteFenetreFlottante = new PetiteFenetreFlottante2(this);
+        petiteFenetreFlottante.attachToActivity(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_in_game);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // Hide status bar and navigation bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // For API level 30 and above
+            getWindow().getInsetsController().hide(android.view.WindowInsets.Type.statusBars() | android.view.WindowInsets.Type.navigationBars());
+        } else {
+            // For API level below 30
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+
+        container = this.findViewById(R.id.main);
+        levelFile = MainActivity.Bus.getInstance().getLevelFile();
+        onToucheListenerPlateauModulaire = new BoardsMovements(this);
+
+        ajouterPopUp();
+        ajouterFenetre();
+
+        BainDeSavon bainDeSavon = BainDeSavon.getInstance(this);
+        bainDeSavon.setContainerDeToutesLesBulles(this);
+
+        FirstCodeReader.read(this, levelFile.sequentialCode);
+        verifyCompletion();
+    }
+
+    @Override
+    public ConstraintLayout getContainer() {
+        return container;
+    }
+
+    public PopUp getPopUp() {
+        return popUp;
+    }
+
+    public PetiteFenetreFlottante2 getPetiteFenetreFlottante() {
+        return petiteFenetreFlottante;
+    }
+
+    @NonNull
+    @Override
+    public LevelFile getLevelFiles() {
+        return levelFile;
+    }
+
+    @Override
+    public void retourAuMenu() {
+        Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(mainActivity);
+        this.finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void flashDeCouleur(int couleur) {
+
+        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{couleur, couleur});
+
+        if(backgroundColors.length < 2) return;
+        GradientDrawable initial = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, backgroundColors);
+
+        Drawable[] layers = {gradientDrawable, initial};
+        TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
+        container.setBackground(transitionDrawable);
+
+        transitionDrawable.startTransition(2000);
+    }
+
+    public BoardsMovements getOnToucheListenerPlateauModulaire() {
+        return onToucheListenerPlateauModulaire;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        petiteFenetreFlottante.hide();
+        popUp.cacher();
+        onToucheListenerPlateauModulaire.onTouchEvent(event, plateauADeplacer);
+        return true;
+    }
+
+    public void verifyCompletion() {
+        if(isComplete()) {
+            retourAuMenu();
+        }
+    }
+
+    public boolean isComplete() {
+        return plateauModulaireSet.stream().allMatch(Board::isComplete);
+    }
+
+    public ArrayList<Board> getPlateauModulaireSet() {
+        return plateauModulaireSet;
+    }
+
+    public void addBoard(Board board) {
+        plateauModulaireSet.add(board);
+    }
+
+    public void setPlateauADeplacer(Board plateauADeplacer) {
+        this.plateauADeplacer = plateauADeplacer;
+    }
+
+    /**
+     * Manages the background colors.
+     * @param code who containes some colors like : xxxxxxyyyyyyzzzzzz...
+     */
+    public void backgroundColoration(String code) {
+        backgroundColors = StringColorConverter.turnIntoColors(code);
+        ColorierBackground.colorierBackground(this, backgroundColors);
+    }
+
+    /**
+     * Enable or not the outline of cable with a code.
+     * <br>
+     * false by default.
+     * @param code just 't' for true or 'f' for false.
+     */
+    public void setCableOutline(String code) {
+        boolean enable = Objects.equals(code, "t");
+        setCableOutline(enable);
+    }
+
+    /**
+     * Enable or not the outline of cable.
+     * <br>
+     * false by default.
+     * @param enable true for enable cables outlines. False otherwise.
+     */
+    public void setCableOutline(boolean enable) {
+        this.cableOutline = enable;
+        plateauModulaireSet.forEach(Board::refreshCables);
+    }
+
+    public void enableDisableCableOutline() {
+        setCableOutline(!cableOutline);
+    }
+
+    public boolean isCableOutline() {
+        return cableOutline;
+    }
+}

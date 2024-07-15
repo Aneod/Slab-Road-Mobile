@@ -1,0 +1,142 @@
+package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab;
+
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+
+import androidx.annotation.NonNull;
+import androidx.core.util.Consumer;
+
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.ModularSlab;
+import com.example.veritablejeu.Game.PlateauModulaire.Square.ModularSquare;
+import com.example.veritablejeu.Game.PlateauModulaire.Square.WallsOfSquare.Wall.ModularDoor;
+import com.example.veritablejeu.OutilsEnEnum.CouleurDuJeu;
+import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
+import com.example.veritablejeu.sequentialCode.Code;
+
+import org.jetbrains.annotations.Contract;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@SuppressLint("ViewConstructor")
+public class CabledSlab extends ModularSlab {
+    private final Set<Cable> connectedCable2 = new HashSet<>();
+    private final Set<ModularDoor> connectedWall = new HashSet<>();
+
+    @NonNull
+    @Contract("_, _ -> new")
+    public static CabledSlab lightBlue(@NonNull ModularSquare modularSquare, @NonNull String code) {
+        return new CabledSlab(modularSquare, CouleurDuJeu.BleuClair.Int(), code);
+    }
+
+    @NonNull
+    @Contract("_, _ -> new")
+    public static CabledSlab darkBlue(@NonNull ModularSquare modularSquare, @NonNull String code) {
+        return new CabledSlab(modularSquare, CouleurDuJeu.BleuFonce.Int(), code);
+    }
+
+    @NonNull
+    @Contract("_, _ -> new")
+    public static CabledSlab red(@NonNull ModularSquare modularSquare, @NonNull String code) {
+        return new CabledSlab(modularSquare, CouleurDuJeu.Rouge.Int(), code);
+    }
+
+    public CabledSlab(@NonNull ModularSquare modularSquare, int fillColor, @NonNull String code) {
+        super(modularSquare, fillColor, code);
+
+        String subString = code.substring(2);
+        if(!subString.isEmpty()) {
+            Code.apply(subString,
+                    'c', (Consumer<String>) this::addCable
+            );
+        }
+    }
+
+    public Set<Cable> getConnectedCable2() {
+        return connectedCable2;
+    }
+
+    private void addCable(String code) {
+        if(code == null || code.isEmpty()) {
+            return;
+        }
+        Cable modularCable2 = new Cable(this, code);
+        connectedCable2.add(modularCable2);
+    }
+
+    public void refreshCables() {
+        connectedCable2.forEach(completeCable -> completeCable.getMorceauStorage().refresh());
+    }
+
+    public void addConnectedWall(ModularDoor modularDoor) {
+        if(modularDoor == null) {
+            return;
+        }
+        connectedWall.add(modularDoor);
+    }
+
+    public void verifyDoors() {
+        for(ModularDoor wall : connectedWall) {
+            wall.verify();
+        }
+    }
+
+    @Override
+    public void whenActivation() {
+        verifyDoors();
+    }
+
+    @Override
+    public void whenActivation_onlyFirstTime() {
+        if(fillColor == CouleurDuJeu.Rouge.Int()) {
+            flash();
+        }
+    }
+
+    @Override
+    public void whenDisactivation() {
+        verifyDoors();
+    }
+
+    @Override
+    public void whenDisactivation_onlyFirstTime() {
+
+    }
+
+    @Override
+    public void whenBlobAdded() {
+
+    }
+
+    @Override
+    public void whenBlobAdded_onlyFirstTime() {
+
+    }
+
+    @Override
+    public void whenBlobGone() {
+
+    }
+
+    @Override
+    public void whenBlobGone_onlyFirstTime() {
+
+    }
+
+    @Override
+    public List<PetiteFenetreFlottante2.StringRunnablePair> getEditPropositions() {
+        List<PetiteFenetreFlottante2.StringRunnablePair> propositions = new ArrayList<>();
+        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Add cable", this::addWeight));
+
+        boolean isBlue = fillColor == CouleurDuJeu.BleuClair.Int() || fillColor == CouleurDuJeu.BleuFonce.Int();
+        if(!isBlue) {
+            propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Add weight", this::addWeight));
+            propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Remove weight", this::removeWeight));
+        }
+        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", this::remove, Color.RED, true));
+        return propositions;
+    }
+}

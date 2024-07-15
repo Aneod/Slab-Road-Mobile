@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "284912244439",
+    "project_id": "slab-road-96db6",
+    "storage_bucket": "slab-road-96db6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:284912244439:android:cf0f10bcba8c6acd914292",
+        "android_client_info": {
+          "package_name": "com.example.veritablejeu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbQ1ZM3m8KH6DjxehWdU2LwabUT7Sk4sE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
