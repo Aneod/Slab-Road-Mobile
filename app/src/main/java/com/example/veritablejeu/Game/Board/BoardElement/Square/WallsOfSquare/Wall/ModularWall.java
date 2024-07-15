@@ -17,6 +17,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wal
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.SimpleWall;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -45,16 +46,16 @@ public abstract class ModularWall extends BoardElement {
         }
         char wallType = code.charAt(0);
         switch (wallType) {
-            case '0': return new SimpleWall(modularSquare, direction, code);
-            case '1': return new OutlineWall(modularSquare, direction, code);
-            case 'a': return ModularDoor.lightBlue(modularSquare, direction, code);
-            case 'b': return ModularDoor.darkBlue(modularSquare, direction, code);
-            case 'c': return ModularDoor.red(modularSquare, direction, code);
+            case '0': return new SimpleWall(modularSquare, direction);
+            case '1': return new OutlineWall(modularSquare, direction);
+            case 'a': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuClair, 1);
+            case 'b': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuFonce, 2);
+            case 'c': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.Rouge, 1);
         }
-        return new SimpleWall(modularSquare, direction, code);
+        return new SimpleWall(modularSquare, direction);
     }
 
-    public ModularWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
+    public ModularWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
         super(modularSquare.getBoard());
         this.modularSquare = modularSquare;
         this.direction = direction;

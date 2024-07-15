@@ -47,6 +47,11 @@ public class ComponentsStorage implements IComponentsStorage {
     }
 
     @Override
+    public void removeIntersections(ZdecimalCoordinates intersection) {
+        intersections.remove(intersection);
+    }
+
+    @Override
     public @Nullable ModularDoor getDoor() {
         return door;
     }
@@ -77,6 +82,11 @@ public class ComponentsStorage implements IComponentsStorage {
             door.removeConnectedCable(this);
             door = null;
         }
+    }
+
+    @Override
+    public boolean isConnectedToADoor() {
+        return door != null;
     }
 
     @Override

@@ -19,6 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart.CablePart;
 import com.example.veritablejeu.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
@@ -221,5 +223,31 @@ public class Game extends AppCompatActivity implements IGame {
 
     public boolean isCableOutline() {
         return cableOutline;
+    }
+
+    /**
+     * Activate the cable editor.
+     * <p>
+     *     When a cable is editing, others board elements can't be edited.
+     *     <br>
+     *     The ATH disappear. And a cross appear for close the cable editing.
+     * </p>
+     * <p>
+     *     How cables are modify ?
+     *     <br>
+     *     There are only <u>three actions</u> :
+     *     <br>
+     *     Click on a <b>square with intersection</b> : Remove the both {@link CablePart} who compose the intersection.
+     *     <br>
+     *     Click on a <b>square without intersection</b> : Create an intersection on this square.
+     *     <br>
+     *     Click on a <b>door</b> : Connect the cable to the clicked door.
+     *     <br>
+     *     For each actions the graphic cable will be refreshed.
+     * </p>
+     * @param cable the cable to modify.
+     */
+    public void enableCableEditing(Cable cable) {
+        // TODO
     }
 }

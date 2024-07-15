@@ -30,11 +30,6 @@ public interface IMorceauStorage {
     void addBorders();
 
     /**
-     * Delete the cable.
-     */
-    void deleteCable();
-
-    /**
      * Delete and remove all {@link CablePart} of cable.
      */
     void deleteMorceaux();

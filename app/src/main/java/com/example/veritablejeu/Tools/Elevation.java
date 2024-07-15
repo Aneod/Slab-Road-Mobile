@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Elevation {
-    PopUp, LittleWindow, Blob, FillCable, BorderCable, Door, Wall, Slab, Square, SpecSquare, Bubble;
+    PopUp, LittleWindow, Blob, FillCable, BorderCable, Door, NormalWall, OutlineWall, Slab, Square, SpecSquare, Bubble;
 
     private static final List<Elevation> order = Arrays.asList(
             PopUp,
@@ -14,7 +14,8 @@ public enum Elevation {
             Slab,
             FillCable,
             BorderCable,
-            Wall,
+            NormalWall,
+            OutlineWall,
             Square,
             SpecSquare,
             Bubble

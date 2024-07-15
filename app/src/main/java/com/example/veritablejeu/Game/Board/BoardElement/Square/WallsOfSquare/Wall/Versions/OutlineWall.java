@@ -11,17 +11,21 @@ import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Tools.Elevation;
 
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
 public class OutlineWall extends ModularWall {
 
-    public OutlineWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
-        super(modularSquare, direction, code);
+    private static final int THINKNESS = 4;
+    private static final int ELEVATION = Elevation.NormalWall.getElevation();
+
+    public OutlineWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
+        super(modularSquare, direction);
 
         GradientDrawable normalBackground = CreateSimpleBackground.create(Color.LTGRAY);
-        WallAspect wallAspect = new WallAspect(normalBackground, 4, 0);
+        WallAspect wallAspect = new WallAspect(normalBackground, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
     }
 

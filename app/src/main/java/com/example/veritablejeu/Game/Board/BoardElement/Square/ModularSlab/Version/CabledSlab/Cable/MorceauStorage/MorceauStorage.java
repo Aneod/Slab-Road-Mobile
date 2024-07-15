@@ -26,11 +26,14 @@ public class MorceauStorage implements IMorceauStorage {
     @Override
     public void print() {
         deleteMorceaux();
-        boolean borders = getBoard().getGame().isCableOutline();
-        if(borders) {
+        if(isBordered()) {
             printBorder();
         }
         printFill();
+    }
+
+    private boolean isBordered() {
+        return getBoard().getGame().isCableOutline();
     }
 
     @Override
@@ -66,11 +69,6 @@ public class MorceauStorage implements IMorceauStorage {
     private void generateBorder() {
         Set<CablePart> bordersCableParts = MorceauxGenerator.createAllMorceaux(cable, true);
         bordersCablePartSet.addAll(bordersCableParts);
-    }
-
-    @Override
-    public void deleteCable() {
-        cable.delete();
     }
 
     @Override

@@ -37,6 +37,12 @@ public interface IComponentsStorage {
     void addIntersection(ZdecimalCoordinates intersection);
 
     /**
+     * Remove a intersection.
+     * @param intersection the intersection to remove.
+     */
+    void removeIntersections(ZdecimalCoordinates intersection);
+
+    /**
      * @return the connected door.
      */
     @Nullable
@@ -64,6 +70,11 @@ public interface IComponentsStorage {
      * Disconnect the connected door and remove it from the storage.
      */
     void disconnectDoor();
+
+    /**
+     * @return true if the cable is connected to a door.
+     */
+    boolean isConnectedToADoor();
 
     /**
      * Delete the cable.

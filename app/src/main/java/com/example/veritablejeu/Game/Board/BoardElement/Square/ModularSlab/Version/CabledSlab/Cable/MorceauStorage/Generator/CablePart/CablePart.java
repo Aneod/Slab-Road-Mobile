@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
-import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.MorceauStorage;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
@@ -29,11 +29,11 @@ public class CablePart extends BoardElement {
         return OUTLINE_COLOR;
     }
 
-    private final MorceauStorage morceauStorage;
+    private final Cable cable;
 
-    public CablePart(@NonNull MorceauStorage morceauStorage, Point from, Point to, int color, boolean borders) {
-        super(morceauStorage.getBoard());
-        this.morceauStorage = morceauStorage;
+    public CablePart(@NonNull Cable cable, Point from, Point to, int color, boolean borders) {
+        super(cable.getBoard());
+        this.cable = cable;
         setLayoutParams(from, to);
         applyRotation(from, to);
         applyElevation(borders);
@@ -90,12 +90,24 @@ public class CablePart extends BoardElement {
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
+        if(cableParentIsConnectedToADoor()) {
+            propositions.add(new LittleWindow.StringRunnablePair("Disconnect door", cable::disconnectDoor, true));
+        }
+        propositions.add(new LittleWindow.StringRunnablePair("Modify", this::enableCableEditing, true));
         propositions.add(new LittleWindow.StringRunnablePair("Outline", this::swapCableOutline));
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", morceauStorage::deleteCable, Color.RED, true));
+        propositions.add(new LittleWindow.StringRunnablePair("Delete", cable::delete, Color.RED, true));
         return propositions;
     }
 
+    private boolean cableParentIsConnectedToADoor() {
+        return cable.getComponentsStorage().isConnectedToADoor();
+    }
+
     private void swapCableOutline() {
-        morceauStorage.getBoard().getGame().swapCableOutline();
+        cable.getBoard().getGame().swapCableOutline();
+    }
+
+    private void enableCableEditing() {
+        cable.getBoard().getGame().enableCableEditing(cable);
     }
 }

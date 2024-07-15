@@ -11,6 +11,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wal
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Tools.Elevation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,14 @@ import java.util.List;
 @SuppressLint("ViewConstructor")
 public class SimpleWall extends ModularWall {
 
-    public SimpleWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
-        super(modularSquare, direction, code);
+    private static final int THINKNESS = 4;
+    private static final int ELEVATION = Elevation.NormalWall.getElevation();
+
+    public SimpleWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
+        super(modularSquare, direction);
 
         GradientDrawable normalBackground = CreateSimpleBackground.create(Color.BLACK);
-        WallAspect wallAspect = new WallAspect(normalBackground, 4, 1);
+        WallAspect wallAspect = new WallAspect(normalBackground, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
     }
 

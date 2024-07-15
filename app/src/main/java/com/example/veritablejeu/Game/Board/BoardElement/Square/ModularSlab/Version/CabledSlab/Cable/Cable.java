@@ -9,6 +9,8 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Versi
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.CabledSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableCodeDiscrambler.CableCodeDiscrambler;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
+import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 
 public class Cable implements ICable {
 
@@ -20,7 +22,7 @@ public class Cable implements ICable {
      * For complete the cable, we must wait that <u>all doors are built</u>.
      * <br>
      * Then, with the door identity, we search the corresponding door, with
-     * {@link ComponentsStorage#connectCorrespondingDoor(DoorIdentity)}, and connected it.
+     * {@link #connectCorrespondingDoor()}, and connected it.
      */
     private DoorIdentity doorIdentity;
 
@@ -70,6 +72,36 @@ public class Cable implements ICable {
     @Override
     public void setDoorIdentity(DoorIdentity doorIdentity) {
         this.doorIdentity = doorIdentity;
+    }
+
+    @Override
+    public void addIntersection(ZdecimalCoordinates coordinates) {
+        componentsStorage.addIntersection(coordinates);
+        morceauStorage.print();
+    }
+
+    @Override
+    public void removeIntersection(ZdecimalCoordinates coordinates) {
+        componentsStorage.removeIntersections(coordinates);
+        morceauStorage.print();
+    }
+
+    @Override
+    public void connectDoor(ModularDoor door) {
+        componentsStorage.connectDoor(door);
+        morceauStorage.print();
+    }
+
+    @Override
+    public void connectCorrespondingDoor() {
+        componentsStorage.connectCorrespondingDoor(doorIdentity);
+        morceauStorage.print();
+    }
+
+    @Override
+    public void disconnectDoor() {
+        componentsStorage.disconnectDoor();
+        morceauStorage.print();
     }
 
     @Override

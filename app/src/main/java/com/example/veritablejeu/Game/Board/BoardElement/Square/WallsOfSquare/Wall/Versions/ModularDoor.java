@@ -17,6 +17,7 @@ import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.sequentialCode.Code;
 
 import org.jetbrains.annotations.Contract;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 public class ModularDoor extends ModularWall {
 
     private static final int DEFAULT_FILL_COLOR = Color.WHITE;
+    private static final int THINKNESS = 15;
+    private static final int ELEVATION = Elevation.Door.getElevation();
 
     private final int necessarySlabNumber;
     private final Set<ComponentsStorage> connectedCables = new HashSet<>();
@@ -38,37 +41,21 @@ public class ModularDoor extends ModularWall {
     protected boolean subjectToSealing = false;
     protected boolean sealed = false;
 
-    @NonNull
-    @Contract("_, _, _ -> new")
-    public static ModularDoor lightBlue(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
-        return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuClair, 1);
-    }
-
-    @NonNull
-    @Contract("_, _, _ -> new")
-    public static ModularDoor darkBlue(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
-        return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuFonce, 2);
-    }
-
-    @NonNull
-    @Contract("_, _, _ -> new")
-    public static ModularDoor red(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code) {
-        return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.Rouge, 1);
-    }
-
     public ModularDoor(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code, CouleurDuJeu fillColor, int necessarySlab) {
-        super(modularSquare, direction, code);
+        super(modularSquare, direction);
 
         necessarySlabNumber = necessarySlab;
         int color = fillColor == null ? DEFAULT_FILL_COLOR : fillColor.Int();
         GradientDrawable background = CreateSimpleBackground.create(color, Color.BLACK, 2);
-        wallAspect = new WallAspect(background, 15, 6);
+        wallAspect = new WallAspect(background, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
 
-        String subcode = code.substring(1);
-        Code.apply(subcode,
-                'c', (Consumer<String>) codex -> sealing()
-        );
+        if(code != null && !code.isEmpty()) {
+            String subcode = code.substring(1);
+            Code.apply(subcode,
+                    'c', (Consumer<String>) codex -> sealing()
+            );
+        }
     }
 
     public boolean isSealed() {

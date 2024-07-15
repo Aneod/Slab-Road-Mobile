@@ -3,6 +3,7 @@ package com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Vers
 import android.graphics.Point;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.DoorIdentity.DoorIdentity;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart.CablePart;
@@ -25,19 +26,37 @@ public class MorceauxGenerator {
         for(int index = 0; index < coordinates.size() - 1; index++) {
             Point from = coordinates.get(index);
             Point to = coordinates.get(index + 1);
-            CablePart cablePart = new CablePart(cable.getMorceauStorage(), from, to, color, borders);
+            CablePart cablePart = new CablePart(cable, from, to, color, borders);
             finalList.add(cablePart);
         }
-        DoorIdentity doorIdentity = cable.getDoorIdentity();
-        if(doorIdentity != null) {
-            Point centerOfDoor = doorIdentity.getDoorIdentityCenter();
-            if(centerOfDoor != null) {
-                Point lastCoordinates = coordinates.get(coordinates.size() - 1);
-                CablePart cablePart = new CablePart(cable.getMorceauStorage(), lastCoordinates, centerOfDoor, color, borders);
-                finalList.add(cablePart);
-            }
+
+        Point lastCoordinates = coordinates.get(coordinates.size() - 1);
+        CablePart lastCablePart = createCablePartsOfDoor(cable, lastCoordinates, color, borders);
+        if(lastCablePart != null) {
+            finalList.add(lastCablePart);
         }
         return finalList;
+    }
+
+    @Nullable
+    private static CablePart createCablePartsOfDoor(Cable cable, Point lastCoordinate, int color, boolean borders) {
+        if(noDoorToConnect(cable)) return null;
+        Point centerOfDoor = getDoorIdentityCenter(cable);
+        if(centerOfDoor == null) return null;
+        return new CablePart(cable, lastCoordinate, centerOfDoor, color, borders);
+    }
+
+    private static boolean noDoorToConnect(Cable cable) {
+        if(cable == null) return true;
+        return !cable.getComponentsStorage().isConnectedToADoor();
+    }
+
+    @Nullable
+    private static Point getDoorIdentityCenter(Cable cable) {
+        if(cable == null) return null;
+        DoorIdentity doorIdentity = cable.getDoorIdentity();
+        if(doorIdentity == null) return null;
+        return doorIdentity.getDoorIdentityCenter();
     }
 
     @NonNull

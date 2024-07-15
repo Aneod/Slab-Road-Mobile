@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Board.BoardElement.Fence.Fence;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.GroupOfBlobsOfBoard;
@@ -130,7 +131,6 @@ public class Board extends FrameLayout {
         );
 
         connectDoors_and_cables();
-        printCables();
 
         determineBoardLimits();
         width = getNumberOf_squarePerLines() * SQUARE_SIZE + BORDER_WIDTH * 2;
@@ -199,14 +199,7 @@ public class Board extends FrameLayout {
                 .filter(CabledSlab.class::isInstance)
                 .map(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable())
                 .flatMap(Set::stream)
-                .forEach(cable -> cable.getComponentsStorage().connectCorrespondingDoor(cable.getDoorIdentity()));
-    }
-
-    private void printCables() {
-        groupOfSlabs.stream()
-                .filter(modularSlab -> modularSlab instanceof CabledSlab)
-                .flatMap(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable().stream())
-                .forEach(completeCable -> completeCable.getMorceauStorage().print());
+                .forEach(Cable::connectCorrespondingDoor);
     }
 
     public void showFence() {
