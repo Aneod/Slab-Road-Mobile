@@ -249,5 +249,6 @@ public class Game extends AppCompatActivity implements IGame {
      */
     public void enableCableEditing(Cable cable) {
         // TODO
+
     }
 }
