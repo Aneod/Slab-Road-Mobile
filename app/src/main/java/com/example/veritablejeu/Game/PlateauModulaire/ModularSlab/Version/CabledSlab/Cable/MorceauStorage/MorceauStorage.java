@@ -39,16 +39,9 @@ public class MorceauStorage implements IMorceauStorage {
         bordersMorceauSet.forEach(board::removeView);
     }
 
-    private void removeFill() {
-        Board board = getBoard();
-        fillMorceauSet.forEach(board::removeView);
-    }
-
     @Override
     public void addBorders() {
-        removeFill();
         printBorder();
-        printFill();
     }
 
     private void printBorder() {

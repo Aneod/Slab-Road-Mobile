@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.PlateauModulaire.ModularObject;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.MorceauStorage;
-import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
-import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesPositionner;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.PetiteFenetreFlottante.PetiteFenetreFlottante2;
@@ -33,41 +31,44 @@ public class Morceau extends ModularObject {
 
     private final MorceauStorage morceauStorage;
 
-    public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull ZdecimalCoordinates from, @NonNull ZdecimalCoordinates to, int couleur, boolean borders) {
-        this(morceauStorage, ZdecimalCoordinatesPositionner.getCenterOf(from), ZdecimalCoordinatesPositionner.getCenterOf(to), couleur, borders);
-    }
-
-    public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull ZdecimalCoordinates from, @NonNull Point to, int couleur, boolean borders) {
-        this(morceauStorage, ZdecimalCoordinatesPositionner.getCenterOf(from), to, couleur, borders);
-    }
-
-    public Morceau(@NonNull MorceauStorage morceauStorage, @NonNull Point from, @NonNull Point to, int couleur, boolean borders) {
-        super(morceauStorage.getBoard());
-        this.morceauStorage = morceauStorage;
-
+    private void setLayoutParams(Point from, Point to) {
         int distance = MathematicTools.getDistance(from, to);
         int largeur = distance + TOTAL_HEIGHT;
-        int halfH = TOTAL_HEIGHT / 2;
-        int leftMargin = from.x - halfH;
-        int topMargin = from.y - halfH;
-
+        int leftMargin = from.x - TOTAL_HEIGHT / 2;
+        int topMargin = from.y - TOTAL_HEIGHT / 2;
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 largeur, TOTAL_HEIGHT, leftMargin, topMargin
         );
         setLayoutParams(layoutParams);
-        setElevation(Elevation.Cable.getElevation());
-
-        setPivotX(halfH);
-        setPivotY(halfH);
-        float angleDegPositif = (float) MathematicTools.getAngle(from, to);
-        setRotation(angleDegPositif);
-
-        addVisualCable(distance, couleur, borders);
     }
 
-    private void addVisualCable(double distance, int color, boolean borders) {
-        View visualCable = new View(getContext());
+    private void applyRotation(Point from, Point to) {
+        setPivotX((float) TOTAL_HEIGHT / 2);
+        setPivotY((float) TOTAL_HEIGHT / 2);
+        float angleDegPositif = (float) MathematicTools.getAngle(from, to);
+        setRotation(angleDegPositif);
+    }
 
+    private void applyElevation(boolean borders) {
+        if(borders) {
+            setElevation(Elevation.BorderCable.getElevation());
+        } else {
+            setElevation(Elevation.FillCable.getElevation());
+        }
+    }
+
+    public Morceau(@NonNull MorceauStorage morceauStorage, Point from, Point to, int color, boolean borders) {
+        super(morceauStorage.getBoard());
+        this.morceauStorage = morceauStorage;
+        setLayoutParams(from, to);
+        applyRotation(from, to);
+        applyElevation(borders);
+        addVisualCable(from, to, color, borders);
+    }
+
+    private void addVisualCable(Point from, Point to, int color, boolean borders) {
+        View visualCable = new View(getContext());
+        int distance = MathematicTools.getDistance(from, to);
         int height = borders ? CABLE_HEIGHT + BORDER_HEIGHT * 2 : CABLE_HEIGHT;
         int width = (int) (distance + height);
         int margins = (TOTAL_HEIGHT - height) / 2;
@@ -88,12 +89,12 @@ public class Morceau extends ModularObject {
     @Override
     public List<PetiteFenetreFlottante2.StringRunnablePair> getEditPropositions() {
         List<PetiteFenetreFlottante2.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Outline", this::enableDisableCableOutline));
+        propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Outline", this::swapCableOutline));
         propositions.add(new PetiteFenetreFlottante2.StringRunnablePair("Delete", morceauStorage::deleteCable, Color.RED, true));
         return propositions;
     }
 
-    private void enableDisableCableOutline() {
-        morceauStorage.getBoard().getGame().enableDisableCableOutline();
+    private void swapCableOutline() {
+        morceauStorage.getBoard().getGame().swapCableOutline();
     }
 }

@@ -38,7 +38,7 @@ public class PetiteFenetreFlottante2 extends FrameLayout implements IPetiteFenet
                 new LayoutParamsDeBase_pourConstraintLayout(WIDTH, 0, 0, 0);
         setLayoutParams(layoutParams);
         setBackgroundColor(Color.WHITE);
-        setElevation(Elevation.Fenetre.getElevation());
+        setElevation(Elevation.LittleWindow.getElevation());
     }
 
     @Override

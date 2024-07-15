@@ -215,7 +215,7 @@ public class Game extends AppCompatActivity implements IGame {
         }
     }
 
-    public void enableDisableCableOutline() {
+    public void swapCableOutline() {
         setCableOutline(!cableOutline);
     }
 

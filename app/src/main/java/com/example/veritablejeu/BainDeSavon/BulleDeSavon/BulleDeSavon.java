@@ -53,7 +53,7 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
         groupe = MathematicTools.random_open(0, 1);
         setLayoutParam();
         setOpaciteRandom();
-        setElevation(Elevation.Bulle.getElevation());
+        setElevation(Elevation.Bubble.getElevation());
     }
 
     @Override

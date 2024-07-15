@@ -32,7 +32,7 @@ public class SlabDesign {
     }
 
     private void display_onlyFirstTime() {
-        dalle.setElevation(Elevation.Dalle.getElevation());
+        dalle.setElevation(Elevation.Slab.getElevation());
         dalle.getBoard().addView(dalle);
 
         GradientDrawable background = CreateSimpleBackground.create(dalle.getFillColor(), Color.BLACK, 1);

@@ -1,22 +1,27 @@
 package com.example.veritablejeu.Tools;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Elevation {
-    PopUp, Fenetre, Blob, Cable, PointIntersection, Porte, Mur, Dalle, Square, SpecSquare, Bulle;
+    PopUp, LittleWindow, Blob, FillCable, BorderCable, Door, Wall, Slab, Square, SpecSquare, Bubble;
+
+    private static final List<Elevation> order = Arrays.asList(
+            PopUp,
+            LittleWindow,
+            Blob,
+            Door,
+            Slab,
+            FillCable,
+            BorderCable,
+            Wall,
+            Square,
+            SpecSquare,
+            Bubble
+    );
 
     public int getElevation() {
-        switch (this) {
-            case PopUp: return 10;
-            case Fenetre: return 9;
-            case PointIntersection:
-            case Blob: return 7;
-            case Porte: return 6;
-            case Dalle: return 5;
-            case Cable: return 4;
-            case Mur: return 1;
-            case Square: return 0;
-            case SpecSquare: return -1;
-            case Bulle: return -2;
-        }
-        return 0;
+        int howManyLevelsBelow = order.indexOf(this);
+        return (order.size() - 1) - howManyLevelsBelow;
     }
 }

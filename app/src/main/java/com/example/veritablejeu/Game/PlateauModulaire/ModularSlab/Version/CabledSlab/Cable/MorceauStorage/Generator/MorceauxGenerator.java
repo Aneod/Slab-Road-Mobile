@@ -9,6 +9,7 @@ import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.Cabled
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau.Morceau;
 import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Game.PlateauModulaire.ZdecimalCoordinates.ZdecimalCoordinatesPositionner;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,12 +19,12 @@ public class MorceauxGenerator {
 
     @NonNull
     public static Set<Morceau> createAllMorceaux(Cable cable, boolean borders) {
-        ArrayList<ZdecimalCoordinates> coordinates = getSortedIntersections_ofCable(cable);
+        ArrayList<Point> coordinates = getSortedIntersections_ofCable(cable);
         Set<Morceau> finalList = new HashSet<>();
         int color = borders ? Morceau.getOutlineColor() : cable.getComponentsStorage().getSlab().getFillColor();
         for(int index = 0; index < coordinates.size() - 1; index++) {
-            ZdecimalCoordinates from = coordinates.get(index);
-            ZdecimalCoordinates to = coordinates.get(index + 1);
+            Point from = coordinates.get(index);
+            Point to = coordinates.get(index + 1);
             Morceau morceau = new Morceau(cable.getMorceauStorage(), from, to, color, borders);
             finalList.add(morceau);
         }
@@ -31,7 +32,7 @@ public class MorceauxGenerator {
         if(doorIdentity != null) {
             Point centerOfDoor = doorIdentity.getDoorIdentityCenter();
             if(centerOfDoor != null) {
-                ZdecimalCoordinates lastCoordinates = coordinates.get(coordinates.size() - 1);
+                Point lastCoordinates = coordinates.get(coordinates.size() - 1);
                 Morceau morceau = new Morceau(cable.getMorceauStorage(), lastCoordinates, centerOfDoor, color, borders);
                 finalList.add(morceau);
             }
@@ -40,8 +41,8 @@ public class MorceauxGenerator {
     }
 
     @NonNull
-    private static ArrayList<ZdecimalCoordinates> getSortedIntersections_ofCable(Cable cable) {
-        ArrayList<ZdecimalCoordinates> finalList = new ArrayList<>();
+    private static ArrayList<Point> getSortedIntersections_ofCable(Cable cable) {
+        ArrayList<Point> finalList = new ArrayList<>();
         if(cable == null) {
             return finalList;
         }
@@ -51,7 +52,12 @@ public class MorceauxGenerator {
         }
         ZdecimalCoordinates originSlabCoordinates = componentsStorage.getSlab().getOriginSquare().getCord();
         Set<ZdecimalCoordinates> intersections = componentsStorage.getIntersections();
-        return IntersectionsSorter.sort(originSlabCoordinates, intersections);
+        ArrayList<ZdecimalCoordinates> sortedIntersections = IntersectionsSorter.sort(originSlabCoordinates, intersections);
+        for(ZdecimalCoordinates coordinates : sortedIntersections) {
+            Point equivalent = ZdecimalCoordinatesPositionner.getCenterOf(coordinates);
+            finalList.add(equivalent);
+        }
+        return finalList;
     }
 
 }
