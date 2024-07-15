@@ -28,6 +28,9 @@ import java.util.Set;
 @SuppressLint("ViewConstructor")
 public abstract class ModularSlab extends ModularObject {
 
+    private static final int MIN_WEIGHT = 1;
+    private static final int MAX_WEIGHT = 35;
+
     protected final ModularSquare originSquare;
     protected final int fillColor;
     protected final Set<ZdecimalCoordinates> squareNums = new HashSet<>();
@@ -90,12 +93,12 @@ public abstract class ModularSlab extends ModularObject {
     }
 
     public void setWeight(int weight) {
-        if(weight <= 0) {
-            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be lower than 1", 1500);
-        } else if(weight >= 36) {
-            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be higher than 35", 1500);
+        if(weight < MIN_WEIGHT) {
+            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be lower than " + MIN_WEIGHT, 1500);
+        } else if(weight > MAX_WEIGHT) {
+            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be higher than " + MAX_WEIGHT, 1500);
         }
-        this.weight = Math.min(Math.max(1, weight), 35);
+        this.weight = Math.min(Math.max(MIN_WEIGHT, weight), MAX_WEIGHT);
         slabDesign.refresh();
     }
 

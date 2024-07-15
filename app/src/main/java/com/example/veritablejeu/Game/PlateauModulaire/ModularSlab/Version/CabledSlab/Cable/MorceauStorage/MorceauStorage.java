@@ -3,7 +3,7 @@ package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.Cable
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.MorceauxGenerator;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau.Morceau;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart.CablePart;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +11,8 @@ import java.util.Set;
 public class MorceauStorage implements IMorceauStorage {
 
     private final Cable cable;
-    private final Set<Morceau> fillMorceauSet = new HashSet<>();
-    private final Set<Morceau> bordersMorceauSet = new HashSet<>();
+    private final Set<CablePart> fillCablePartSet = new HashSet<>();
+    private final Set<CablePart> bordersCablePartSet = new HashSet<>();
 
     public MorceauStorage(Cable cable) {
         this.cable = cable;
@@ -36,7 +36,7 @@ public class MorceauStorage implements IMorceauStorage {
     @Override
     public void removeBorders() {
         Board board = getBoard();
-        bordersMorceauSet.forEach(board::removeView);
+        bordersCablePartSet.forEach(board::removeView);
     }
 
     @Override
@@ -45,27 +45,27 @@ public class MorceauStorage implements IMorceauStorage {
     }
 
     private void printBorder() {
-        if(bordersMorceauSet.isEmpty()) {
+        if(bordersCablePartSet.isEmpty()) {
             generateBorder();
         }
-        bordersMorceauSet.forEach(getBoard()::addView);
+        bordersCablePartSet.forEach(getBoard()::addView);
     }
 
     private void printFill() {
-        if(fillMorceauSet.isEmpty()) {
+        if(fillCablePartSet.isEmpty()) {
             generateFill();
         }
-        fillMorceauSet.forEach(getBoard()::addView);
+        fillCablePartSet.forEach(getBoard()::addView);
     }
 
     private void generateFill() {
-        Set<Morceau> fillMorceaux = MorceauxGenerator.createAllMorceaux(cable, false);
-        fillMorceauSet.addAll(fillMorceaux);
+        Set<CablePart> fillCableParts = MorceauxGenerator.createAllMorceaux(cable, false);
+        fillCablePartSet.addAll(fillCableParts);
     }
 
     private void generateBorder() {
-        Set<Morceau> bordersMorceaux = MorceauxGenerator.createAllMorceaux(cable, true);
-        bordersMorceauSet.addAll(bordersMorceaux);
+        Set<CablePart> bordersCableParts = MorceauxGenerator.createAllMorceaux(cable, true);
+        bordersCablePartSet.addAll(bordersCableParts);
     }
 
     @Override
@@ -76,13 +76,13 @@ public class MorceauStorage implements IMorceauStorage {
     @Override
     public void deleteMorceaux() {
         remove();
-        fillMorceauSet.clear();
-        bordersMorceauSet.clear();
+        fillCablePartSet.clear();
+        bordersCablePartSet.clear();
     }
 
     private void remove() {
         Board board = getBoard();
-        fillMorceauSet.forEach(board::removeView);
-        bordersMorceauSet.forEach(board::removeView);
+        fillCablePartSet.forEach(board::removeView);
+        bordersCablePartSet.forEach(board::removeView);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau;
+package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
-public class Morceau extends ModularObject {
+public class CablePart extends ModularObject {
 
     private static final int TOTAL_HEIGHT = 100;
     private static final int CABLE_HEIGHT = 6;
@@ -30,6 +30,15 @@ public class Morceau extends ModularObject {
     }
 
     private final MorceauStorage morceauStorage;
+
+    public CablePart(@NonNull MorceauStorage morceauStorage, Point from, Point to, int color, boolean borders) {
+        super(morceauStorage.getBoard());
+        this.morceauStorage = morceauStorage;
+        setLayoutParams(from, to);
+        applyRotation(from, to);
+        applyElevation(borders);
+        addVisualCable(from, to, color, borders);
+    }
 
     private void setLayoutParams(Point from, Point to) {
         int distance = MathematicTools.getDistance(from, to);
@@ -50,35 +59,27 @@ public class Morceau extends ModularObject {
     }
 
     private void applyElevation(boolean borders) {
-        if(borders) {
-            setElevation(Elevation.BorderCable.getElevation());
-        } else {
-            setElevation(Elevation.FillCable.getElevation());
-        }
-    }
-
-    public Morceau(@NonNull MorceauStorage morceauStorage, Point from, Point to, int color, boolean borders) {
-        super(morceauStorage.getBoard());
-        this.morceauStorage = morceauStorage;
-        setLayoutParams(from, to);
-        applyRotation(from, to);
-        applyElevation(borders);
-        addVisualCable(from, to, color, borders);
+        Elevation elevation = borders ? Elevation.BorderCable : Elevation.FillCable;
+        setElevation(elevation.getElevation());
     }
 
     private void addVisualCable(Point from, Point to, int color, boolean borders) {
         View visualCable = new View(getContext());
+        FrameLayout.LayoutParams layoutParams = getVisualCableLayoutParams(from, to, borders);
+        visualCable.setLayoutParams(layoutParams);
+        visualCable.setBackgroundColor(color);
+        addView(visualCable);
+    }
+
+    @NonNull
+    private FrameLayout.LayoutParams getVisualCableLayoutParams(Point from, Point to, boolean borders) {
         int distance = MathematicTools.getDistance(from, to);
         int height = borders ? CABLE_HEIGHT + BORDER_HEIGHT * 2 : CABLE_HEIGHT;
         int width = (int) (distance + height);
         int margins = (TOTAL_HEIGHT - height) / 2;
-
-        FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
+        return new LayoutParamsDeBase_pourFrameLayout(
                 width, height, margins, margins
         );
-        visualCable.setLayoutParams(layoutParams);
-        visualCable.setBackgroundColor(color);
-        addView(visualCable);
     }
 
     @Override

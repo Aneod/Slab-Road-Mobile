@@ -2,10 +2,10 @@ package com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.Cable
 
 import com.example.veritablejeu.Game.PlateauModulaire.Board;
 import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.Morceau.Morceau;
+import com.example.veritablejeu.Game.PlateauModulaire.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart.CablePart;
 
 /**
- * This class works with two {@link Morceau} set : one for the fill, and another one for the borders.
+ * This class works with two {@link CablePart} set : one for the fill, and another one for the borders.
  */
 public interface IMorceauStorage {
 
@@ -35,7 +35,7 @@ public interface IMorceauStorage {
     void deleteCable();
 
     /**
-     * Delete and remove all {@link Morceau} of cable.
+     * Delete and remove all {@link CablePart} of cable.
      */
     void deleteMorceaux();
 }
