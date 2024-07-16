@@ -18,6 +18,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinatesManager;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 
@@ -94,21 +95,50 @@ public abstract class ModularSlab extends BoardElement {
     }
 
     public void setWeight(int weight) {
+        boolean notEnoughSpace = !enoughSpace(weight);
+        if(notEnoughSpace) {
+            game.getPopUp().showMessage("WARNING", "Not enough space. Slabs need a floor.", 1500);
+            return;
+        }
         if(weight < MIN_WEIGHT) {
-            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be lower than " + MIN_WEIGHT, 1500);
+            game.getPopUp().showMessage("WARNING", "A slab weight can't be lower than " + MIN_WEIGHT, 1500);
         } else if(weight > MAX_WEIGHT) {
-            board.getGame().getPopUp().showMessage("WARNING", "A slab weight can't be higher than " + MAX_WEIGHT, 1500);
+            game.getPopUp().showMessage("WARNING", "A slab weight can't be higher than " + MAX_WEIGHT, 1500);
         }
         this.weight = Math.min(Math.max(MIN_WEIGHT, weight), MAX_WEIGHT);
-        slabDesign.setWeight(weight);
+        slabDesign.refresh();
+    }
+
+    private boolean enoughSpace(int weight) {
+        boolean isYellow = this instanceof YellowSlab;
+        int nombreTotalDeCase = weight + (isYellow ? 1 : 0);
+        int casesEnLargeur = (int) Math.ceil(Math.sqrt(nombreTotalDeCase));
+
+        for(int x = 0; x < casesEnLargeur; x++) {
+            for(int y = 0; y < casesEnLargeur; y++) {
+                ZdecimalCoordinates cord = originSquare.getCord();
+                for(int xIndex = 0; xIndex < x; xIndex++) {
+                    cord = ZdecimalCoordinatesManager.getRightOf(cord);
+                }
+                for(int yIndex = 0; yIndex < y; yIndex++) {
+                    cord = ZdecimalCoordinatesManager.getBottomOf(cord);
+                }
+                ModularSquare square = originSquare.getBoard().getSquareAt(cord);
+                boolean noSquareHere = square == null;
+                if(noSquareHere) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void addWeight() {
-        setWeight(++weight);
+        setWeight(weight + 1);
     }
 
     public void removeWeight() {
-        setWeight(--weight);
+        setWeight(weight - 1);
     }
 
     public void addBlob(ModularBlob blob) {
@@ -205,6 +235,12 @@ public abstract class ModularSlab extends BoardElement {
         propositions.add(new LittleWindow.StringRunnablePair("Remove weight", this::removeWeight));
         propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        board.removeSlab(this);
     }
 
     public abstract void whenActivation();

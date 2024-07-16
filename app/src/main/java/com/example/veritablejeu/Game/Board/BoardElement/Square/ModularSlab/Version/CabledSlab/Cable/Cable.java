@@ -89,6 +89,7 @@ public class Cable implements ICable {
     @Override
     public void connectDoor(ModularDoor door) {
         componentsStorage.connectDoor(door);
+        setDoorIdentity(new DoorIdentity(door.getDirection(), door.getSquareCoordinates()));
         morceauStorage.print();
     }
 

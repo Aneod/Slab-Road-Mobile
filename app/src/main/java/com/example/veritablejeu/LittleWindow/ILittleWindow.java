@@ -42,6 +42,13 @@ public interface ILittleWindow {
     void set(Point position, List<LittleWindow.StringRunnablePair> liste);
 
     /**
+     * Réecrit la liste des propositions de la fenêtre pour la liste donnée.
+     * Les propositions étants des {@link LittleWindow.StringRunnablePair}.
+     * @param liste la liste triée des nouvelles propositions.
+     */
+    void set(List<LittleWindow.StringRunnablePair> liste);
+
+    /**
      * Return <i>ObjectInMemory</i>. This variable can memorize a View.
      * For example, this is useful to check if the class is opening for an same
      * object twice in a row.

@@ -10,6 +10,8 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Modul
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
+import com.example.veritablejeu.Game.Editeur.Editeur;
+import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.sequentialCode.Code;
@@ -38,12 +40,11 @@ public class CabledSlab extends ModularSlab {
         return connectedCable;
     }
 
-    private void addCable(String code) {
-        if(code == null || code.isEmpty()) {
-            return;
-        }
-        Cable modularCable2 = new Cable(this, code);
-        connectedCable.add(modularCable2);
+    @NonNull
+    private Cable addCable(String code) {
+        Cable cable = new Cable(this, code);
+        connectedCable.add(cable);
+        return cable;
     }
 
     public void removeCable(Cable cable) {
@@ -117,8 +118,7 @@ public class CabledSlab extends ModularSlab {
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add cable", () -> {}));
-
+        propositions.add(new LittleWindow.StringRunnablePair("Add cable", this::addAndEditCable, true));
         boolean isBlue = fillColor == CouleurDuJeu.BleuClair.Int() || fillColor == CouleurDuJeu.BleuFonce.Int();
         if(!isBlue) {
             propositions.add(new LittleWindow.StringRunnablePair("Add weight", this::addWeight));
@@ -126,6 +126,14 @@ public class CabledSlab extends ModularSlab {
         }
         propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    private void addAndEditCable() {
+        Cable cable = addCable(null);
+        Game game = board.getGame();
+        if(game instanceof Editeur) {
+            ((Editeur) game).enableCableEditing(cable);
+        }
     }
 
     @Override

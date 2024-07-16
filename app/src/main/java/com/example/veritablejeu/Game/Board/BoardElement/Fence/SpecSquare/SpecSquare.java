@@ -3,13 +3,16 @@ package com.example.veritablejeu.Game.Board.BoardElement.Fence.SpecSquare;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
+import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
@@ -70,17 +73,60 @@ public class SpecSquare extends BoardElement {
         setBackground(null);
     }
 
-    private void createSquareOn() {
-        board.createSquare("0" + coordinates.getX().getCharacter() + coordinates.getY().getCharacter());
-    }
-
     @Override
     public void enableInGameListeners() {
 
     }
 
     public void enableCableEditorListener(Cable cable) {
-        setOnClickListener(v -> swapIntersectionToCable(cable));
+
+        new OnTouchForElement(this) {
+
+            @Override
+            public Consumer<MotionEvent> clickEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> longPressWithoutMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> longPressAfterMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> moveAfterLongPressEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastStopTouchWithoutMoveEvent() {
+                return event -> swapIntersectionToCable(cable);
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastStopTouchWithMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> stopTouchWithoutMoveAfterLongPressEvent() {
+                return event -> swapIntersectionToCable(cable);
+            }
+
+            @Override
+            public Consumer<MotionEvent> stopTouchWithMoveAfterLongPressEvent() {
+                return event -> {};
+            }
+        };
     }
 
     private void swapIntersectionToCable(Cable cable) {
@@ -103,16 +149,26 @@ public class SpecSquare extends BoardElement {
         cable.removeIntersection(coordinates);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void disableCableEditorListener() {
-        setOnClickListener(null);
+        setOnTouchListener((v, event) -> false);
     }
 
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(new LittleWindow.StringRunnablePair("Add square", this::createSquareOn, true));
+        propositions.add(new LittleWindow.StringRunnablePair("Add ghost", this::createGhostOn, true));
         propositions.add(new LittleWindow.StringRunnablePair("Flash", () -> game.flashDeCouleur(Color.BLACK)));
         return propositions;
+    }
+
+    private void createSquareOn() {
+        board.createSquare("0" + coordinates.getX().getCharacter() + coordinates.getY().getCharacter());
+    }
+
+    private void createGhostOn() {
+        board.createSquare("1" + coordinates.getX().getCharacter() + coordinates.getY().getCharacter());
     }
 
 }

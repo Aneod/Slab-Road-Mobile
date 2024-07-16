@@ -126,12 +126,17 @@ public class LittleWindow extends FrameLayout implements ILittleWindow {
 
     @Override
     public void set(Point position, @Nullable List<StringRunnablePair> liste) {
+        setPosition(position);
+        set(liste);
+    }
+
+    @Override
+    public void set(List<StringRunnablePair> liste) {
         if(liste == null) {
             hide();
             return;
         }
         setContent(liste);
-        setPosition(position);
         show();
     }
 

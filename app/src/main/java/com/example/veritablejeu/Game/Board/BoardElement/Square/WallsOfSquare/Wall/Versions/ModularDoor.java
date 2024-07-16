@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -15,6 +16,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Versi
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
+import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
@@ -166,7 +168,54 @@ public class ModularDoor extends ModularWall {
     }
 
     public void enableCableEditorListener(Cable cable) {
-        setOnClickListener(v -> swapConnectionWithCable(cable));
+
+        new OnTouchForElement(this) {
+
+            @Override
+            public Consumer<MotionEvent> clickEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> longPressWithoutMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> longPressAfterMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> moveAfterLongPressEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastStopTouchWithoutMoveEvent() {
+                return event -> swapConnectionWithCable(cable);
+            }
+
+            @Override
+            public Consumer<MotionEvent> fastStopTouchWithMoveEvent() {
+                return event -> {};
+            }
+
+            @Override
+            public Consumer<MotionEvent> stopTouchWithoutMoveAfterLongPressEvent() {
+                return event -> swapConnectionWithCable(cable);
+            }
+
+            @Override
+            public Consumer<MotionEvent> stopTouchWithMoveAfterLongPressEvent() {
+                return event -> {};
+            }
+        };
     }
 
     private void swapConnectionWithCable(Cable cable) {
@@ -189,8 +238,9 @@ public class ModularDoor extends ModularWall {
         cable.disconnectDoor();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void disableCableEditorListener() {
-        setOnClickListener(null);
+        setOnTouchListener((v, event) -> false);
     }
 
     @Override

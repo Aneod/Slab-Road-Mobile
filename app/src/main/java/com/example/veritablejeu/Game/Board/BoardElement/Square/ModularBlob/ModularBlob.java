@@ -172,4 +172,9 @@ public class ModularBlob extends BoardElement {
         return propositions;
     }
 
+    @Override
+    public void remove() {
+        super.remove();
+        board.removeBlob(this);
+    }
 }

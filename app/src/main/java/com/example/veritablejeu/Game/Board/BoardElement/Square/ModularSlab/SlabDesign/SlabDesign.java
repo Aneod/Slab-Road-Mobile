@@ -30,7 +30,7 @@ public class SlabDesign {
         cercleDeCompte = new CercleDeCompte(dalle);
         originSquare = origin;
         display_onlyFirstTime();
-        display(dalle.getWeight());
+        display();
     }
 
     private void display_onlyFirstTime() {
@@ -41,7 +41,8 @@ public class SlabDesign {
         dalle.setBackground(background);
     }
 
-    public void display(int weight) {
+    public void display() {
+        int weight = dalle.getWeight();
         boolean isYellow = dalle instanceof YellowSlab;
         int nombreTotalDeCase = weight + (isYellow ? 1 : 0);
         int casesEnLargeur = (int) Math.ceil(Math.sqrt(nombreTotalDeCase));
@@ -73,8 +74,8 @@ public class SlabDesign {
         cercleDeCompte.set(weight);
     }
 
-    public void setWeight(int weight) {
-        display(weight);
+    public void refresh() {
+        display();
     }
 
     public void turnOff() {

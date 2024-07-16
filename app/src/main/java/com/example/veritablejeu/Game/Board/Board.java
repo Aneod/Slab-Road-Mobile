@@ -243,6 +243,10 @@ public class Board extends FrameLayout {
         groupOfBlobsOfBoard.add(blob);
     }
 
+    public void removeBlob(ModularBlob blob) {
+        groupOfBlobsOfBoard.remove(blob);
+    }
+
     public ZdecimalCharacter getTopLimit() {
         return topLimit;
     }
@@ -319,6 +323,9 @@ public class Board extends FrameLayout {
 
     public void addSlab(ModularSlab modularSlab) {
         groupOfSlabs.add(modularSlab);
+    }
+    public void removeSlab(ModularSlab modularSlab) {
+        groupOfSlabs.remove(modularSlab);
     }
 
     @Nullable

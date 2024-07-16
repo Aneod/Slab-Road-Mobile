@@ -16,6 +16,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.Ghost;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.NormalSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.sequentialCode.Code;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
@@ -152,6 +153,10 @@ public abstract class ModularSquare extends BoardElement {
         return board.getBlobAtSquare(this);
     }
 
+    /**
+     * Create a slab without check if it's possible.
+     * @param code the code of the slab.
+     */
     public void createSlab(String code) {
         ModularSlab modularSlab = ModularSlab.create(this, code);
         board.addSlab(modularSlab);
@@ -328,8 +333,85 @@ public abstract class ModularSquare extends BoardElement {
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add blob", () -> createBlob(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Add square", this::openSquarePropositions));
+        if(this instanceof NormalSquare) {
+            propositions.add(new LittleWindow.StringRunnablePair("Add blob", this::createSecureBlob, true));
+        }
         propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    private void openSquarePropositions() {
+        board.getGame().getPetiteFenetreFlottante().set(getSquarePropositions());
+    }
+
+    public List<LittleWindow.StringRunnablePair> getSquarePropositions() {
+        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
+        propositions.add(new LittleWindow.StringRunnablePair("Light blue", () -> createSecureSlab("01"), CouleurDuJeu.BleuClair.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Dark blue", () -> createSecureSlab("11"), CouleurDuJeu.BleuFonce.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Red", () -> createSecureSlab("21"), CouleurDuJeu.Rouge.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Green", () -> createSecureSlab("31"), CouleurDuJeu.Vert.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Yellow", () -> createSecureSlab("41"), CouleurDuJeu.Jaune.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Orange", () -> createSecureSlab("51"), CouleurDuJeu.Orange.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Purple", () -> createSecureSlab("61"), CouleurDuJeu.Violet.Int(), true));
+        return propositions;
+    }
+
+    /**
+     * Create a slab <u>only if</u> it's possible.
+     * @param code the code of the slab.
+     */
+    private void createSecureSlab(String code) {
+        if(thereIsAlreadyASlab()) {
+            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.", 1500);
+            return;
+        }
+        if(thereIsABlob()) {
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            return;
+        }
+        createSlab(code);
+    }
+
+    /**
+     * Create a blob <u>only if</u> it's possible.
+     */
+    private void createSecureBlob() {
+        if(thereIsABlob()) {
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            return;
+        }
+        createBlob();
+    }
+
+    private boolean thereIsAlreadyASlab() {
+        ModularSlab slab = board.getSlabAt(cord);
+        return slab != null;
+    }
+
+    private boolean thereIsABlob() {
+        ModularBlob blob = board.getBlobAtSquare(this);
+        return blob != null;
+    }
+
+    @Override
+    public void remove() {
+        super.remove();
+        removeSlabOn();
+        removeBlobOn();
+    }
+
+    private void removeSlabOn() {
+        ModularSlab slab = board.getSlabAt(cord);
+        if(slab != null) {
+            slab.remove();
+        }
+    }
+
+    private void removeBlobOn() {
+        ModularBlob blob = board.getBlobAtSquare(this);
+        if(blob != null) {
+            blob.remove();
+        }
     }
 }
