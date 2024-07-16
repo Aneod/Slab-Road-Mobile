@@ -6,7 +6,7 @@ import androidx.core.util.Consumer;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.sequentialCode.Code;
+import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 public class FirstCodeReader {
 

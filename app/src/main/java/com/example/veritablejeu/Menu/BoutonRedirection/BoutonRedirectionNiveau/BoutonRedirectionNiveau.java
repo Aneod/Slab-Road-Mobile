@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.DataBases.Local.PersonalBests.PersonalBests;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;

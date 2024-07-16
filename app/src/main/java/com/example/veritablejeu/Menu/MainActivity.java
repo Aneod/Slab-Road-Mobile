@@ -18,8 +18,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;

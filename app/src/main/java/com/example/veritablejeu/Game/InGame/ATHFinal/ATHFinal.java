@@ -2,7 +2,7 @@ package com.example.veritablejeu.Game.InGame.ATHFinal;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.ATHFinal.BoutonsFinaux.BoutonsFinaux;
 import com.example.veritablejeu.Game.InGame.ATHFinal.FeuxArtifice.FeuxArtifice;
 import com.example.veritablejeu.Game.InGame.ATHFinal.TextesFinaux.TextesFinaux;

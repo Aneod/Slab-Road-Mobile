@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreReader;
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreReader;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.IndicationPourPanneauDeNiveaux;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveaux;

@@ -15,8 +15,8 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.DataBases.FireStore.Pseudo.DatabaseFirestorePseudo;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.DataBases.FireStore.Pseudo.DatabaseFirestorePseudo;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.Tools.ScreenUtils;

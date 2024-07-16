@@ -7,8 +7,8 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.DataBases.Local.LevelFiles.PersonalFiles;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 
 @SuppressLint("ViewConstructor")
 public class TexteAccomplissement extends androidx.appcompat.widget.AppCompatTextView {

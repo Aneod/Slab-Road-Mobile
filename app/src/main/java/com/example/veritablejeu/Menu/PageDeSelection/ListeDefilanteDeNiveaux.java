@@ -7,9 +7,9 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.LevelFile.LevelCategory;
-import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauBloque;

@@ -3,7 +3,6 @@ package com.example.veritablejeu.Game.Board.BoardElement;
 import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -104,7 +103,9 @@ public abstract class BoardElement extends FrameLayout {
         if(event == null) return;
         Point point = new Point((int) event.getRawX(), (int) event.getRawY());
         List<LittleWindow.StringRunnablePair> propositions = getEditPropositions();
-        game.getPetiteFenetreFlottante().set(point, propositions);
+        LittleWindow littleWindow = game.getLittleWindow();
+        littleWindow.setPosition(point);
+        littleWindow.set(propositions);
     }
 
     @SuppressLint("ClickableViewAccessibility")

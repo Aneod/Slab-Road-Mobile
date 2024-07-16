@@ -14,7 +14,7 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
-import com.example.veritablejeu.sequentialCode.Code;
+import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 import java.util.ArrayList;
 import java.util.HashSet;

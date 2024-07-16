@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
@@ -22,9 +21,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Versi
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Tools.Elevation;
-import com.example.veritablejeu.sequentialCode.Code;
-
-import org.jetbrains.annotations.Contract;
+import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 import java.util.ArrayList;
 import java.util.HashSet;

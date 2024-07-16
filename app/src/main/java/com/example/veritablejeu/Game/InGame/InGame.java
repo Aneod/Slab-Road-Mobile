@@ -5,12 +5,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
+import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
 import com.example.veritablejeu.Game.Board.Board;
-import com.example.veritablejeu.LevelFile.LevelCategory;
-import com.example.veritablejeu.LevelFile.LevelFile;
-import com.example.veritablejeu.DataBases.Local.PersonalBests.PersonalBests;
-import com.example.veritablejeu.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.InGame.ATHFinal.ATHFinal;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;

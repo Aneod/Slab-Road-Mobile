@@ -50,7 +50,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         }
 
         PopUp popUp = editeur.getPopUp();
-        LittleWindow petiteFenetreFlottante2 = editeur.getPetiteFenetreFlottante();
+        LittleWindow petiteFenetreFlottante2 = editeur.getLittleWindow();
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(
                 new LittleWindow.StringRunnablePair("Couleurs de fond", popUp::afficherManuel));
@@ -58,8 +58,8 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
                 new LittleWindow.StringRunnablePair("Particules de fond", () -> {
                     //popUp.afficherParametres(editeur.getPlateauModifiable());
                 }));
-        petiteFenetreFlottante2.set(new Point(leftMargin, topMargin), propositions);
-        petiteFenetreFlottante2.setObjectInMemory(null);
+        petiteFenetreFlottante2.setPosition(new Point(leftMargin, topMargin));
+        petiteFenetreFlottante2.set(propositions);
     }
 
     private void activerDesactiverGrille(){

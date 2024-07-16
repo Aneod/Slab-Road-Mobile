@@ -2,7 +2,7 @@ package com.example.veritablejeu.Menu.PageDeSelection;
 
 import android.widget.FrameLayout;
 
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.DataBases.Local.LevelFiles.PersonalFiles;
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;

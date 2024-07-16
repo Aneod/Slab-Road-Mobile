@@ -3,7 +3,7 @@ package com.example.veritablejeu.Game;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 
 public interface IGame {
 

@@ -18,7 +18,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.NormalSq
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
-import com.example.veritablejeu.sequentialCode.Code;
+import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.Board;
@@ -345,7 +345,7 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     private void openSlabPropositions() {
-        board.getGame().getPetiteFenetreFlottante().set(getSlabPropositions());
+        board.getGame().getLittleWindow().set(getSlabPropositions());
     }
 
     @NonNull
@@ -362,22 +362,22 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     private void openWallPropositions() {
-        board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("0"));
+        board.getGame().getLittleWindow().set(getWallPropositions("0"));
     }
 
     private void openDoorPropositions() {
-        board.getGame().getPetiteFenetreFlottante().set(getDoorPropositions());
+        board.getGame().getLittleWindow().set(getDoorPropositions());
     }
 
     @NonNull
     private List<LittleWindow.StringRunnablePair> getDoorPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(new LittleWindow.StringRunnablePair(
-                "Light blue", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("a")), CouleurDuJeu.BleuClair.Int()));
+                "Light blue", () -> board.getGame().getLittleWindow().set(getWallPropositions("a")), CouleurDuJeu.BleuClair.Int()));
         propositions.add(new LittleWindow.StringRunnablePair(
-                "Dark blue", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("b")), CouleurDuJeu.BleuFonce.Int()));
+                "Dark blue", () -> board.getGame().getLittleWindow().set(getWallPropositions("b")), CouleurDuJeu.BleuFonce.Int()));
         propositions.add(new LittleWindow.StringRunnablePair(
-                "Red", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("c")), CouleurDuJeu.Rouge.Int()));
+                "Red", () -> board.getGame().getLittleWindow().set(getWallPropositions("c")), CouleurDuJeu.Rouge.Int()));
         return propositions;
     }
 

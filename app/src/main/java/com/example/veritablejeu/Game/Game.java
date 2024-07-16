@@ -19,9 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
-import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.MorceauStorage.Generator.CablePart.CablePart;
-import com.example.veritablejeu.LevelFile.LevelFile;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Game.Board.Board;
@@ -42,7 +40,7 @@ public class Game extends AppCompatActivity implements IGame {
     protected LevelFile levelFile;
 
     protected PopUp popUp;
-    protected LittleWindow petiteFenetreFlottante;
+    protected LittleWindow littleWindow;
     public final Chronometre chronometre = new Chronometre();
     public int nombreDeCoups = 0;
     protected BoardsMovements onToucheListenerPlateauModulaire;
@@ -61,8 +59,8 @@ public class Game extends AppCompatActivity implements IGame {
     }
 
     private void ajouterFenetre() {
-        petiteFenetreFlottante = new LittleWindow(this);
-        petiteFenetreFlottante.attachToActivity(this);
+        littleWindow = new LittleWindow(this);
+        littleWindow.attachToActivity(this);
     }
 
     @Override
@@ -112,8 +110,8 @@ public class Game extends AppCompatActivity implements IGame {
         return popUp;
     }
 
-    public LittleWindow getPetiteFenetreFlottante() {
-        return petiteFenetreFlottante;
+    public LittleWindow getLittleWindow() {
+        return littleWindow;
     }
 
     @NonNull
@@ -152,7 +150,7 @@ public class Game extends AppCompatActivity implements IGame {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        petiteFenetreFlottante.hide();
+        littleWindow.hide();
         popUp.cacher();
         onToucheListenerPlateauModulaire.onTouchEvent(event, plateauADeplacer);
         return true;

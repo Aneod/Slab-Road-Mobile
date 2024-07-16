@@ -25,7 +25,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wal
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.Board.BoardsMovements.BoardFraming;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterSequencer;
-import com.example.veritablejeu.sequentialCode.Code;
+import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacter;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;

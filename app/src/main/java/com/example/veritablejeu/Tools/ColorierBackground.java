@@ -34,16 +34,4 @@ public class ColorierBackground {
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, couleurs);
         container.setBackground(gradientDrawable);
     }
-
-    /**
-     * Change immédiatement la couleur du background du container.
-     * @param container la container dont on change la couleur.
-     * @param couleursEnList les couleurs (haute et basse) qu'on applique.
-     */
-    public static void colorierBackground(ConstraintLayout container, List<Integer> couleursEnList) {
-        if(couleursEnList.size() < 2) return;
-        int[] couleurs = new int[]{couleursEnList.get(0), couleursEnList.get(1)};
-        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, couleurs);
-        container.setBackground(gradientDrawable);
-    }
 }

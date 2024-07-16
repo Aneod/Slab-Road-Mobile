@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.AssociationsIdConsumer;
+
 public class AssociationsIdConsumerTest {
 
     private AssociationsIdConsumer associationsIdConsumer;
