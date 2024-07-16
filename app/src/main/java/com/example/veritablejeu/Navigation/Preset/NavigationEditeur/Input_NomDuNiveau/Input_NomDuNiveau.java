@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Navigation.Input_NomDuNiveau;
+package com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -61,10 +61,23 @@ public class Input_NomDuNiveau extends AppCompatEditText implements IInput_NomDu
         });
     }
 
+    @Override
+    public void show() {
+        if(getParent() == null) {
+            constraintLayout.addView(this);
+        }
+    }
+
+    @Override
+    public void hide() {
+        constraintLayout.removeView(this);
+    }
+
     /**
      * Construit un GradientDrawable blanc avec bordure noire et coins arrondis.
      * @return un GradientDrawable.
      */
+    @NonNull
     private GradientDrawable getDrawable() {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(Color.WHITE);

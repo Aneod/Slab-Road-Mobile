@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Editeur.SelectionElement.Association_Image_Modele.Association_Image_Modele;
@@ -13,13 +14,18 @@ import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SelectionElement implements ISelectionElement {
 
+    private final ConstraintLayout container;
+    private final Set<BoutonModele> boutonModeleSet = new HashSet<>();
     private BoutonModele boutonModeleSelectionne;
 
     public SelectionElement(@NonNull Editeur context) {
+        this.container = context.getContainer();
 
         int largeurEcran_max1000 = Math.min(ScreenUtils.getScreenWidth(), 1000);
 
@@ -68,7 +74,8 @@ public class SelectionElement implements ISelectionElement {
                     }
                 });
 
-                context.getContainer().addView(boutonNavigation);
+                boutonModeleSet.add(boutonNavigation);
+                container.addView(boutonNavigation);
                 indexAssociation++;
                 if(indexAssociation >= 15) return;
             }
@@ -87,6 +94,20 @@ public class SelectionElement implements ISelectionElement {
             boutonModeleSelectionne = null;
         }
         else boutonModeleSelectionne = boutonModele;
+    }
+
+    @Override
+    public void show() {
+        for(BoutonModele boutonModele : boutonModeleSet) {
+            if(boutonModele.getParent() == null) {
+                container.addView(boutonModele);
+            }
+        }
+    }
+
+    @Override
+    public void hide() {
+        boutonModeleSet.forEach(container::removeView);
     }
 
 

@@ -21,4 +21,14 @@ public interface ISelectionElement {
      */
     void setBoutonModeleSelectionne(BoutonModele boutonModele);
 
+    /**
+     * Show all buttons.
+     */
+    void show();
+
+    /**
+     * Hide all buttons.
+     */
+    void hide();
+
 }

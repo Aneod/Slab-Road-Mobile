@@ -6,33 +6,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
+import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonPrincipal.BoutonPrincipal;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonSecondaire.BoutonSecondaire;
 import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Navigation implements INavigation {
 
+    private static final int BOUTONS_SECONDAIRES_NOMBRE = 5;
+    private static final float PROPORTION_AUTORISE_DE_ECRAN = 0.9f;
+    private static final float COEF_LARGEUR_BOUTON_PRINCIPAL = 1.0f;
+    private static final float COEF_LARGEUR_BOUTONS_SECONDAIRES = 0.8f;
+
+
     private final AppCompatActivity context;
+    private final ConstraintLayout container;
     protected BoutonPrincipal boutonPrincipal;
+    private final Set<BoutonSecondaire> boutonSecondaireSet = new HashSet<>();
     private BoutonSecondaire boutonManuel;
     private int margesHGD = 0;
 
     private void creationDesBoutons(List<Association_Symbole_Fonction> associations) {
-        ConstraintLayout container;
-        container = context.findViewById(R.id.main);
         if(container == null) return;
-
         int largeurEcran_max1000 = Math.min(ScreenUtils.getScreenWidth(), 1000);
-
-        int BOUTONS_SECONDAIRES_NOMBRE = 5;
-        float PROPORTION_AUTORISE_DE_ECRAN = 0.9f;
         int largeurAutorisee = (int) (largeurEcran_max1000 * PROPORTION_AUTORISE_DE_ECRAN);
         this.margesHGD = (largeurEcran_max1000 - largeurAutorisee) / 2;
-        float COEF_LARGEUR_BOUTON_PRINCIPAL = 1.0f;
-        float COEF_LARGEUR_BOUTONS_SECONDAIRES = 0.8f;
         int largeurBoutons_enPixel = largeurAutorisee / 6;
         int largeurBoutonPrincipal_enPixel = (int) (largeurBoutons_enPixel * COEF_LARGEUR_BOUTON_PRINCIPAL);
         int largeurBoutonsSecondaire_enPixel = (int) (largeurBoutons_enPixel * COEF_LARGEUR_BOUTONS_SECONDAIRES);
@@ -55,6 +58,7 @@ public class Navigation implements INavigation {
                     context, largeurBoutonsSecondaire_enPixel, leftMarginBoutonSecondaire, topMarginBoutonsSecondaires
             );
             boutonPrincipal.boutonsSecondaire_ajouter(boutonNavigation);
+            boutonSecondaireSet.add(boutonNavigation);
             container.addView(boutonNavigation);
 
             if(index < associations.size()) {
@@ -63,7 +67,6 @@ public class Navigation implements INavigation {
                 Integer symbole = association.getSymbole();
                 if(symbole != null) {
                     boutonNavigation.setImage(symbole, .6f);
-
                     boolean boutonPourManuel = symbole.equals(R.drawable.point_interrogation);
                     if(boutonPourManuel) boutonManuel = boutonNavigation;
                 }
@@ -81,11 +84,7 @@ public class Navigation implements INavigation {
 
     public Navigation(@NonNull AppCompatActivity context) {
         this.context = context;
-    }
-
-    public Navigation(@NonNull AppCompatActivity context, List<Association_Symbole_Fonction> associations) {
-        this.context = context;
-        setContenu(associations);
+        container = context.findViewById(R.id.main);
     }
 
     @Override
@@ -115,5 +114,23 @@ public class Navigation implements INavigation {
         if(boutonManuel != null) {
             boutonManuel.activerFocus();
         }
+    }
+
+    @Override
+    public void show() {
+        if(boutonPrincipal.getParent() == null) {
+            container.addView(boutonPrincipal);
+        }
+        for(BoutonNavigation boutonNavigation : boutonSecondaireSet) {
+            if(boutonNavigation.getParent() == null) {
+                container.addView(boutonNavigation);
+            }
+        }
+    }
+
+    @Override
+    public void hide() {
+        container.removeView(boutonPrincipal);
+        boutonSecondaireSet.forEach(container::removeView);
     }
 }

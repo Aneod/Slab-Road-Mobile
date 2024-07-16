@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Navigation.Input_NomDuNiveau;
+package com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau;
 
 public interface IInput_NomDuNiveau {
 
@@ -14,4 +14,14 @@ public interface IInput_NomDuNiveau {
      * @param startOffSet la durée en ms avant le lancement de l'animation.
      */
     void disparition(long startOffSet);
+
+    /**
+     * Show immediately the input.
+     */
+    void show();
+
+    /**
+     * Hide immediately the input.
+     */
+    void hide();
 }

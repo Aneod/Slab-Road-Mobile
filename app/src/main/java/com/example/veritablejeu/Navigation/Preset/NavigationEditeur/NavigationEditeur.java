@@ -8,7 +8,7 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
-import com.example.veritablejeu.Navigation.Input_NomDuNiveau.Input_NomDuNiveau;
+import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
@@ -21,7 +21,6 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private final Editeur editeur;
     private final Input_NomDuNiveau inputNomDuNiveau;
-    public final LittleWindow petiteFenetreFlottante;
 
     private void propositionQuitter() {
         PopUp popUp = editeur.getPopUp();
@@ -87,6 +86,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         popUp.setContenu(contenuPopUp);
     }
 
+    @NonNull
     private List<Association_Symbole_Fonction> getAssociations() {
         List<Association_Symbole_Fonction> associations = new ArrayList<>();
 
@@ -115,11 +115,17 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         List<Association_Symbole_Fonction> associations = getAssociations();
         setContenu(associations);
         inputNomDuNiveau = new Input_NomDuNiveau(editeur, this);
-        this.petiteFenetreFlottante = new LittleWindow(editeur);
     }
 
     @Override
-    public Input_NomDuNiveau getInputNomDuNiveau() {
-        return inputNomDuNiveau;
+    public void show() {
+        super.show();
+        inputNomDuNiveau.show();
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        inputNomDuNiveau.hide();
     }
 }

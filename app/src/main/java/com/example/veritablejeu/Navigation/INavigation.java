@@ -47,4 +47,14 @@ public interface INavigation {
      * - Bouton principal si le menu est fermé.
      */
     void activerFocus();
+
+    /**
+     * Show all buttons.
+     */
+    void show();
+
+    /**
+     * Hide all buttons.
+     */
+    void hide();
 }

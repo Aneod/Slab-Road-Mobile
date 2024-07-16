@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
+import com.example.veritablejeu.Game.Board.BoardElement.Fence.SpecSquare.SpecSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Board.BoardElement.Fence.Fence;
@@ -42,6 +44,7 @@ public class Board extends FrameLayout {
 
     private final Game game;
     private ConstraintLayout.LayoutParams layoutParams;
+    private final Set<BoardElement> boardElementSet = new HashSet<>();
     public final float normalScale;
     private final int width;
     private final int height;
@@ -166,6 +169,32 @@ public class Board extends FrameLayout {
                 if (rightLimit == null || ZdecimalCharacterSequencer.isHigherTo(cordXSquare, rightLimit)) {
                     rightLimit = cordXSquare;
                 }
+            }
+        }
+    }
+
+    public Set<BoardElement> getBoardElementSet() {
+        return boardElementSet;
+    }
+
+    public void enableEditorListeners() {
+        for(BoardElement boardElement : boardElementSet) {
+            if(boardElement instanceof ModularDoor) {
+                ((ModularDoor) boardElement).disableCableEditorListener();
+            } else if(boardElement instanceof SpecSquare) {
+                ((SpecSquare) boardElement).disableCableEditorListener();
+            }
+            boardElement.enableEditorListeners();
+        }
+    }
+
+    public void enableCableEditorListeners(Cable cable) {
+        for(BoardElement boardElement : boardElementSet) {
+            boardElement.disableEditorListeners();
+            if(boardElement instanceof ModularDoor) {
+                ((ModularDoor) boardElement).enableCableEditorListener(cable);
+            } else if(boardElement instanceof SpecSquare) {
+                ((SpecSquare) boardElement).enableCableEditorListener(cable);
             }
         }
     }

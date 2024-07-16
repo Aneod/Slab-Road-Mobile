@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
+import com.example.veritablejeu.Game.Editeur.Editeur;
+import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
@@ -101,6 +103,9 @@ public class CablePart extends BoardElement {
     }
 
     private void enableCableEditing() {
-        cable.getBoard().getGame().enableCableEditing(cable);
+        Game game = cable.getBoard().getGame();
+        if(game instanceof Editeur) {
+            ((Editeur) game).enableCableEditing(cable);
+        }
     }
 }

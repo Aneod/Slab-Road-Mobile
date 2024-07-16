@@ -3,11 +3,13 @@ package com.example.veritablejeu.Game.Board.BoardElement.Fence.SpecSquare;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.Board;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
@@ -75,6 +77,34 @@ public class SpecSquare extends BoardElement {
     @Override
     public void enableInGameListeners() {
 
+    }
+
+    public void enableCableEditorListener(Cable cable) {
+        setOnClickListener(v -> swapIntersectionToCable(cable));
+    }
+
+    private void swapIntersectionToCable(Cable cable) {
+        if(cable == null) return;
+        boolean isIntersectionedCable = cable.getComponentsStorage().getIntersections().contains(coordinates);
+        if(isIntersectionedCable) {
+            removeFromCableIntersection(cable);
+        } else {
+            addAsCableIntersection(cable);
+        }
+    }
+
+    private void addAsCableIntersection(Cable cable) {
+        if(cable == null) return;
+        cable.addIntersection(coordinates);
+    }
+
+    private void removeFromCableIntersection(Cable cable) {
+        if(cable == null) return;
+        cable.removeIntersection(coordinates);
+    }
+
+    public void disableCableEditorListener() {
+        setOnClickListener(null);
     }
 
     @Override

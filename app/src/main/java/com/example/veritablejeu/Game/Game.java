@@ -225,31 +225,4 @@ public class Game extends AppCompatActivity implements IGame {
         return cableOutline;
     }
 
-    /**
-     * Activate the cable editor.
-     * <p>
-     *     When a cable is editing, others board elements can't be edited.
-     *     <br>
-     *     The ATH disappear. And a cross appear for close the cable editing.
-     * </p>
-     * <p>
-     *     How cables are modify ?
-     *     <br>
-     *     There are only <u>four actions</u> :
-     *     <br>
-     *     Click on a <b>square with intersection</b> : Remove the intersection.
-     *     <br>
-     *     Click on a <b>square without intersection</b> : Create an intersection on this square.
-     *     <br>
-     *     Click on a <b>none connected door</b> : Connect the cable to the clicked door.
-     *     <br>
-     *     Click on the <b>connected door</b> : Disconnect the door to the cable.
-     *     <br>
-     *     For each actions the graphic cable will be refreshed.
-     * </p>
-     * @param cable the cable to modify.
-     */
-    public void enableCableEditing(Cable cable) {
-        // TODO
-    }
 }

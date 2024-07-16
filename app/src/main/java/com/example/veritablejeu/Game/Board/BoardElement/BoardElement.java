@@ -1,7 +1,9 @@
 package com.example.veritablejeu.Game.Board.BoardElement;
 
+import android.annotation.SuppressLint;
 import android.graphics.Point;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -24,9 +26,13 @@ public abstract class BoardElement extends FrameLayout {
         super(board.getContext());
         this.game = board.getGame();
         this.board = board;
+        board.getBoardElementSet().add(this);
 
         if(game instanceof Editeur) {
-            enableEditorListeners();
+            boolean isCableEditing = ((Editeur) game).isCableEditing();
+            if(!isCableEditing) {
+                enableEditorListeners();
+            }
         } else {
             enableInGameListeners();
         }
@@ -99,6 +105,11 @@ public abstract class BoardElement extends FrameLayout {
         Point point = new Point((int) event.getRawX(), (int) event.getRawY());
         List<LittleWindow.StringRunnablePair> propositions = getEditPropositions();
         game.getPetiteFenetreFlottante().set(point, propositions);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void disableEditorListeners() {
+        setOnTouchListener((v, event) -> false);
     }
 
 }

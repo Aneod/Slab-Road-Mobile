@@ -4,12 +4,14 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
@@ -161,6 +163,34 @@ public class ModularDoor extends ModularWall {
     @Override
     public void enableInGameListeners() {
 
+    }
+
+    public void enableCableEditorListener(Cable cable) {
+        setOnClickListener(v -> swapConnectionWithCable(cable));
+    }
+
+    private void swapConnectionWithCable(Cable cable) {
+        if(cable == null) return;
+        boolean isConnectedCable = connectedCables.contains(cable.getComponentsStorage());
+        if(isConnectedCable) {
+            disconnectToCable(cable);
+        } else {
+            connectToCable(cable);
+        }
+    }
+
+    private void connectToCable(Cable cable) {
+        if(cable == null) return;
+        cable.connectDoor(this);
+    }
+
+    private void disconnectToCable(Cable cable) {
+        if(cable == null) return;
+        cable.disconnectDoor();
+    }
+
+    public void disableCableEditorListener() {
+        setOnClickListener(null);
     }
 
     @Override
