@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Game.Board;
+package com.example.veritablejeu.Tools;
 
 import static org.junit.Assert.*;
 

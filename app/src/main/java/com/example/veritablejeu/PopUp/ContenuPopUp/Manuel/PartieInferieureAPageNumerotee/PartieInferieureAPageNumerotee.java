@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PartieInferieureAPageNumerotee;
+package com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageNumerotee;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -6,6 +6,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
@@ -46,7 +48,7 @@ public class PartieInferieureAPageNumerotee extends FrameLayout {
         return affichageNumeroPage;
     }
 
-    public PartieInferieureAPageNumerotee(FrameLayout parent, int width, int height, int topMargin, int largeurBordure, Runnable previousEffect, Runnable nextEffect) {
+    public PartieInferieureAPageNumerotee(@NonNull FrameLayout parent, int width, int height, int topMargin, int largeurBordure, Runnable previousEffect, Runnable nextEffect) {
         super(parent.getContext());
         this.hauteur = height;
 

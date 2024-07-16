@@ -13,6 +13,7 @@ public class UserData {
     private static final String KEY_USER_SCORE = "user_score";
 
     public static void saveUsername(Context context, String username) {
+        if(context == null) return;
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USERNAME, username);
@@ -25,6 +26,7 @@ public class UserData {
     }
 
     public static void saveUserScore(Context context, int score) {
+        if(context == null) return;
         SharedPreferences sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_SCORE, score);
@@ -37,6 +39,7 @@ public class UserData {
     }
 
     public static void progressionDansLeScore(Context context, LevelFile levelFile) {
+        if(context == null || levelFile == null) return;
         LevelCategory levelCategory = levelFile.levelCategory;
         boolean estUnNiveauDeLaCampagne = levelCategory == LevelCategory.Normaux;
         if(estUnNiveauDeLaCampagne) {

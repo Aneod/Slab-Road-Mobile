@@ -1,8 +1,10 @@
-package com.example.veritablejeu.PartieInferieureAPageNumerotee;
+package com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageNumerotee;
 
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -22,6 +24,7 @@ public class ContainerDeFleche extends FrameLayout {
      * @param image l'image à l'intérieur de l'imageView.
      * @return un imageView.
      */
+    @NonNull
     private ImageView getImageView(int longueurCote, int leftTopMargin, int image) {
         ImageView fleche = new ImageView(this.getContext());
         fleche.setImageResource(image);
@@ -38,7 +41,7 @@ public class ContainerDeFleche extends FrameLayout {
      * @param topMargin la marge supérieure de la classe.
      * @param image l'image mise dans le container.
      */
-    public ContainerDeFleche(PartieInferieureAPageNumerotee parent, int leftMargin, int topMargin, int image) {
+    public ContainerDeFleche(@NonNull PartieInferieureAPageNumerotee parent, int leftMargin, int topMargin, int image) {
         super(parent.getContext());
 
         int hauteur = parent.getHauteur();

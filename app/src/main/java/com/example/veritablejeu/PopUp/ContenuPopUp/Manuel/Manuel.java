@@ -10,8 +10,8 @@ import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
-import com.example.veritablejeu.PartieInferieureAPageNumerotee.ContainerDeFleche;
-import com.example.veritablejeu.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
+import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageNumerotee.ContainerDeFleche;
+import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.R;
 
 @SuppressLint("ViewConstructor")
