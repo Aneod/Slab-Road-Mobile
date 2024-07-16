@@ -3,7 +3,6 @@ package com.example.veritablejeu.Game.Editeur;
 import android.os.Bundle;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
-import com.example.veritablejeu.Game.Editeur.SelectionElement.SelectionElement;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.NavigationEditeur;
@@ -11,7 +10,6 @@ import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.NavigationEd
 public class Editeur extends Game {
 
     private NavigationEditeur navigationEditeur;
-    private SelectionElement selectionElement;
     private BoutonNavigationRetour boutonNavigationRetour;
     private boolean fencesShown = false;
     private boolean isCableEditing = false;
@@ -20,7 +18,6 @@ public class Editeur extends Game {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navigationEditeur = new NavigationEditeur(this);
-        selectionElement = new SelectionElement(this);
         boutonNavigationRetour = new BoutonNavigationRetour(this);
         showHideFences();
     }
@@ -90,12 +87,10 @@ public class Editeur extends Game {
 
     private void showATH() {
         navigationEditeur.show();
-        selectionElement.show();
     }
 
     private void hideATH() {
         navigationEditeur.hide();
-        selectionElement.hide();
     }
 
     public boolean isCableEditing() {

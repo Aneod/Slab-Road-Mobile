@@ -42,6 +42,7 @@ public class ModularDoor extends ModularWall {
     private final int necessarySlabNumber;
     private final Set<ComponentsStorage> connectedCables = new HashSet<>();
     protected WallAspect wallAspect;
+    private final int fillColor;
     protected boolean subjectToSealing = false;
     protected boolean sealed = false;
 
@@ -49,8 +50,8 @@ public class ModularDoor extends ModularWall {
         super(modularSquare, direction);
 
         necessarySlabNumber = necessarySlab;
-        int color = fillColor == null ? DEFAULT_FILL_COLOR : fillColor.Int();
-        GradientDrawable background = CreateSimpleBackground.create(color, Color.BLACK, 2);
+        this.fillColor = fillColor == null ? DEFAULT_FILL_COLOR : fillColor.Int();
+        GradientDrawable background = CreateSimpleBackground.create(this.fillColor, Color.BLACK, 2);
         wallAspect = new WallAspect(background, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
 
@@ -229,8 +230,17 @@ public class ModularDoor extends ModularWall {
     }
 
     private void connectToCable(Cable cable) {
-        if(cable == null) return;
-        cable.connectDoor(this);
+        if(cableColorMatch(cable)) {
+            cable.connectDoor(this);
+        } else {
+            game.getPopUp().showMessage("WARNING", "Doors and cables must have the same color.", 1500);
+        }
+    }
+
+    private boolean cableColorMatch(Cable cable) {
+        if(cable == null) return false;
+        int cableColor = cable.getComponentsStorage().getSlab().getFillColor();
+        return cableColor == fillColor;
     }
 
     private void disconnectToCable(Cable cable) {

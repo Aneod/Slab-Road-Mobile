@@ -120,10 +120,12 @@ public class Navigation implements INavigation {
     public void show() {
         if(boutonPrincipal.getParent() == null) {
             container.addView(boutonPrincipal);
+            boutonPrincipal.reduire(0);
         }
-        for(BoutonNavigation boutonNavigation : boutonSecondaireSet) {
-            if(boutonNavigation.getParent() == null) {
-                container.addView(boutonNavigation);
+        for(BoutonSecondaire boutonSecondaire : boutonSecondaireSet) {
+            if(boutonSecondaire.getParent() == null) {
+                container.addView(boutonSecondaire);
+                boutonSecondaire.cacher(0, 0);
             }
         }
     }

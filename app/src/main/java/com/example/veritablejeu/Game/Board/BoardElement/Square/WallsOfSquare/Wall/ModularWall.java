@@ -146,4 +146,9 @@ public abstract class ModularWall extends BoardElement {
         }
     }
 
+    @Override
+    public void remove() {
+        super.remove();
+        modularSquare.getWalls().remove(direction);
+    }
 }

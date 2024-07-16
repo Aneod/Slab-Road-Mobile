@@ -62,7 +62,7 @@ public class BoutonPrincipal extends BoutonNavigation implements IBoutonPrincipa
         scaleAnimation(SCALE_QUAND_REDUIT, 1.0f, 0, DUREE_ANIMATIONS);
     }
 
-    private void reduire(long dureeAnimation) {
+    public void reduire(long dureeAnimation) {
         scaleAnimation(1.0f, SCALE_QUAND_REDUIT, 0, dureeAnimation);
     }
 

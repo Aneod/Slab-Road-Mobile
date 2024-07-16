@@ -94,6 +94,18 @@ public class WallsOfSquare {
         set(direction, modularWall);
     }
 
+    public void remove(Direction direction) {
+        if(get(direction) == null) {
+            return;
+        }
+        wallMap.remove(direction);
+        ModularSquare neighbor = direction.getNeighbor(modularSquare);
+        Direction opposite = direction.getOpposite();
+        if(neighbor != null) {
+            neighbor.getWalls().remove(opposite);
+        }
+    }
+
     /**
      * <u>Don't verify if the neighbor have a wall</u>. Just returns the wall of the given {@link Direction}.
      * @param direction the {@link Direction} of the desired wall.

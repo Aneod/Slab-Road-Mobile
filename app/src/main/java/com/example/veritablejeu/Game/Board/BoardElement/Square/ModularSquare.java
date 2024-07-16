@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.Ghost;
@@ -333,7 +334,9 @@ public abstract class ModularSquare extends BoardElement {
     @Override
     public List<LittleWindow.StringRunnablePair> getEditPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add square", this::openSquarePropositions));
+        propositions.add(new LittleWindow.StringRunnablePair("Add Door", this::openDoorPropositions));
+        propositions.add(new LittleWindow.StringRunnablePair("Add Wall", this::openWallPropositions));
+        propositions.add(new LittleWindow.StringRunnablePair("Add slab", this::openSlabPropositions));
         if(this instanceof NormalSquare) {
             propositions.add(new LittleWindow.StringRunnablePair("Add blob", this::createSecureBlob, true));
         }
@@ -341,20 +344,67 @@ public abstract class ModularSquare extends BoardElement {
         return propositions;
     }
 
-    private void openSquarePropositions() {
-        board.getGame().getPetiteFenetreFlottante().set(getSquarePropositions());
+    private void openSlabPropositions() {
+        board.getGame().getPetiteFenetreFlottante().set(getSlabPropositions());
     }
 
-    public List<LittleWindow.StringRunnablePair> getSquarePropositions() {
+    @NonNull
+    private List<LittleWindow.StringRunnablePair> getSlabPropositions() {
         List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
         propositions.add(new LittleWindow.StringRunnablePair("Light blue", () -> createSecureSlab("01"), CouleurDuJeu.BleuClair.Int(), true));
         propositions.add(new LittleWindow.StringRunnablePair("Dark blue", () -> createSecureSlab("11"), CouleurDuJeu.BleuFonce.Int(), true));
         propositions.add(new LittleWindow.StringRunnablePair("Red", () -> createSecureSlab("21"), CouleurDuJeu.Rouge.Int(), true));
         propositions.add(new LittleWindow.StringRunnablePair("Green", () -> createSecureSlab("31"), CouleurDuJeu.Vert.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Yellow", () -> createSecureSlab("41"), CouleurDuJeu.Jaune.Int(), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Yellow", this::createSecureYellowSlab, CouleurDuJeu.Jaune.Int(), true));
         propositions.add(new LittleWindow.StringRunnablePair("Orange", () -> createSecureSlab("51"), CouleurDuJeu.Orange.Int(), true));
         propositions.add(new LittleWindow.StringRunnablePair("Purple", () -> createSecureSlab("61"), CouleurDuJeu.Violet.Int(), true));
         return propositions;
+    }
+
+    private void openWallPropositions() {
+        board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("0"));
+    }
+
+    private void openDoorPropositions() {
+        board.getGame().getPetiteFenetreFlottante().set(getDoorPropositions());
+    }
+
+    @NonNull
+    private List<LittleWindow.StringRunnablePair> getDoorPropositions() {
+        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
+        propositions.add(new LittleWindow.StringRunnablePair(
+                "Light blue", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("a")), CouleurDuJeu.BleuClair.Int()));
+        propositions.add(new LittleWindow.StringRunnablePair(
+                "Dark blue", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("b")), CouleurDuJeu.BleuFonce.Int()));
+        propositions.add(new LittleWindow.StringRunnablePair(
+                "Red", () -> board.getGame().getPetiteFenetreFlottante().set(getWallPropositions("c")), CouleurDuJeu.Rouge.Int()));
+        return propositions;
+    }
+
+    @NonNull
+    private List<LittleWindow.StringRunnablePair> getWallPropositions(String code) {
+        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
+        propositions.add(new LittleWindow.StringRunnablePair("Top", () -> createSecureWall(WallsOfSquare.Direction.Top, code), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Left", () -> createSecureWall(WallsOfSquare.Direction.Left, code), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Bottom", () -> createSecureWall(WallsOfSquare.Direction.Bottom, code), true));
+        propositions.add(new LittleWindow.StringRunnablePair("Right", () -> createSecureWall(WallsOfSquare.Direction.Right, code), true));
+        return propositions;
+    }
+
+    /**
+     * Create a wall <u>only if</u> it's possible.
+     */
+    private void createSecureWall(WallsOfSquare.Direction direction, String code) {
+        if(thereIsAlreadyAWallAt(direction)) {
+            game.getPopUp().showMessage("WARNING", "There is already a wall on this place.", 1500);
+            return;
+        }
+        walls.setByCode(direction, code);
+    }
+
+    private boolean thereIsAlreadyAWallAt(WallsOfSquare.Direction direction) {
+        ModularWall wall = walls.get(direction);
+        return wall != null;
     }
 
     /**
@@ -374,6 +424,46 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     /**
+     * Create a yellow slab <u>only if</u> it's possible.
+     */
+    private void createSecureYellowSlab() {
+        int casesEnLargeur = 2;
+        for(int x = 0; x < casesEnLargeur; x++) {
+            for(int y = 0; y < casesEnLargeur; y++) {
+                ZdecimalCoordinates cord = this.cord;
+                for(int xIndex = 0; xIndex < x; xIndex++) {
+                    cord = ZdecimalCoordinatesManager.getRightOf(cord);
+                }
+                for(int yIndex = 0; yIndex < y; yIndex++) {
+                    cord = ZdecimalCoordinatesManager.getBottomOf(cord);
+                }
+                ModularSquare square = board.getSquareAt(cord);
+                boolean freeSquare = checkIfFreePlace(square);
+                if(!freeSquare) {
+                    return;
+                }
+            }
+        }
+        createSlab("41");
+    }
+
+    private boolean checkIfFreePlace(ModularSquare square) {
+        if(square == null) {
+            game.getPopUp().showMessage("WARNING", "There isn't enough space.", 1500);
+            return false;
+        }
+        if(square.thereIsAlreadyASlab()) {
+            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.", 1500);
+            return false;
+        }
+        if(square.thereIsABlob()) {
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Create a blob <u>only if</u> it's possible.
      */
     private void createSecureBlob() {
@@ -384,12 +474,12 @@ public abstract class ModularSquare extends BoardElement {
         createBlob();
     }
 
-    private boolean thereIsAlreadyASlab() {
+    public boolean thereIsAlreadyASlab() {
         ModularSlab slab = board.getSlabAt(cord);
         return slab != null;
     }
 
-    private boolean thereIsABlob() {
+    public boolean thereIsABlob() {
         ModularBlob blob = board.getBlobAtSquare(this);
         return blob != null;
     }
