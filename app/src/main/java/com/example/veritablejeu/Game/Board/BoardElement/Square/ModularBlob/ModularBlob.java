@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.BlobDesign.ModularBlobDesign;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.BlobDesign.Settings.BlobColorSettings;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.CadrageMaster.CadrageMaster;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
@@ -187,9 +188,13 @@ public class ModularBlob extends BoardElement {
     @Override
     public List<WindowProposal> getEditPropositions() {
         List<WindowProposal> propositions = new ArrayList<>();
-        propositions.add(new WindowProposal("Change color", () -> {}));
+        propositions.add(new WindowProposal("Change color", this::openBlobColorSettings, true));
         propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    private void openBlobColorSettings() {
+        BlobColorSettings.showGameSettingsPopUp(board);
     }
 
     @Override

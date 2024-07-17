@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.SlabDesign.SlabDesign;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
 
@@ -20,6 +21,36 @@ import java.util.Random;
 
 @SuppressLint("ViewConstructor")
 public class ModularBlobDesign extends FrameLayout {
+
+    private static int RED = 255;
+    private static int GREEN = 255;
+    private static int BLUE = 255;
+
+    public static int getRED() {
+        return RED;
+    }
+
+    public static void setRED(int RED) {
+        ModularBlobDesign.RED = RED;
+    }
+
+    public static int getGREEN() {
+        return GREEN;
+    }
+
+    public static void setGREEN(int GREEN) {
+        ModularBlobDesign.GREEN = GREEN;
+    }
+
+    public static int getBLUE() {
+        return BLUE;
+    }
+
+    public static void setBLUE(int BLUE) {
+        ModularBlobDesign.BLUE = BLUE;
+    }
+
+
     private final ImageView contour;
     private final ImageView coeur;
     private final ImageView blobShape;
