@@ -12,6 +12,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Game;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
@@ -90,11 +91,11 @@ public class CablePart extends BoardElement {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Modify", this::enableCableEditing, true));
-        propositions.add(new LittleWindow.StringRunnablePair("Outline", this::swapCableOutline));
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", cable::delete, Color.RED, true));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Modify", this::enableCableEditing, true));
+        propositions.add(new WindowProposal("Outline", this::swapCableOutline));
+        propositions.add(new WindowProposal("Delete", cable::delete, Color.RED, true));
         return propositions;
     }
 

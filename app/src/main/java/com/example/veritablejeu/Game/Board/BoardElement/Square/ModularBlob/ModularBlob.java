@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.Board;
@@ -15,15 +14,23 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.Cadra
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
 public class ModularBlob extends BoardElement {
+
+    private static int MOVES_DURATION = 500;
+    public static int getMovesDuration() {
+        return MOVES_DURATION;
+    }
+    public static void setMovesDuration(int movesDuration) {
+        MOVES_DURATION = movesDuration;
+    }
 
     private final FrameLayout.LayoutParams layoutParams;
     private ModularSquare currentLocation;
@@ -128,7 +135,7 @@ public class ModularBlob extends BoardElement {
         int topMarginToBrowse = topMarginDestination - currentTopMargin;
 
         ValueAnimator marginsAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
-        marginsAnimator.setDuration(500);
+        marginsAnimator.setDuration(MOVES_DURATION);
         marginsAnimator.addUpdateListener(animation -> {
             float current = (float) marginsAnimator.getAnimatedValue();
             layoutParams.leftMargin = (int) (currentLeftMargin + leftMarginToBrowse * current);
@@ -165,10 +172,10 @@ public class ModularBlob extends BoardElement {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Change color", () -> {}));
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Change color", () -> {}));
+        propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }
 

@@ -28,7 +28,7 @@ import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux.PanneauDeNiveauxNormaux;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.PanneauDeNiveauxPersonel;
 import com.example.veritablejeu.Menu.PagePrincipale.PanneauDeBoutonsRedirection;
-import com.example.veritablejeu.Tools.ColorierBackground;
+import com.example.veritablejeu.Tools.BackgroundColoration;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.R;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         mediaPlayerInstance.activerLaMusiqueDuMenu(this.getApplicationContext());
 
         container = this.findViewById(R.id.main);
-        ColorierBackground.colorierBackground(container, new int[]{Color.WHITE, Color.BLACK});
+        BackgroundColoration.colorierBackground(container, Color.WHITE, Color.BLACK);
         BainDeSavon bainDeSavon = BainDeSavon.getInstance(this);
         bainDeSavon.setContainerDeToutesLesBulles(this);
         bainDeSavon.setDesignDeBase();
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
      * @param couleurDuHaut la couleur du haut de la page.
      */
     private void colorierBackground(int couleurDuHaut) {
-        ColorierBackground.colorierBackground(container, new int[]{couleurDuHaut, Color.BLACK});
+        BackgroundColoration.colorierBackground(container, couleurDuHaut, Color.BLACK);
     }
 
     private void goMenu() {
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(imageTitre);
         container.removeView(panneau);
         int couleurBouton = panneau.getBoutonAPropos().getColor();
-        ColorierBackground.colorierBackground(container, new int[]{couleurBouton, couleurBouton});
+        BackgroundColoration.colorierBackground(container, couleurBouton, couleurBouton);
         boutonExit.setOnClickListener(view -> goMenu());
 
         if(contenuAPropos == null) {
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goEditeur(@Nullable LevelFile levelFile) {
         Bus.getInstance().setLevelFile(levelFile);
-        Intent activity = new Intent(getApplicationContext(), Editeur.class);
+        Intent activity = new Intent(getApplicationContext(), InGame.class);
         startActivity(activity);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

@@ -12,6 +12,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Game;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.BackEnd.sequentialCode.Code;
@@ -116,15 +117,15 @@ public class CabledSlab extends ModularSlab {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add cable", this::addAndEditCable, true));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Add cable", this::addAndEditCable, true));
         boolean isBlue = fillColor == CouleurDuJeu.BleuClair.Int() || fillColor == CouleurDuJeu.BleuFonce.Int();
         if(!isBlue) {
-            propositions.add(new LittleWindow.StringRunnablePair("Add weight", this::addWeight));
-            propositions.add(new LittleWindow.StringRunnablePair("Remove weight", this::removeWeight));
+            propositions.add(new WindowProposal("Add weight", this::addWeight));
+            propositions.add(new WindowProposal("Remove weight", this::removeWeight));
         }
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
+        propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }
 

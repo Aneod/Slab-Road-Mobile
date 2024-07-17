@@ -17,6 +17,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.Ghost;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.NormalSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
@@ -273,7 +274,7 @@ public abstract class ModularSquare extends BoardElement {
 
     private void showImpossibleTravelMessage() {
         PopUp popUp = PopUp.getInstance(getContext());
-        Message message = new Message(popUp, "SYSTEME", "Impossible d'aller ici.", 1000);
+        Message message = new Message(popUp, "WARNING", "Can't go here.", 1000);
         popUp.setContenu(message);
     }
 
@@ -332,15 +333,15 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add Door", this::openDoorPropositions));
-        propositions.add(new LittleWindow.StringRunnablePair("Add Wall", this::openWallPropositions));
-        propositions.add(new LittleWindow.StringRunnablePair("Add slab", this::openSlabPropositions));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Add Door", this::openDoorPropositions));
+        propositions.add(new WindowProposal("Add Wall", this::openWallPropositions));
+        propositions.add(new WindowProposal("Add slab", this::openSlabPropositions));
         if(this instanceof NormalSquare) {
-            propositions.add(new LittleWindow.StringRunnablePair("Add blob", this::createSecureBlob, true));
+            propositions.add(new WindowProposal("Add blob", this::createSecureBlob, true));
         }
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
+        propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }
 
@@ -349,15 +350,15 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     @NonNull
-    private List<LittleWindow.StringRunnablePair> getSlabPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Light blue", () -> createSecureSlab("01"), CouleurDuJeu.BleuClair.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Dark blue", () -> createSecureSlab("11"), CouleurDuJeu.BleuFonce.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Red", () -> createSecureSlab("21"), CouleurDuJeu.Rouge.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Green", () -> createSecureSlab("31"), CouleurDuJeu.Vert.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Yellow", this::createSecureYellowSlab, CouleurDuJeu.Jaune.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Orange", () -> createSecureSlab("51"), CouleurDuJeu.Orange.Int(), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Purple", () -> createSecureSlab("61"), CouleurDuJeu.Violet.Int(), true));
+    private List<WindowProposal> getSlabPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Light blue", () -> createSecureSlab("01"), CouleurDuJeu.BleuClair.Int(), true));
+        propositions.add(new WindowProposal("Dark blue", () -> createSecureSlab("11"), CouleurDuJeu.BleuFonce.Int(), true));
+        propositions.add(new WindowProposal("Red", () -> createSecureSlab("21"), CouleurDuJeu.Rouge.Int(), true));
+        propositions.add(new WindowProposal("Green", () -> createSecureSlab("31"), CouleurDuJeu.Vert.Int(), true));
+        propositions.add(new WindowProposal("Yellow", this::createSecureYellowSlab, CouleurDuJeu.Jaune.Int(), true));
+        propositions.add(new WindowProposal("Orange", () -> createSecureSlab("51"), CouleurDuJeu.Orange.Int(), true));
+        propositions.add(new WindowProposal("Purple", () -> createSecureSlab("61"), CouleurDuJeu.Violet.Int(), true));
         return propositions;
     }
 
@@ -370,24 +371,24 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     @NonNull
-    private List<LittleWindow.StringRunnablePair> getDoorPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair(
+    private List<WindowProposal> getDoorPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal(
                 "Light blue", () -> board.getGame().getLittleWindow().set(getWallPropositions("a")), CouleurDuJeu.BleuClair.Int()));
-        propositions.add(new LittleWindow.StringRunnablePair(
+        propositions.add(new WindowProposal(
                 "Dark blue", () -> board.getGame().getLittleWindow().set(getWallPropositions("b")), CouleurDuJeu.BleuFonce.Int()));
-        propositions.add(new LittleWindow.StringRunnablePair(
+        propositions.add(new WindowProposal(
                 "Red", () -> board.getGame().getLittleWindow().set(getWallPropositions("c")), CouleurDuJeu.Rouge.Int()));
         return propositions;
     }
 
     @NonNull
-    private List<LittleWindow.StringRunnablePair> getWallPropositions(String code) {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Top", () -> createSecureWall(WallsOfSquare.Direction.Top, code), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Left", () -> createSecureWall(WallsOfSquare.Direction.Left, code), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Bottom", () -> createSecureWall(WallsOfSquare.Direction.Bottom, code), true));
-        propositions.add(new LittleWindow.StringRunnablePair("Right", () -> createSecureWall(WallsOfSquare.Direction.Right, code), true));
+    private List<WindowProposal> getWallPropositions(String code) {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Top", () -> createSecureWall(WallsOfSquare.Direction.Top, code), true));
+        propositions.add(new WindowProposal("Left", () -> createSecureWall(WallsOfSquare.Direction.Left, code), true));
+        propositions.add(new WindowProposal("Bottom", () -> createSecureWall(WallsOfSquare.Direction.Bottom, code), true));
+        propositions.add(new WindowProposal("Right", () -> createSecureWall(WallsOfSquare.Direction.Right, code), true));
         return propositions;
     }
 

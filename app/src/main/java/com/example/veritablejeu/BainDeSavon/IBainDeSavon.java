@@ -64,6 +64,10 @@ public interface IBainDeSavon {
      */
     void hide();
 
+    void show_and_resume();
+
+    void hide_and_pause();
+
     /**
      * Indique si les bulles sont actuellement visibles.
      * @return la valeur du booléen <i>visible</i>.

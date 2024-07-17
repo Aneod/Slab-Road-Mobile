@@ -2,8 +2,9 @@ package com.example.veritablejeu.LittleWindow;
 
 import android.graphics.Point;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 
 import java.util.List;
 
@@ -36,13 +37,13 @@ public interface ILittleWindow {
      * Same logic for vertical. That for stay near of the center of the screen.
      * @param position the approximate position of the window.
      */
-    void setPosition(@NonNull Point position);
+    void setPosition(Point position);
 
     /**
      * Réecrit la liste des propositions de la fenêtre pour la liste donnée.
-     * Les propositions étants des {@link LittleWindow.StringRunnablePair}.
+     * Les propositions étants des {@link WindowProposal}.
      * @param liste la liste triée des nouvelles propositions.
      */
-    void set(List<LittleWindow.StringRunnablePair> liste);
+    void set(List<WindowProposal> liste);
 
 }

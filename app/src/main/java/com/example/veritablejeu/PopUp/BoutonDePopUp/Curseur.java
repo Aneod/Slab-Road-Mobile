@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.ContenuPopUp.Parametres;
+package com.example.veritablejeu.PopUp.BoutonDePopUp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

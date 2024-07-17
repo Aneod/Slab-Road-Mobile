@@ -69,14 +69,12 @@ public class BoardFraming {
         if(board == null) {
             return;
         }
-        ViewGroup.LayoutParams layoutParams = board.getLayoutParams();
-        if(!(layoutParams instanceof ConstraintLayout.LayoutParams)) {
+        ConstraintLayout.LayoutParams layoutParams = board.getLayoutParams();
+        if(layoutParams == null) {
             return;
         }
-        ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) layoutParams;
-
-        constraintLayoutParams.leftMargin = 0;
-        constraintLayoutParams.topMargin = 0;
+        layoutParams.leftMargin = 0;
+        layoutParams.topMargin = 0;
     }
 
 
@@ -96,12 +94,10 @@ public class BoardFraming {
         if(board == null) {
             return;
         }
-        ViewGroup.LayoutParams layoutParams = board.getLayoutParams();
-        if(!(layoutParams instanceof ConstraintLayout.LayoutParams)) {
+        ConstraintLayout.LayoutParams layoutParams = board.getLayoutParams();
+        if(layoutParams == null) {
             return;
         }
-        ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) layoutParams;
-
         float autorizedWidth = Math.min(newBoardWidth, MAX_BOARD_WIDTH);
         float autorizedHeight = Math.min(newBoardHeight, MAX_BOARD_HEIGHT);
         float xScaleValue = autorizedWidth / board.getWidthToShow();
@@ -110,17 +106,17 @@ public class BoardFraming {
         board.setScaleX(scaleValue);
         board.setScaleY(scaleValue);
 
-        int originalWidth = constraintLayoutParams.width;
+        int originalWidth = layoutParams.width;
         float scaledWidth = originalWidth * scaleValue;
         float xTranslationByXScale = (originalWidth - scaledWidth) / 2;
 
-        int originalHeight = constraintLayoutParams.height;
+        int originalHeight = layoutParams.height;
         float scaledHeight = originalHeight * scaleValue;
         float yTranslationByYScale = (originalHeight - scaledHeight) / 2;
 
-        constraintLayoutParams.leftMargin -= (int) xTranslationByXScale;
-        constraintLayoutParams.topMargin -= (int) yTranslationByYScale;
-        board.setLayoutParams(constraintLayoutParams);
+        layoutParams.leftMargin -= (int) xTranslationByXScale;
+        layoutParams.topMargin -= (int) yTranslationByYScale;
+        board.setLayoutParams(layoutParams);
     }
 
 
@@ -142,20 +138,18 @@ public class BoardFraming {
         if(board == null) {
             return;
         }
-        ViewGroup.LayoutParams layoutParams = board.getLayoutParams();
-        if(!(layoutParams instanceof ConstraintLayout.LayoutParams)) {
+        ConstraintLayout.LayoutParams layoutParams = board.getLayoutParams();
+        if(layoutParams == null) {
             return;
         }
-        ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) layoutParams;
-
         float scaleX = board.getScaleX();
         float scaleY = board.getScaleY();
         float dx = board.getNearestLeftMargin() * scaleX;
         float dy = board.getNearestTopMargin() * scaleY;
 
-        constraintLayoutParams.leftMargin -= (int) dx;
-        constraintLayoutParams.topMargin -= (int) dy;
-        board.setLayoutParams(constraintLayoutParams);
+        layoutParams.leftMargin -= (int) dx;
+        layoutParams.topMargin -= (int) dy;
+        board.setLayoutParams(layoutParams);
     }
 
 
@@ -214,30 +208,29 @@ public class BoardFraming {
             if(board == null) {
                 return;
             }
-            ViewGroup.LayoutParams layoutParams = board.getLayoutParams();
-            if(!(layoutParams instanceof ConstraintLayout.LayoutParams)) {
+            ConstraintLayout.LayoutParams layoutParams = board.getLayoutParams();
+            if(layoutParams == null) {
                 return;
             }
-            ConstraintLayout.LayoutParams constraintLayoutParams = (ConstraintLayout.LayoutParams) layoutParams;
 
             if(this == topLeft || this == bottomLeft || this == centerLeft) {
-                constraintLayoutParams.leftMargin += getPositionToLeft();
+                layoutParams.leftMargin += getPositionToLeft();
             }
             if(this == topCenter || this == bottomCenter || this == center) {
-                constraintLayoutParams.leftMargin += getPositionToHorizontalCenter(board);
+                layoutParams.leftMargin += getPositionToHorizontalCenter(board);
             }
             if(this == topRight || this == bottomRight || this == centerRight) {
-                constraintLayoutParams.leftMargin += getPositionToRight(board);
+                layoutParams.leftMargin += getPositionToRight(board);
             }
 
             if(this == topLeft || this == topRight || this == topCenter) {
-                constraintLayoutParams.topMargin += getPositionToTop();
+                layoutParams.topMargin += getPositionToTop();
             }
             if(this == centerLeft || this == centerRight || this == center) {
-                constraintLayoutParams.topMargin += getPositionToVerticalCenter(board);
+                layoutParams.topMargin += getPositionToVerticalCenter(board);
             }
             if(this == bottomLeft || this == bottomRight || this == bottomCenter) {
-                constraintLayoutParams.topMargin += getPositionToBottom(board);
+                layoutParams.topMargin += getPositionToBottom(board);
             }
         }
 

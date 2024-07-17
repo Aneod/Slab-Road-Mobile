@@ -16,6 +16,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
@@ -251,10 +252,10 @@ public class ModularDoor extends ModularWall {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Sealing", this::sealUnseal, true));
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Sealing", this::sealUnseal, true));
+        propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }
 

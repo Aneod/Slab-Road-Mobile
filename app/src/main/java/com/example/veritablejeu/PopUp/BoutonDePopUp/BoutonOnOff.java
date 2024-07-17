@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.ContenuPopUp.Parametres;
+package com.example.veritablejeu.PopUp.BoutonDePopUp;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -41,6 +41,7 @@ public class BoutonOnOff extends FrameLayout {
      * @param leftMargin la marge gauche.
      * @return un TextView.
      */
+    @NonNull
     private AppCompatTextView creationTexte(int width, int height, int leftMargin) {
         AppCompatTextView texte = new AppCompatTextView(getContext());
         texte.setTextSize(TEXT_SIZE);

@@ -2,9 +2,6 @@ package com.example.veritablejeu.Game;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -27,7 +24,7 @@ import com.example.veritablejeu.Game.Board.BoardsMovements.BoardsMovements;
 import com.example.veritablejeu.Tools.StringColorConverter;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.Tools.ColorierBackground;
+import com.example.veritablejeu.Tools.BackgroundColoration;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;
@@ -129,19 +126,8 @@ public class Game extends AppCompatActivity implements IGame {
     }
 
     @Override
-    public void flashDeCouleur(int couleur) {
-
-        GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{couleur, couleur});
-
-        if(backgroundColors.length < 2) return;
-        GradientDrawable initial = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, backgroundColors);
-
-        Drawable[] layers = {gradientDrawable, initial};
-        TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
-        container.setBackground(transitionDrawable);
-
-        transitionDrawable.startTransition(2000);
+    public void colorFlash(int color) {
+        BackgroundColoration.colorFlash(container, color, backgroundColors);
     }
 
     public BoardsMovements getOnToucheListenerPlateauModulaire() {
@@ -184,7 +170,7 @@ public class Game extends AppCompatActivity implements IGame {
      */
     public void backgroundColoration(String code) {
         backgroundColors = StringColorConverter.turnIntoColors(code);
-        ColorierBackground.colorierBackground(this, backgroundColors);
+        BackgroundColoration.colorierBackground(container, backgroundColors);
     }
 
     /**

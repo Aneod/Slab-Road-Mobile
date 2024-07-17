@@ -385,21 +385,23 @@ public class Board extends FrameLayout {
     }
 
     public void setSquaresAccessibilities() {
-        Set<ZdecimalCoordinates> accessibleSquares = AccessibleSquaresFinder.getAllAccessibleSquares_byMaster(this);
-        setSquaresAccessibilities_byList(accessibleSquares);
-        if(getMaster() == null) {
+        boolean movesHelperDisable = !AccessibleSquaresFinder.isHelperEnable();
+        if(getMaster() == null || movesHelperDisable) {
             showAllSquaresAccessible();
+        } else {
+            Set<ZdecimalCoordinates> accessibleSquares = AccessibleSquaresFinder.getAllAccessibleSquares_byMaster(this);
+            setSquaresAccessibilities_byList(accessibleSquares);
         }
     }
 
-    public void setSquaresAccessibilities_byList(Set<ZdecimalCoordinates> accessibleSquares) {
+    private void setSquaresAccessibilities_byList(Set<ZdecimalCoordinates> accessibleSquares) {
         for(ModularSquare modularSquare : modularSquareSet) {
             ZdecimalCoordinates current = modularSquare.getCord();
             modularSquare.setShowAsAccessible(accessibleSquares.contains(current));
         }
     }
 
-    public void showAllSquaresAccessible() {
+    private void showAllSquaresAccessible() {
         for(ModularSquare modularSquare : modularSquareSet) {
             modularSquare.setShowAsAccessible(modularSquare.isAccessible());
         }

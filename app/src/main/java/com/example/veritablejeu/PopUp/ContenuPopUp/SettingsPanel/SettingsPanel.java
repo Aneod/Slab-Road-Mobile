@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.ContenuPopUp.Parametres;
+package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,24 +7,27 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.PopUp.BoutonDePopUp.BoutonOnOff;
+import com.example.veritablejeu.PopUp.BoutonDePopUp.Curseur;
 import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 import java.util.List;
 
-public class Parametres extends ContenuPopUp {
+public class SettingsPanel extends ContenuPopUp {
 
+    private static final String POPUP_TITLE = "SETTINGS";
     private static final int LEFT_RIGHT_MARGINS = 25;
     private static final int COMPONENTS_HEIGHT = 100;
     private static final int HEIGHT_BETWEEN_COMPONENTS = 15;
 
-    public Parametres(@NonNull Context context) {
-        super(context, "PARAMETRES");
+    public SettingsPanel(@NonNull Context context) {
+        super(context, POPUP_TITLE);
     }
 
-    public Parametres(@NonNull PopUp popUp, @NonNull List<Title_Effect_Association> components) {
-        super(popUp.getContext(), "PARAMETRES");
+    public SettingsPanel(@NonNull PopUp popUp, @NonNull List<Title_Effect_Association> components) {
+        super(popUp.getContext(), POPUP_TITLE);
 
         int width = popUp.getLargeur() - 2 * LEFT_RIGHT_MARGINS;
         hauteurTotale = components.size() * (COMPONENTS_HEIGHT + HEIGHT_BETWEEN_COMPONENTS);
@@ -57,8 +60,8 @@ public class Parametres extends ContenuPopUp {
                         getContext(), title,
                         width, COMPONENTS_HEIGHT, 0, topMargin,
                         startState,
-                        "ACTIVÉ", runnableA,
-                        "DESACTIVÉ", runnableB
+                        "ON", runnableA,
+                        "OFF", runnableB
                 );
                 addView(boutonOnOff);
             }

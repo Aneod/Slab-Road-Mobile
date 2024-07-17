@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
@@ -51,11 +52,9 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
         PopUp popUp = editeur.getPopUp();
         LittleWindow petiteFenetreFlottante2 = editeur.getLittleWindow();
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(
-                new LittleWindow.StringRunnablePair("Couleurs de fond", popUp::afficherManuel));
-        propositions.add(
-                new LittleWindow.StringRunnablePair("Particules de fond", () -> {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Couleurs de fond", popUp::afficherManuel));
+        propositions.add(new WindowProposal("Particules de fond", () -> {
                     //popUp.afficherParametres(editeur.getPlateauModifiable());
                 }));
         petiteFenetreFlottante2.setPosition(new Point(leftMargin, topMargin));

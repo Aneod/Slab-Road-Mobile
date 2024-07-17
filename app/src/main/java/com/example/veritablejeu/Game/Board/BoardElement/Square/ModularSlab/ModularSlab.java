@@ -19,7 +19,7 @@ import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinatesManager;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 
 import java.util.ArrayList;
@@ -220,7 +220,7 @@ public abstract class ModularSlab extends BoardElement {
     }
 
     public void flash() {
-        game.flashDeCouleur(fillColor);
+        game.colorFlash(fillColor);
     }
 
     @Override
@@ -229,11 +229,11 @@ public abstract class ModularSlab extends BoardElement {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add weight", this::addWeight));
-        propositions.add(new LittleWindow.StringRunnablePair("Remove weight", this::removeWeight));
-        propositions.add(new LittleWindow.StringRunnablePair("Delete", this::remove, Color.RED, true));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Add weight", this::addWeight));
+        propositions.add(new WindowProposal("Remove weight", this::removeWeight));
+        propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }
 

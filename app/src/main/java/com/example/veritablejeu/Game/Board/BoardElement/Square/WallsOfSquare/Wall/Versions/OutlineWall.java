@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
@@ -40,7 +41,7 @@ public class OutlineWall extends ModularWall {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
+    public List<WindowProposal> getEditPropositions() {
         return null;
     }
 }

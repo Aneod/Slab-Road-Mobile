@@ -27,8 +27,8 @@ public interface IGame {
 
     /**
      * Effectue un flash de la couleur souhaité.
-     * @param couleur la couleur du flash.
+     * @param color la couleur du flash.
      */
-    void flashDeCouleur(int couleur);
+    void colorFlash(int color);
 
 }

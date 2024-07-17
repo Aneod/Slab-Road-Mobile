@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -13,13 +12,13 @@ import androidx.core.util.Consumer;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CreateSimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,11 +154,11 @@ public class SpecSquare extends BoardElement {
     }
 
     @Override
-    public List<LittleWindow.StringRunnablePair> getEditPropositions() {
-        List<LittleWindow.StringRunnablePair> propositions = new ArrayList<>();
-        propositions.add(new LittleWindow.StringRunnablePair("Add square", this::createSquareOn, true));
-        propositions.add(new LittleWindow.StringRunnablePair("Add ghost", this::createGhostOn, true));
-        propositions.add(new LittleWindow.StringRunnablePair("Flash", () -> game.flashDeCouleur(Color.BLACK)));
+    public List<WindowProposal> getEditPropositions() {
+        List<WindowProposal> propositions = new ArrayList<>();
+        propositions.add(new WindowProposal("Add square", this::createSquareOn, true));
+        propositions.add(new WindowProposal("Add ghost", this::createGhostOn, true));
+        propositions.add(new WindowProposal("Flash", () -> game.colorFlash(Color.BLACK)));
         return propositions;
     }
 

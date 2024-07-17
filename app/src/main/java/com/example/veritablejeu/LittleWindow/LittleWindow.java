@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.ScreenUtils;
@@ -25,6 +26,13 @@ public class LittleWindow extends FrameLayout implements ILittleWindow {
 
     private static final int WIDTH = 300;
     private static final int PROPOSAL_HEIGHT = 80;
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+    public static int getProposalHeight() {
+        return PROPOSAL_HEIGHT;
+    }
+
 
     private final ConstraintLayout.LayoutParams layoutParams =
             new LayoutParamsDeBase_pourConstraintLayout(WIDTH, 0, 0, 0);
@@ -62,11 +70,6 @@ public class LittleWindow extends FrameLayout implements ILittleWindow {
         removeAllViews();
     }
 
-    @Override
-    public ConstraintLayout.LayoutParams getLayoutParams() {
-        return layoutParams;
-    }
-
     private void setHeight(int hauteurTotale) {
         layoutParams.height = hauteurTotale;
     }
@@ -102,30 +105,9 @@ public class LittleWindow extends FrameLayout implements ILittleWindow {
     }
 
     @Override
-    public void setPosition(@NonNull Point position) {
+    public void setPosition(Point position) {
         setHorizontalPosition(position);
         setVerticalPosition(position);
-    }
-
-    private void runnableOfProposal(StringRunnablePair stringRunnablePair) {
-        if(stringRunnablePair != null) {
-            stringRunnablePair.runnable.run();
-            if(stringRunnablePair.autoClose) {
-                hide();
-            }
-        }
-    }
-
-    @NonNull
-    private TextView generateTextViewOfProposal(StringRunnablePair stringRunnablePair) {
-        TextView textView = new TextView(getContext());
-        if(stringRunnablePair != null) {
-            textView.setText(stringRunnablePair.str);
-            textView.setTextColor(stringRunnablePair.textColor);
-            textView.setGravity(Gravity.CENTER);
-            textView.setOnClickListener(v -> runnableOfProposal(stringRunnablePair));
-        }
-        return textView;
     }
 
     @NonNull
@@ -136,88 +118,51 @@ public class LittleWindow extends FrameLayout implements ILittleWindow {
         );
     }
 
-    private void addProposalAtHeight(@NonNull StringRunnablePair stringRunnablePair, int topMargin) {
-        TextView textView = generateTextViewOfProposal(stringRunnablePair);
+    private void addProposalAtHeight(WindowProposal windowProposal, int topMargin) {
+        if(windowProposal == null) return;
+        TextView textView = windowProposal.generateTextViewForWindow(this);
         ConstraintLayout.LayoutParams layoutParams = generateConstraintLayoutByTopMargin(topMargin);
         textView.setLayoutParams(layoutParams);
         addView(textView);
     }
 
-    private void addProposals(List<StringRunnablePair> list) {
+    private void addProposals(List<WindowProposal> list) {
         if(list == null) return;
         int topMargin = 0;
-        for(StringRunnablePair stringRunnablePair : list) {
-            addProposalAtHeight(stringRunnablePair, topMargin);
+        for(WindowProposal windowProposal : list) {
+            addProposalAtHeight(windowProposal, topMargin);
             topMargin += PROPOSAL_HEIGHT;
         }
     }
 
     @NonNull
-    private List<StringRunnablePair> getCloseProposal() {
-        List<StringRunnablePair> oneChoiceList = new ArrayList<>();
-        StringRunnablePair closeProposal = new StringRunnablePair("Close", this::hide, Color.BLUE);
+    private List<WindowProposal> getCloseProposal() {
+        List<WindowProposal> oneChoiceList = new ArrayList<>();
+        WindowProposal closeProposal = WindowProposal.getCloseProposal(this);
         oneChoiceList.add(closeProposal);
         return oneChoiceList;
     }
 
     @NonNull
-    private List<StringRunnablePair> addCloseProposalToList(List<StringRunnablePair> list) {
-        List<StringRunnablePair> closeProposal = getCloseProposal();
+    private List<WindowProposal> addCloseProposalToList(List<WindowProposal> list) {
+        List<WindowProposal> closeProposal = getCloseProposal();
         if(list == null)
             return closeProposal;
         list.addAll(closeProposal);
         return list;
     }
 
-    private void setContent(List<StringRunnablePair> list) {
-        List<StringRunnablePair> listWithClose = addCloseProposalToList(list);
+    private void setContent(List<WindowProposal> list) {
+        List<WindowProposal> listWithClose = addCloseProposalToList(list);
         addProposals(listWithClose);
         int newHeight = listWithClose.size() * PROPOSAL_HEIGHT;
         setHeight(newHeight);
     }
 
     @Override
-    public void set(List<StringRunnablePair> list) {
+    public void set(List<WindowProposal> list) {
         clear();
         setContent(list);
         show();
     }
-
-
-    /**
-     * La fenêtre est constituée d'une liste de plusieurs associations de String et de
-     * Runnable. La classe interne statique {@link #StringRunnablePair} est une sous-classe
-     * utilisable uniquement à l'intérieur de la classe actuelle, et permet justement de
-     * créer des associations de String et Runnable.
-     */
-    public static class StringRunnablePair {
-
-        private static final int DEFAULT_TEXT_COLOR = Color.BLACK;
-        private static final boolean DEFAULT_AUTOCLOSE = false;
-
-        private final String str;
-        private final Runnable runnable;
-        private final int textColor;
-        private final boolean autoClose;
-
-        public StringRunnablePair(String str, Runnable runnable) {
-            this(str, runnable, DEFAULT_TEXT_COLOR, DEFAULT_AUTOCLOSE);
-        }
-
-        public StringRunnablePair(String str, Runnable runnable, int textColor) {
-            this(str, runnable, textColor, DEFAULT_AUTOCLOSE);
-        }
-
-        public StringRunnablePair(String str, Runnable runnable, boolean autoClose) {
-            this(str, runnable, DEFAULT_TEXT_COLOR, autoClose);
-        }
-
-        public StringRunnablePair(String str, Runnable runnable, int textColor, boolean autoClose) {
-            this.str = str;
-            this.runnable = runnable;
-            this.textColor = textColor;
-            this.autoClose = autoClose;
-        }
-    }
-
 }

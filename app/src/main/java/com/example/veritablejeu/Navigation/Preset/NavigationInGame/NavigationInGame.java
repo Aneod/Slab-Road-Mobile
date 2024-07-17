@@ -6,8 +6,9 @@ import androidx.core.util.Consumer;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
+import com.example.veritablejeu.Navigation.Preset.NavigationInGame.GameSettings.GameSettings;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
-import com.example.veritablejeu.PopUp.ContenuPopUp.Parametres.Parametres;
+import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
@@ -29,28 +30,19 @@ public class NavigationInGame extends Navigation {
         };
         Runnable runnableB = popUp::cacher;
         Question contenuPopUp = new Question(
-                popUp, "QUITTER", "Retourner à la page principale ?", "OUI", runnableA, "NON", runnableB
+                popUp, "EXIT", "Return to main page ? Your progress will be lost.", "YES", runnableA, "NO", runnableB
         );
         popUp.setContenu(contenuPopUp);
     }
 
     private void propositionReset() {
-        /*
         PopUp popUp = inGame.getPopUp();
-        Plateau plateau = inGame.getPlateau();
-        if(plateau != null) {
-            Runnable runnableA = () -> {
-                plateau.resetPlateau();
-                popUp.cacher();
-            };
-            Runnable runnableB = popUp::cacher;
-            Question contenuPopUp = new Question(
-                    popUp, "RECOMMENCER", "Voulez-vous réinitialiser la progression ?", "OUI", runnableA, "NON", runnableB
-            );
-            popUp.setContenu(contenuPopUp);
-        }
-
-         */
+        Runnable runnableA = popUp::cacher;
+        Runnable runnableB = popUp::cacher;
+        Question contenuPopUp = new Question(
+                popUp, "RESET", "Do you want to reset progress ?", "YES", runnableA, "NO", runnableB
+        );
+        popUp.setContenu(contenuPopUp);
     }
 
     private void recadrage() {
@@ -78,71 +70,7 @@ public class NavigationInGame extends Navigation {
     }
 
     private void parametres() {
-        PopUp popUp = inGame.getPopUp();
-
-        List<Parametres.Title_Effect_Association> components = new ArrayList<>();
-
-        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance();
-        Consumer<Float> consumerVolume = value -> {
-            if(value != null) {
-                mediaPlayerInstance.setVolume(value);
-            }
-        };
-        float currentVolume = mediaPlayerInstance.getVolume();
-        Parametres.Title_Consumer_Association curseurVolume = new Parametres.Title_Consumer_Association(
-                "Volume musiques", consumerVolume, currentVolume);
-        components.add(curseurVolume);
-
-        Consumer<Float> speedConsumer = value -> {
-            if(value != null) {
-                int value_on1000 = (int) (value * 1000);
-                int valeurInversee = 1000 - value_on1000;
-                //ParametresPlateau.setDureeDeplacement(valeurInversee);
-            }
-        };
-        /*
-        float currentSpeed = 1.0f - (float) ParametresPlateau.getDureeDeplacement() / 1000;
-        Parametres.Title_Consumer_Association speedCursor = new Parametres.Title_Consumer_Association(
-                "Vitesse de déplacements", speedConsumer, currentSpeed);
-        components.add(speedCursor);
-
-        Runnable activeEffectFlashs = () -> ParametresPlateau.setFlashsActives(true);
-        Runnable disactiveEffectFlashs = () -> ParametresPlateau.setFlashsActives(false);
-        boolean currentFlash = ParametresPlateau.isFlashesEnable();
-        Parametres.Title_Runnables_Association boutonOnOffFlash = new Parametres.Title_Runnables_Association(
-                "Flashs lumineux", activeEffectFlashs, disactiveEffectFlashs, currentFlash);
-        components.add(boutonOnOffFlash);
-         */
-
-        BainDeSavon bainDeSavon = BainDeSavon.getInstance(inGame);
-        Runnable activeEffectBulles = () -> {
-            bainDeSavon.show();
-            bainDeSavon.resume_animations();
-        };
-        Runnable disactiveEffectBulles = () -> {
-            bainDeSavon.hide();
-            bainDeSavon.pause_animations();
-        };
-        boolean currentBulles = bainDeSavon.getBullesVisibles();
-        Parametres.Title_Runnables_Association boutonOnOffBulles = new Parametres.Title_Runnables_Association(
-                "Particules d'arrière-plan", activeEffectBulles, disactiveEffectBulles, currentBulles);
-        components.add(boutonOnOffBulles);
-
-        /*
-        Squares squares = inGame.getPlateau().getSquares();
-        Runnable runnableA = () -> squares.setAideAuxDeplacements(true);
-        Runnable runnableB = () -> squares.setAideAuxDeplacements(false);
-        boolean currentMoveHelper = ParametresPlateau.getAideAuxDeplacement();
-        Parametres.Title_Runnables_Association boutonOnOffMoveHelper = new Parametres.Title_Runnables_Association(
-                "Aide aux déplacements", runnableA, runnableB, currentMoveHelper);
-        components.add(boutonOnOffMoveHelper);
-
-        Parametres parametres = new Parametres(popUp, components);
-        popUp.setContenu(parametres);
-
-        popUp.montrer();
-
-         */
+        GameSettings.showGameSettingsPopUp(inGame);
     }
 
     private List<Association_Symbole_Fonction> getAssociations() {

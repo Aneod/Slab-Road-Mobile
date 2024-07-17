@@ -124,6 +124,18 @@ public class BainDeSavon implements IBainDeSavon {
     }
 
     @Override
+    public void show_and_resume() {
+        resume_animations();
+        show();
+    }
+
+    @Override
+    public void hide_and_pause() {
+        pause_animations();
+        hide();
+    }
+
+    @Override
     public boolean getBullesVisibles() {
         return visible;
     }

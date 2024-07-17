@@ -13,6 +13,7 @@ import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 
 import java.util.List;
 
@@ -47,7 +48,7 @@ public abstract class BoardElement extends FrameLayout {
 
     public abstract void enableInGameListeners();
 
-    public abstract List<LittleWindow.StringRunnablePair> getEditPropositions();
+    public abstract List<WindowProposal> getEditPropositions();
 
     public void enableEditorListeners() {
 
@@ -102,7 +103,7 @@ public abstract class BoardElement extends FrameLayout {
     private void showLittleWindow(MotionEvent event) {
         if(event == null) return;
         Point point = new Point((int) event.getRawX(), (int) event.getRawY());
-        List<LittleWindow.StringRunnablePair> propositions = getEditPropositions();
+        List<WindowProposal> propositions = getEditPropositions();
         LittleWindow littleWindow = game.getLittleWindow();
         littleWindow.setPosition(point);
         littleWindow.set(propositions);
