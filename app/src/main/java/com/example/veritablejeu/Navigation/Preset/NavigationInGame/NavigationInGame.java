@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
+import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.Preset.NavigationInGame.GameSettings.GameSettings;
@@ -30,7 +31,7 @@ public class NavigationInGame extends Navigation {
         };
         Runnable runnableB = popUp::cacher;
         Question contenuPopUp = new Question(
-                popUp, "EXIT", "Return to main page ? Your progress will be lost.", "YES", runnableA, "NO", runnableB
+                popUp, "EXIT", "Return to main page ?", "YES", runnableA, "NO", runnableB
         );
         popUp.setContenu(contenuPopUp);
     }
@@ -47,21 +48,8 @@ public class NavigationInGame extends Navigation {
 
     private void recadrage() {
         PopUp popUp = inGame.getPopUp();
-        Message message = new Message(popUp, "SYSTEME", "Le plateau a été correctement recentré.", 1000);
-        popUp.setContenu(message);
-        recadragePlateauParLeBoutonRecadrage();
-    }
-
-    private void recadragePlateauParLeBoutonRecadrage() {
-        /*
-        Plateau plateau = inGame.getPlateau();
-        if(plateau != null) {
-            OnToucheListener onToucheListener = inGame.getOnToucheListener();
-            if(onToucheListener != null) {
-                onToucheListener.setScaleFactor(1.0f);
-                plateau.recadrage();
-            }
-        }*/
+        popUp.showMessage("SYSTEM", "Refocused tray.", 1000);
+        inGame.getPlateauModulaireSet().forEach(Board::cropping);
     }
 
     private void manuel() {
@@ -73,6 +61,7 @@ public class NavigationInGame extends Navigation {
         GameSettings.showGameSettingsPopUp(inGame);
     }
 
+    @NonNull
     private List<Association_Symbole_Fonction> getAssociations() {
         List<Association_Symbole_Fonction> associations = new ArrayList<>();
 

@@ -6,12 +6,14 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 @SuppressLint("ViewConstructor")
-public class BoutonDePopUp extends androidx.appcompat.widget.AppCompatButton {
+public class BoutonDePopUp extends AppCompatButton {
 
     /**
      * Change la couleur de fond pour du noir, et le texte pour du blanc.
@@ -32,19 +34,16 @@ public class BoutonDePopUp extends androidx.appcompat.widget.AppCompatButton {
         this.setTextColor(Color.BLACK);
     }
 
-    public BoutonDePopUp(FrameLayout parent, String texte, int width, int height, int leftMargin, int topMargin, Runnable runnable) {
+    public BoutonDePopUp(@NonNull FrameLayout parent) {
         super(parent.getContext());
-        setText(texte);
-        setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
-        ConstraintLayout.LayoutParams layoutParams =
-                new LayoutParamsDeBase_pourConstraintLayout(width, height, leftMargin, topMargin);
-        this.setLayoutParams(layoutParams);
-
-        setOnClickListener(v -> runnable.run());
     }
 
-    public BoutonDePopUp(FrameLayout parent, String texte, int width, int height, int leftMargin, int topMargin) {
+    public BoutonDePopUp(@NonNull FrameLayout parent, String texte, int width, int height, int leftMargin, int topMargin, Runnable runnable) {
+        this(parent, texte, width, height, leftMargin, topMargin);
+        setRunnable(runnable);
+    }
+
+    public BoutonDePopUp(@NonNull FrameLayout parent, String texte, int width, int height, int leftMargin, int topMargin) {
         super(parent.getContext());
         setText(texte);
         setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -52,5 +51,13 @@ public class BoutonDePopUp extends androidx.appcompat.widget.AppCompatButton {
         ConstraintLayout.LayoutParams layoutParams =
                 new LayoutParamsDeBase_pourConstraintLayout(width, height, leftMargin, topMargin);
         this.setLayoutParams(layoutParams);
+    }
+
+    public void setRunnable(Runnable runnable) {
+        setOnClickListener(v -> {
+            if(runnable != null) {
+                runnable.run();
+            }
+        });
     }
 }

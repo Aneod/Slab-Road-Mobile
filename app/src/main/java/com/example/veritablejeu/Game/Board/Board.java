@@ -145,6 +145,13 @@ public class Board extends FrameLayout {
         normalScale = getScaleX();
     }
 
+    public void cropping() {
+        setScaleX(normalScale);
+        setScaleY(normalScale);
+        setTranslationX(0.0f);
+        setTranslationY(0.0f);
+    }
+
     private void determineBoardLimits() {
 
         if(game instanceof Editeur) {

@@ -19,8 +19,8 @@ import java.util.List;
 public class GameSettings {
 
     @NonNull
-    private static SettingsPanel.Title_Consumer_Association getVolumeCursor() {
-        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance();
+    private static SettingsPanel.Title_Consumer_Association getVolumeCursor(InGame inGame) {
+        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance(inGame);
         Consumer<Float> consumerVolume = value -> {
             if(value != null) {
                 mediaPlayerInstance.setVolume(value);
@@ -76,7 +76,7 @@ public class GameSettings {
     @NonNull
     private static List<SettingsPanel.Title_Effect_Association> getAllComponents(InGame inGame) {
         List<SettingsPanel.Title_Effect_Association> components = new ArrayList<>();
-        components.add(getVolumeCursor());
+        components.add(getVolumeCursor(inGame));
         components.add(getBlobSpeedCursor());
         components.add(getFlashsOnOff());
         components.add(getBubblesOnOff(inGame));

@@ -264,18 +264,13 @@ public abstract class ModularSquare extends BoardElement {
             board.setMaster(blobOnSquare);
         }
         else if (masterToMove) {
-            if(isShowAsAccessible()) {
-                master.moveTo(cord);
+            boolean unaccessible = !isShowAsAccessible();
+            if(unaccessible) {
+                master.showImpossibleTravelMessage();
             } else {
-                showImpossibleTravelMessage();
+                master.moveTo(cord);
             }
         }
-    }
-
-    private void showImpossibleTravelMessage() {
-        PopUp popUp = PopUp.getInstance(getContext());
-        Message message = new Message(popUp, "WARNING", "Can't go here.", 1000);
-        popUp.setContenu(message);
     }
 
     @Override
@@ -341,6 +336,7 @@ public abstract class ModularSquare extends BoardElement {
         if(this instanceof NormalSquare) {
             propositions.add(new WindowProposal("Add blob", this::createSecureBlob, true));
         }
+        propositions.add(new WindowProposal("Transparency", () -> {}, true));
         propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
     }

@@ -47,6 +47,17 @@ public class BackgroundColoration {
         transitionDrawable.startTransition(FLASH_DURATION);
     }
 
+    /**
+     * Make a GradientDrawable with only one color make a error exception.
+     * @param color the mono color of the background.
+     * @return a monochromatic GradientDrawable.
+     */
+    @NonNull
+    @Contract("_ -> new")
+    private static GradientDrawable createFadeOfColors(int color) {
+        return createFadeOfColors(color, color);
+    }
+
     @NonNull
     @Contract("_ -> new")
     private static GradientDrawable createFadeOfColors(int... colors) {

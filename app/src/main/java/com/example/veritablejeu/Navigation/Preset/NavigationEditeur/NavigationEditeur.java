@@ -10,6 +10,7 @@ import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
+import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
@@ -36,7 +37,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         popUp.setContenu(contenuPopUp);
     }
 
-    private void ouvrirPetiteFenetrePourEffetsVisuels() {
+    private void openVisualEffectsTools() {
         int leftMargin;
         int topMargin;
         leftMargin = getMargesHautGaucheDroite();
@@ -50,15 +51,13 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
             topMargin = 0;
         }
 
-        PopUp popUp = editeur.getPopUp();
-        LittleWindow petiteFenetreFlottante2 = editeur.getLittleWindow();
+        LittleWindow littleWindow = editeur.getLittleWindow();
         List<WindowProposal> propositions = new ArrayList<>();
-        propositions.add(new WindowProposal("Couleurs de fond", popUp::afficherManuel));
-        propositions.add(new WindowProposal("Particules de fond", () -> {
-                    //popUp.afficherParametres(editeur.getPlateauModifiable());
-                }));
-        petiteFenetreFlottante2.setPosition(new Point(leftMargin, topMargin));
-        petiteFenetreFlottante2.set(propositions);
+        propositions.add(new WindowProposal("Background colors", () -> {}, true));
+        propositions.add(new WindowProposal("Background bubbles", () -> {}, true));
+        propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
+        littleWindow.setPosition(new Point(leftMargin, topMargin));
+        littleWindow.set(propositions);
     }
 
     private void activerDesactiverGrille(){
@@ -93,7 +92,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
                 R.drawable.symbole_retour, this::propositionQuitter)
         );
         associations.add(new Association_Symbole_Fonction(
-                R.drawable.effets_scintillant, this::ouvrirPetiteFenetrePourEffetsVisuels)
+                R.drawable.effets_scintillant, this::openVisualEffectsTools)
         );
         associations.add(new Association_Symbole_Fonction(
                 R.drawable.grille, this::activerDesactiverGrille)

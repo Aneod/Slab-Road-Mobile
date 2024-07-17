@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.PopUp.BoutonDePopUp.BoutonDePopUp;
@@ -21,22 +22,29 @@ public class Question extends ContenuPopUp {
     private final int margesH = 15;
     private final int margesB = 40;
 
+    private final TextePopUp text;
+    private final BoutonDePopUp boutonA;
+    private final BoutonDePopUp boutonB;
 
     public Question(@NonNull Context context) {
         super(context);
+        PopUp popUp = PopUp.getInstance(context);
+        text = new TextePopUp(popUp, 0);
+        boutonA = new BoutonDePopUp(popUp);
+        boutonB = new BoutonDePopUp(popUp);
     }
 
-    public Question(@NonNull PopUp popUp, String titre, String question, String reponseA, Runnable runnableA, String reponseB, Runnable runnableB) {
+    public Question(@NonNull PopUp popUp, String titre, String question, String reponseA, @Nullable Runnable runnableA, String reponseB, @Nullable Runnable runnableB) {
         super(popUp.getContext(), titre);
 
         int margeGauchePremierBouton = (popUp.getLargeur() - distanceTexteBoutons - largeurBoutons * 2) / 2;
         int topMarginBoutons = hauteurTexteApproximative + distanceTexteBoutons;
-        BoutonDePopUp boutonA = new BoutonDePopUp(popUp, reponseA, largeurBoutons, hauteurBoutons, margeGauchePremierBouton, topMarginBoutons, runnableA);
+        boutonA = new BoutonDePopUp(popUp, reponseA, largeurBoutons, hauteurBoutons, margeGauchePremierBouton, topMarginBoutons, runnableA);
         boutonA.prendreLaCouleurBlanche();
         this.addView(boutonA);
 
         int leftMargin = margeGauchePremierBouton + largeurBoutons + separationEntreLesBoutons;
-        BoutonDePopUp boutonB = new BoutonDePopUp(popUp, reponseB, largeurBoutons, hauteurBoutons, leftMargin, topMarginBoutons, runnableB);
+        boutonB = new BoutonDePopUp(popUp, reponseB, largeurBoutons, hauteurBoutons, leftMargin, topMarginBoutons, runnableB);
         boutonB.prendreLaCouleurNoire();
         this.addView(boutonB);
 
@@ -47,8 +55,20 @@ public class Question extends ContenuPopUp {
         );
         this.setLayoutParams(layoutParams);
 
-        TextePopUp textViewQuestion = new TextePopUp(popUp, hauteurTexteApproximative);
-        textViewQuestion.setText(question);
-        this.addView(textViewQuestion);
+        text = new TextePopUp(popUp, hauteurTexteApproximative);
+        text.setText(question);
+        this.addView(text);
+    }
+
+    public void setText(String text) {
+        this.text.setText(text);
+    }
+
+    public void setRunnableA(Runnable runnable) {
+        boutonA.setRunnable(runnable);
+    }
+
+    public void setRunnableB(Runnable runnable) {
+        boutonB.setRunnable(runnable);
     }
 }

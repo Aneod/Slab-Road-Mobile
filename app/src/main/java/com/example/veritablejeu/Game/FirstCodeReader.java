@@ -54,8 +54,8 @@ public class FirstCodeReader {
         boolean isNumeric = isNumeric(musicId);
         if(isNumeric) {
             int intId = Integer.parseInt(musicId);
-            MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance();
-            mediaPlayerInstance.activerPisteDuNumero(game.getApplicationContext(), intId);
+            MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance(game);
+            mediaPlayerInstance.playNewMusic(intId);
         }
     }
 

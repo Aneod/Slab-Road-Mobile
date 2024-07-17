@@ -15,6 +15,8 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Modul
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
+import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -95,6 +97,12 @@ public class ModularBlob extends BoardElement {
         }
     }
 
+    public void showImpossibleTravelMessage() {
+        PopUp popUp = PopUp.getInstance(getContext());
+        Message message = new Message(popUp, "WARNING", "Can't go here.", 1000);
+        popUp.setContenu(message);
+    }
+
     public void moveTo(ZdecimalCoordinates coordinates) {
         if(estEnDeplacement) return;
         ArrayList<ZdecimalCoordinates> itinerary = BestItinerary.get(getBoard(), currentLocation.getCord(), coordinates);
@@ -103,8 +111,13 @@ public class ModularBlob extends BoardElement {
         if(slab != null) {
             slab.removeBlob(this);
         }
-        movesTo(itinerary);
-        game.nombreDeCoups++;
+        if(itinerary.isEmpty()) {
+            showImpossibleTravelMessage();
+            estEnDeplacement = false;
+        } else {
+            movesTo(itinerary);
+            game.nombreDeCoups++;
+        }
     }
 
     public void movesTo(ArrayList<ZdecimalCoordinates> coordinates) {

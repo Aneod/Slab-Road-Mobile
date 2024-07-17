@@ -1,5 +1,6 @@
 package com.example.veritablejeu.MediaPlayerInstance;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 
@@ -9,58 +10,92 @@ import com.example.veritablejeu.MediaPlayerInstance.BanqueDeSon.BanqueDeSon;
 
 public class MediaPlayerInstance implements IMediaPlayerInstance {
 
+    @SuppressLint("StaticFieldLeak")
     private static MediaPlayerInstance instance;
-    private static MediaPlayer mediaPlayer;
-    private static float volumeActuel = 1.0f;
+    private final Context context;
+    private MediaPlayer mediaPlayer;
+    private float currentVolume = 1.0f;
+    private int currentTrack = BanqueDeSon.getMainPageTrack();
 
-    private MediaPlayerInstance(){}
+    /**
+     * Hide
+     */
+    public MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
+    }
 
-    public static MediaPlayerInstance getInstance() {
+    /**
+     * Hide
+     */
+    public int getCurrentTrack() {
+        return currentTrack;
+    }
+
+    private MediaPlayerInstance(@NonNull Context context){
+        this.context = context;
+    }
+
+    public static MediaPlayerInstance getInstance(@NonNull Context context) {
         if(instance == null) {
-            instance = new MediaPlayerInstance();
+            instance = new MediaPlayerInstance(context);
         }
         return instance;
     }
 
     @Override
     public float getVolume() {
-        return volumeActuel;
+        return currentVolume;
     }
 
     @Override
     public void setVolume(float volume) {
-        volumeActuel = Math.min(Math.max(0.0f, volume), 1.0f);
-        mediaPlayer.setVolume(volumeActuel, volumeActuel);
+        currentVolume = Math.min(Math.max(0.0f, volume), 1.0f);
+        if(mediaPlayer != null) {
+            mediaPlayer.setVolume(currentVolume, currentVolume);
+        }
     }
 
     @Override
-    public void setMusiqueActuelle(@NonNull Context context, int musique) {
+    public void setTrack(int track) {
         if(mediaPlayer != null) {
             mediaPlayer.release();
         }
-        mediaPlayer = MediaPlayer.create(context, musique);
-        mediaPlayer.setVolume(volumeActuel, volumeActuel);
+        mediaPlayer = MediaPlayer.create(context, track);
+        mediaPlayer.setVolume(currentVolume, currentVolume);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
+        currentTrack = track;
     }
 
     @Override
-    public void activerPisteDuNumero(@NonNull Context context, int numero) {
-        if(mediaPlayer != null) {
-            mediaPlayer.release();
-        }
+    public void playNewMusic(int numero) {
         BanqueDeSon banqueDeSon = BanqueDeSon.getInstance();
-        int musique = banqueDeSon.getMusiqueDuNumero(numero);
-        mediaPlayer = MediaPlayer.create(context, musique);
-        mediaPlayer.setVolume(volumeActuel, volumeActuel);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
+        int musique = banqueDeSon.getTrackOf(numero);
+        setTrack(musique);
     }
 
     @Override
-    public void activerLaMusiqueDuMenu(@NonNull Context context) {
+    public void playMainPageMusic() {
+        setTrack(BanqueDeSon.getMainPageTrack());
+    }
+
+    @Override
+    public void playPrevious() {
         BanqueDeSon banqueDeSon = BanqueDeSon.getInstance();
-        int musiqueDuMenu = banqueDeSon.getMusiqueDuMenu();
-        setMusiqueActuelle(context, musiqueDuMenu);
+        int musique = banqueDeSon.getPreviousOf(currentTrack);
+        setTrack(musique);
+    }
+
+    @Override
+    public void playNext() {
+        BanqueDeSon banqueDeSon = BanqueDeSon.getInstance();
+        int musique = banqueDeSon.getNextOf(currentTrack);
+        setTrack(musique);
+    }
+
+    @Override
+    public int getCurrentTrackNumber() {
+        BanqueDeSon banqueDeSon = BanqueDeSon.getInstance();
+        return banqueDeSon.getNumberOf(currentTrack);
     }
 }

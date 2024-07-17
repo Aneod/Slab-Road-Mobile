@@ -20,7 +20,7 @@ import java.util.List;
 public class OutlineWall extends ModularWall {
 
     private static final int THINKNESS = 4;
-    private static final int ELEVATION = Elevation.NormalWall.getElevation();
+    private static final int ELEVATION = Elevation.OutlineWall.getElevation();
 
     public OutlineWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
         super(modularSquare, direction);

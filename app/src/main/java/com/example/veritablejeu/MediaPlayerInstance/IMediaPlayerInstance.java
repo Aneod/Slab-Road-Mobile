@@ -1,9 +1,5 @@
 package com.example.veritablejeu.MediaPlayerInstance;
 
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-
 import com.example.veritablejeu.MediaPlayerInstance.BanqueDeSon.BanqueDeSon;
 
 /**
@@ -27,10 +23,14 @@ public interface IMediaPlayerInstance {
     float getVolume();
 
     /**
-     * Modifie le volume du son pour celui donné.
-     * @param volume Normalement compris dans l'interval [0.0f, 1.0f].
-     *               Le volume sera mis à 0.0f si le paramètre donné est inférieur à l'interval.
-     *               1.0f si supérieur.
+     * Set the music volume. Can't work if no track have been played yet.
+     * <br>
+     * The volume is in [0.0f, 1.0f].
+     * <br>
+     * If the given volume is < to lower bound, set volume to 0.0f.
+     * <br>
+     * If the given volume is > to higher bound, set volume to 1.0f.
+     * @param volume the new volume.
      */
     void setVolume(float volume);
 
@@ -39,17 +39,33 @@ public interface IMediaPlayerInstance {
      * @param musique Un des fichiers son du jeu.
      *                L'objet MediaPlayer changera alors de ressource (fichier) sonore.
      */
-    void setMusiqueActuelle(@NonNull Context context, int musique);
+    void setTrack(int musique);
 
     /**
      * Change la musique jouée.
+     *
      * @param numero Le numéro de la musique que l'on souhaite jouer.
      *               L'objet MediaPlayer changera alors de ressource (fichier) sonore.
      */
-    void activerPisteDuNumero(@NonNull Context context, int numero);
+    void playNewMusic(int numero);
 
     /**
      * Change la musique actuellement jouée pour celle du menu.
      */
-    void activerLaMusiqueDuMenu(@NonNull Context context);
+    void playMainPageMusic();
+
+    /**
+     * Play the previous track of the current.
+     */
+    void playPrevious();
+
+    /**
+     * Play the next track of the current.
+     */
+    void playNext();
+
+    /**
+     * @return the number in the jukebox of the current track.
+     */
+    int getCurrentTrackNumber();
 }

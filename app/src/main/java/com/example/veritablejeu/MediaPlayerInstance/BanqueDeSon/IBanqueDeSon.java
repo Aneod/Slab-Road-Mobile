@@ -9,25 +9,43 @@ package com.example.veritablejeu.MediaPlayerInstance.BanqueDeSon;
 public interface IBanqueDeSon {
 
     /**
-     * Les musiques du jeu sont nommées pas un numéro. Cette fonction utilise un switch
-     * pour récupérer la musique correspondante au numéro donnée en paramètre.
-     * @param numero le numéro de la musique que l'on cherche.
-     *               Normalement ce numéro est positif et ne dépasse pas (et n'égal pas) le nombre total
-     *               de musique dans le switch.
-     *               Mais dans le cas contraire, la musique du menu sera renvoyée par défaut.
-     * @return la musique correspondante.
+     * Returns the corresponding track in the jukebox of the given number.
+     * <br>
+     * If the number is < 0, returns the last track. The first if the number is > jukebox.length().
+     * @param number the number of the track in the jukebox track order.
+     * @return a track of the jukebox.
      */
-    int getMusiqueDuNumero(int numero);
+    int getTrackOf(int number);
 
     /**
-     * Renvoie la musique jouée dans le menu du jeu.
-     * @return la valeur de l'objet int de la musique du menu.
+     * Returns the number of the given track in the jukebox.
+     * <br>
+     * If the given track is unknown, returns -1.
+     * @param track the track who we searching the number in jukebox.
+     * @return the track number.
      */
-    int getMusiqueDuMenu();
+    int getNumberOf(int track);
 
     /**
-     * Retourne le nombre total de piste audio.
-     * @return un entier.
+     * Returns the previous track of the given one.
+     * <br>
+     * If the given track is the first of the list, returns the last.
+     * <br>
+     * If the given track is unknown, return the last track.
+     * @param track the next track of the searched one.
+     * @return a track.
      */
-    int getNombreTotalDePistes();
+    int getPreviousOf(int track);
+
+    /**
+     * Returns the next track of the given one.
+     * <br>
+     * If the given track is the last of the list, returns the first.
+     * <br>
+     * If the given track is unknown, return the first track.
+     * @param track the previous track of the searched one.
+     * @return a track.
+     */
+    int getNextOf(int track);
+
 }

@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
 
-        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance();
-        mediaPlayerInstance.activerLaMusiqueDuMenu(this.getApplicationContext());
+        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance(this);
+        mediaPlayerInstance.playMainPageMusic();
 
         container = this.findViewById(R.id.main);
         BackgroundColoration.colorierBackground(container, Color.WHITE, Color.BLACK);
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goEditeur(@Nullable LevelFile levelFile) {
         Bus.getInstance().setLevelFile(levelFile);
-        Intent activity = new Intent(getApplicationContext(), InGame.class);
+        Intent activity = new Intent(getApplicationContext(), Editeur.class);
         startActivity(activity);
         finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
