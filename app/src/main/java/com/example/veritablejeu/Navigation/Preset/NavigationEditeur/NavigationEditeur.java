@@ -10,6 +10,7 @@ import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
+import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
@@ -50,10 +51,9 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         } else {
             topMargin = 0;
         }
-
         LittleWindow littleWindow = editeur.getLittleWindow();
         List<WindowProposal> propositions = new ArrayList<>();
-        propositions.add(new WindowProposal("Background colors", () -> {}, true));
+        propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
         propositions.add(new WindowProposal("Background bubbles", () -> {}, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));

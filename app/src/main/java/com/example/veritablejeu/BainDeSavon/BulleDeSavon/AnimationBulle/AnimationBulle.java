@@ -13,12 +13,11 @@ import com.example.veritablejeu.BainDeSavon.BulleDeSavon.BulleDeSavon;
 
 public class AnimationBulle implements IAnimationBulle {
 
-    private final BulleDeSavon bulleDeSavon;
     private final ObjectAnimator animator;
     private final ValueAnimator sinAnimator;
 
     @NonNull
-    private ValueAnimator get_xTranslation_animation(int hauteurAParcourir, int dureeTotale) {
+    private ValueAnimator get_xTranslation_animation(BulleDeSavon bulleDeSavon, int hauteurAParcourir, int dureeTotale) {
         int sens = MathematicTools.random_open(-1, 1);
         int vitesseDeVariationSurX = MathematicTools.random_open(20, 100);
 
@@ -35,7 +34,7 @@ public class AnimationBulle implements IAnimationBulle {
     }
 
     @NonNull
-    private ObjectAnimator get_yTranslation_scale_animation(int hauteurAParcourir, int dureeTotale) {
+    private ObjectAnimator get_yTranslation_scale_animation(BulleDeSavon bulleDeSavon, int hauteurAParcourir, int dureeTotale) {
         ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(
                 bulleDeSavon,
                 PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0, 0),
@@ -49,12 +48,11 @@ public class AnimationBulle implements IAnimationBulle {
     }
 
     public AnimationBulle(@NonNull BulleDeSavon bulle) {
-        this.bulleDeSavon = bulle;
         int hauteurAParcourir = MathematicTools.random_open(ScreenUtils.getScreenHeight() * 2/10, ScreenUtils.getScreenHeight() * 9/10);
         int dureeTotale = MathematicTools.random_open(15000, 25000);
 
-        animator = get_yTranslation_scale_animation(hauteurAParcourir, dureeTotale);
-        sinAnimator = get_xTranslation_animation(hauteurAParcourir, dureeTotale);
+        animator = get_yTranslation_scale_animation(bulle, hauteurAParcourir, dureeTotale);
+        sinAnimator = get_xTranslation_animation(bulle, hauteurAParcourir, dureeTotale);
         start_animation();
     }
 

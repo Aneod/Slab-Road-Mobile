@@ -10,13 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.Game.Board.BoardElement.Square.TransparencySettings.TransparencySettings;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.Ghost;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.Versions.NormalSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.BackEnd.sequentialCode.Code;
@@ -28,8 +28,6 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wal
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterSequencer;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinatesManager;
-import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
-import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -336,9 +334,13 @@ public abstract class ModularSquare extends BoardElement {
         if(this instanceof NormalSquare) {
             propositions.add(new WindowProposal("Add blob", this::createSecureBlob, true));
         }
-        propositions.add(new WindowProposal("Transparency", () -> {}, true));
+        propositions.add(new WindowProposal("Transparency", this::openTransparencySettings, true));
         propositions.add(new WindowProposal("Delete", this::remove, Color.RED, true));
         return propositions;
+    }
+
+    private void openTransparencySettings() {
+        TransparencySettings.showGameSettingsPopUp(this);
     }
 
     private void openSlabPropositions() {

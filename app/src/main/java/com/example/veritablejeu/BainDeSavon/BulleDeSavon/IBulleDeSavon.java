@@ -1,17 +1,15 @@
 package com.example.veritablejeu.BainDeSavon.BulleDeSavon;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
 public interface IBulleDeSavon {
 
     /**
      * Supprime la bulle du ConstraintLayout et l'ajoute à celui en paramètre.
-     * @param constraintLayout le ConstraintLayout dans lequel on ajoute la bulle.
+     * @param activity l'activité dans laquelle on ajoute la bulle.
      */
-    void setConstraintLayout(@NonNull Activity activity);
+    void setConstraintLayout(@NonNull AppCompatActivity activity);
 
     /**
      * Obtenir le numéro de groupe de la bulle.
@@ -48,5 +46,15 @@ public interface IBulleDeSavon {
      * Rend invisible la bulle.
      */
     void hide();
+
+    /**
+     * @return the color of the bubble.
+     */
+    int getColor();
+
+    /**
+     * @return the bubble shape.
+     */
+    int getShape();
 
 }

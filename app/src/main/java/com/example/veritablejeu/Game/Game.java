@@ -43,7 +43,7 @@ public class Game extends AppCompatActivity implements IGame {
     protected BoardsMovements onToucheListenerPlateauModulaire;
     protected final ArrayList<Board> plateauModulaireSet = new ArrayList<>();
     private Board plateauADeplacer;
-    private int[] backgroundColors = new int[]{Color.WHITE, Color.WHITE};
+    private GameBackgroundColors backgroundColors;
     private boolean cableOutline = false;
 
 
@@ -87,6 +87,7 @@ public class Game extends AppCompatActivity implements IGame {
         container = this.findViewById(R.id.main);
         levelFile = MainActivity.Bus.getInstance().getLevelFile();
         onToucheListenerPlateauModulaire = new BoardsMovements(this);
+        backgroundColors = new GameBackgroundColors(this);
 
         ajouterPopUp();
         ajouterFenetre();
@@ -127,7 +128,12 @@ public class Game extends AppCompatActivity implements IGame {
 
     @Override
     public void colorFlash(int color) {
-        BackgroundColoration.colorFlash(container, color, backgroundColors);
+        int[] colors = backgroundColors.getBackgroundColors();
+        BackgroundColoration.colorFlash(container, color, colors);
+    }
+
+    public GameBackgroundColors getBackgroundColors() {
+        return backgroundColors;
     }
 
     public BoardsMovements getOnToucheListenerPlateauModulaire() {
@@ -169,8 +175,20 @@ public class Game extends AppCompatActivity implements IGame {
      * @param code who containes some colors like : xxxxxxyyyyyyzzzzzz...
      */
     public void backgroundColoration(String code) {
-        backgroundColors = StringColorConverter.turnIntoColors(code);
-        BackgroundColoration.colorierBackground(container, backgroundColors);
+        int[] colors = StringColorConverter.turnIntoColors(code);
+        int topColor;
+        int bottomColor;
+        if(colors.length < 1) {
+            topColor = GameBackgroundColors.getDefaultColor();
+        } else {
+            topColor = colors[0];
+        }
+        if(colors.length < 2) {
+            bottomColor = GameBackgroundColors.getDefaultColor();
+        } else {
+            bottomColor = colors[1];
+        }
+        backgroundColors.setColors(topColor, bottomColor);
     }
 
     /**

@@ -58,7 +58,7 @@ public class Board extends FrameLayout {
     private final GroupOfBlobsOfBoard groupOfBlobsOfBoard = new GroupOfBlobsOfBoard(this);
     private final Set<ModularSlab> groupOfSlabs = new HashSet<>();
     private final Fence fence;
-
+    private final BoardTransparency boardTransparency = new BoardTransparency();
 
     @Override
     public ConstraintLayout.LayoutParams getLayoutParams() {
@@ -418,5 +418,13 @@ public class Board extends FrameLayout {
         for(ModularSquare modularSquare : modularSquareSet) {
             modularSquare.setShowAsAccessible(modularSquare.isAccessible());
         }
+    }
+
+    public Set<ModularSquare> getModularSquareSet() {
+        return modularSquareSet;
+    }
+
+    public BoardTransparency getBoardTransparency() {
+        return boardTransparency;
     }
 }

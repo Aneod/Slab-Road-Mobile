@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.veritablejeu.BainDeSavon.BulleDeSavon.BulleDeSavon;
+
+import java.util.HashSet;
+
 public interface IBainDeSavon {
 
     /**
@@ -11,6 +15,11 @@ public interface IBainDeSavon {
      * on les supprime de l'ancien.
      */
     void setContainerDeToutesLesBulles(@NonNull AppCompatActivity activity);
+
+    /**
+     * @return all bubbles of the class.
+     */
+    public HashSet<BulleDeSavon> getToutesLesBulles();
 
     /**
      * Reset le design pour celui par défaut.
@@ -72,5 +81,5 @@ public interface IBainDeSavon {
      * Indique si les bulles sont actuellement visibles.
      * @return la valeur du booléen <i>visible</i>.
      */
-    boolean getBullesVisibles();
+    boolean areBubblesVisible();
 }

@@ -15,15 +15,17 @@ import java.util.HashSet;
 
 public class BainDeSavon implements IBainDeSavon {
 
+    private static final int BUBBLE_NUMBER = 45;
+
     private static BainDeSavon instance;
     private final HashSet<BulleDeSavon> toutesLesBulles;
     private boolean visible = true;
 
-    private HashSet<BulleDeSavon> creerBullesDeSavon(@NonNull Activity context) {
-        int nbBulles = 45;
+    @NonNull
+    private HashSet<BulleDeSavon> creerBullesDeSavon(@NonNull AppCompatActivity activity) {
         HashSet<BulleDeSavon> nouvelleListe = new HashSet<>();
-        for(int i = 0; i < nbBulles; i++) {
-            BulleDeSavon bulleDeSavon = new BulleDeSavon(context);
+        for(int i = 0; i < BUBBLE_NUMBER; i++) {
+            BulleDeSavon bulleDeSavon = new BulleDeSavon(activity);
             nouvelleListe.add(bulleDeSavon);
         }
         return nouvelleListe;
@@ -34,9 +36,9 @@ public class BainDeSavon implements IBainDeSavon {
         setDesignDeBase();
     }
 
-    public static synchronized BainDeSavon getInstance(@NonNull AppCompatActivity context) {
+    public static synchronized BainDeSavon getInstance(@NonNull AppCompatActivity activity) {
         if (instance == null) {
-            instance = new BainDeSavon(context);
+            instance = new BainDeSavon(activity);
         }
         return instance;
     }
@@ -46,6 +48,11 @@ public class BainDeSavon implements IBainDeSavon {
         for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
             bulleDeSavon.setConstraintLayout(activity);
         }
+    }
+
+    @Override
+    public HashSet<BulleDeSavon> getToutesLesBulles() {
+        return toutesLesBulles;
     }
 
     @Override
@@ -136,7 +143,7 @@ public class BainDeSavon implements IBainDeSavon {
     }
 
     @Override
-    public boolean getBullesVisibles() {
+    public boolean areBubblesVisible() {
         return visible;
     }
 }

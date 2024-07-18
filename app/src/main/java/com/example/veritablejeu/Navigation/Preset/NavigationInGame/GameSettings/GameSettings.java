@@ -5,7 +5,6 @@ import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.Game.Board.AccessibleSquaresFinder;
-import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
@@ -59,7 +58,7 @@ public class GameSettings {
         BainDeSavon bainDeSavon = BainDeSavon.getInstance(inGame);
         Runnable activeEffectBulles = bainDeSavon::show_and_resume;
         Runnable disactiveEffectBulles = bainDeSavon::hide_and_pause;
-        boolean currentBulles = bainDeSavon.getBullesVisibles();
+        boolean currentBulles = bainDeSavon.areBubblesVisible();
         return new SettingsPanel.Title_Runnables_Association(
                 "Background bubbles", activeEffectBulles, disactiveEffectBulles, currentBulles);
     }

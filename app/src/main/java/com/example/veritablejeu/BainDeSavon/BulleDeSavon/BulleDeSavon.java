@@ -2,11 +2,14 @@ package com.example.veritablejeu.BainDeSavon.BulleDeSavon;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
@@ -18,6 +21,9 @@ import com.example.veritablejeu.R;
 
 @SuppressLint("ViewConstructor")
 public class BulleDeSavon extends View implements IBulleDeSavon {
+
+    private static final int DIAMETER = 25;
+
     private final int groupe;
     private GradientDrawable gradientDrawable;
     private final AnimationBulle animationBulle = new AnimationBulle(this);
@@ -36,19 +42,17 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
     }
 
     private void setLayoutParam() {
-        int diametre = 25;
         int leftMargin = getPositionXAleatoire();
         int topMargin = getPositionYAleatoire();
         ConstraintLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
-                diametre, diametre, leftMargin, topMargin
+                DIAMETER, DIAMETER, leftMargin, topMargin
         );
         setLayoutParams(layoutParams);
     }
 
-    public BulleDeSavon(@NonNull Activity activity) {
+    public BulleDeSavon(@NonNull AppCompatActivity activity) {
         super(activity);
-        ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
-        constraintLayout.addView(this);
+        setConstraintLayout(activity);
 
         groupe = MathematicTools.random_open(0, 1);
         setLayoutParam();
@@ -57,13 +61,13 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
     }
 
     @Override
-    public void setConstraintLayout(@NonNull Activity activity) {
+    public void setConstraintLayout(@NonNull AppCompatActivity activity) {
         ViewParent parent = getParent();
-        ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
         if(parent instanceof ConstraintLayout) {
             ((ConstraintLayout) parent).removeView(this);
-            constraintLayout.addView(this);
         }
+        ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
+        constraintLayout.addView(this);
     }
 
     @Override
@@ -99,5 +103,19 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
     @Override
     public void hide() {
         setVisibility(INVISIBLE);
+    }
+
+    @Override
+    public int getColor() {
+        ColorStateList colorStateList = gradientDrawable.getColor();
+        if(colorStateList == null) {
+            return Color.TRANSPARENT;
+        }
+        return colorStateList.getDefaultColor();
+    }
+
+    @Override
+    public int getShape() {
+        return gradientDrawable.getShape();
     }
 }
