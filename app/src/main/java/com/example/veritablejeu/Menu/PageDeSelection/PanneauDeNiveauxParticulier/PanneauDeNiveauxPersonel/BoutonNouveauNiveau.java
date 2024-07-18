@@ -17,7 +17,7 @@ public class BoutonNouveauNiveau extends FrameLayout {
 
     public static final String codeBidon = "a1wp1e00B66230000000b1cFFFFFFaaaaaam115" +
             "p26b" +
-            "b16000000" +
+            "b16990000" +
             "s1k000w1el110t110b13ac0" +
             "s15001b0" +
             "s1a002w14r110" +

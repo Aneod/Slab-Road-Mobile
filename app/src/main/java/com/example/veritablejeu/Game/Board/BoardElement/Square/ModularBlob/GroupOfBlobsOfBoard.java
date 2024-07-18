@@ -1,21 +1,52 @@
 package com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob;
 
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
-import com.example.veritablejeu.Tools.StringColorConverter;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class GroupOfBlobsOfBoard {
 
+    private int RED = 255;
+    private int GREEN = 255;
+    private int BLUE = 255;
+
+    public int getRED() {
+        return RED;
+    }
+
+    public void setRED(int RED) {
+        this.RED = RED;
+    }
+
+    public int getGREEN() {
+        return GREEN;
+    }
+
+    public void setGREEN(int GREEN) {
+        this.GREEN = GREEN;
+    }
+
+    public int getBLUE() {
+        return BLUE;
+    }
+
+    public void setBLUE(int BLUE) {
+        this.BLUE = BLUE;
+    }
+
+
+
+
     private final Board board;
     private final Set<ModularBlob> modularBlobSet = new HashSet<>();
     private ModularBlob master;
-    private int blobsColor;
 
     public GroupOfBlobsOfBoard(@NonNull Board board) {
         this.board = board;
@@ -57,12 +88,18 @@ public class GroupOfBlobsOfBoard {
     }
 
     public int getBlobsColor() {
-        return blobsColor;
+        return Color.rgb(RED, GREEN, BLUE);
     }
 
-    public void setBlobsColorByCode(String blobsColor) {
-        this.blobsColor = StringColorConverter.turnIntoColor(blobsColor);
-        modularBlobSet.forEach(modularBlob -> modularBlob.setColor(this.blobsColor));
+    public void setBlobsColor(int blobsColor) {
+        RED = Color.red(blobsColor);
+        GREEN = Color.green(blobsColor);
+        BLUE = Color.blue(blobsColor);
+        refreshBlobColor();
+    }
+
+    public void refreshBlobColor() {
+        modularBlobSet.forEach(modularBlob -> modularBlob.setColor(getBlobsColor()));
     }
 
     @Nullable

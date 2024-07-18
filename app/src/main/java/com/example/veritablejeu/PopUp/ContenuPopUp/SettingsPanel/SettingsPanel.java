@@ -94,6 +94,9 @@ public class SettingsPanel extends ContenuPopUp {
         private final Consumer<Float> consumer;
         private final int color;
 
+        /**
+         * @param startValue [0.0f, 1.0f].
+         */
         public Title_Consumer_Association(String title, Consumer<Float> consumer, float startValue) {
             this(title, consumer, startValue, Color.BLACK);
         }

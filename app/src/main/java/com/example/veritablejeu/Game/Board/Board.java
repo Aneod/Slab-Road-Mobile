@@ -31,6 +31,7 @@ import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.R;
+import com.example.veritablejeu.Tools.StringColorConverter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -254,6 +255,10 @@ public class Board extends FrameLayout {
         groupOfBlobsOfBoard.remove(blob);
     }
 
+    public GroupOfBlobsOfBoard getBlobs() {
+        return groupOfBlobsOfBoard;
+    }
+
     public ZdecimalCharacter getTopLimit() {
         return topLimit;
     }
@@ -305,7 +310,8 @@ public class Board extends FrameLayout {
     }
 
     public void setBlobsColorByCode(String blobsColor) {
-        groupOfBlobsOfBoard.setBlobsColorByCode(blobsColor);
+        int color = StringColorConverter.turnIntoColor(blobsColor);
+        groupOfBlobsOfBoard.setBlobsColor(color);
     }
 
     public void createSquare(@NonNull String code) {
