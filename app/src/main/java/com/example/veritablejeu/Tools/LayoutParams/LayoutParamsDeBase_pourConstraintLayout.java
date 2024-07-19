@@ -1,5 +1,6 @@
 package com.example.veritablejeu.Tools.LayoutParams;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class LayoutParamsDeBase_pourConstraintLayout extends ConstraintLayout.LayoutParams {
@@ -17,5 +18,13 @@ public class LayoutParamsDeBase_pourConstraintLayout extends ConstraintLayout.La
         this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         this.leftMargin = leftMargin;
         this.topMargin = topMargin;
+    }
+
+    public LayoutParamsDeBase_pourConstraintLayout(@NonNull ConstraintParams constraintParams) {
+        super(constraintParams.getWidth(), constraintParams.getHeight());
+        this.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        this.leftMargin = constraintParams.getLeftMargin();
+        this.topMargin = constraintParams.getTopMargin();
     }
 }

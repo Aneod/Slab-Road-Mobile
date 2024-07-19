@@ -11,21 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.TextePopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
-public class Message extends ContenuPopUp {
+public class Message extends FrameLayout {
 
     private void fermerPopUpSiContenuInchange(@NonNull PopUp popUp) {
-        FrameLayout contenuAuMomentDeFermer = popUp.getContenu();
-        boolean leContenuEstInchange = contenuAuMomentDeFermer.equals(Message.this);
-        if(leContenuEstInchange) {
-            popUp.cacher();
-        }
+        popUp.hide();
     }
 
     @NonNull
@@ -53,30 +48,29 @@ public class Message extends ContenuPopUp {
     @NonNull
     private View getBarreDeProgression(@NonNull PopUp popUp) {
         View barre = new View(getContext());
-        int leftMargin = popUp.getLargeurBordure();
+        int leftMargin = popUp.getBORDER_WIDTH();
         int width = popUp.getLargeur() - 2 * leftMargin;
         int hauteurBarre = 10;
-        int topMarginBarre = hauteurTotale - hauteurBarre - leftMargin;
         ConstraintLayout.LayoutParams layout = new LayoutParamsDeBase_pourConstraintLayout(
-                width, hauteurBarre, leftMargin, topMarginBarre
+                width, hauteurBarre, leftMargin, 0
         );
         barre.setLayoutParams(layout);
         barre.setBackgroundColor(Color.LTGRAY);
         return barre;
     }
 
-    public Message(@NonNull PopUp popUp, String titre, String texte, int duration) {
-        super(popUp.getContext(), titre);
+    public Message(@NonNull PopUp popUp, String texte, int duration) {
+        super(popUp.getContext());
 
         int hauteurTexteApproximative = 100;
 
         int margesH = 0;
         int margesB = 30;
-        int topMargin = popUp.getHauteurInitiale();
-        this.hauteurTotale = margesH + hauteurTexteApproximative + margesB;
+        int topMargin = popUp.getInitialHeight();
+        int height = margesH + hauteurTexteApproximative + margesB;
         FrameLayout.LayoutParams layoutParams =
                 new LayoutParamsDeBase_pourFrameLayout(
-                        ConstraintLayout.LayoutParams.MATCH_PARENT, hauteurTotale, 0, topMargin
+                        ConstraintLayout.LayoutParams.MATCH_PARENT, height, 0, topMargin
                 );
         this.setLayoutParams(layoutParams);
 

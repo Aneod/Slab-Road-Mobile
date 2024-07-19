@@ -6,7 +6,6 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
@@ -14,8 +13,10 @@ import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageN
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.R;
 
+import org.jetbrains.annotations.Contract;
+
 @SuppressLint("ViewConstructor")
-public class Manuel extends ContenuPopUp {
+public class Manuel extends FrameLayout {
 
     private static Manuel instance;
     private final PopUp parent;
@@ -26,6 +27,8 @@ public class Manuel extends ContenuPopUp {
     private PageInstruction pageInstruction;
     private final int nombreDePages;
 
+    @NonNull
+    @Contract(pure = true)
     private String getAnnotationNumeroPage() {
         return (pageActuelle + 1) + "/" + nombreDePages;
     }
@@ -53,7 +56,7 @@ public class Manuel extends ContenuPopUp {
             boolean dernierePageAtteinte = pageActuelle == nombreDePages - 1;
             if (dernierePageAtteinte) {
                 boutonDroite.getImage().setImageResource(R.drawable.croix);
-                boutonDroite.setOnClickListener(v -> parent.cacher());
+                boutonDroite.setOnClickListener(v -> parent.hide());
             } else {
                 boutonDroite.getImage().setImageResource(R.drawable.fleche_droite);
                 boutonDroite.setOnClickListener(v -> pageSuivante());
@@ -87,7 +90,7 @@ public class Manuel extends ContenuPopUp {
      */
     private PartieInferieureAPageNumerotee creationPartieInferieure(int width, int height, int topMargin) {
         PartieInferieureAPageNumerotee partieInferieureAPageNumerotee = new PartieInferieureAPageNumerotee(
-                this, width, height, topMargin, parent.getLargeurBordure(), this::pagePrecedente, this::pageSuivante
+                this, width, height, topMargin, parent.getBORDER_WIDTH(), this::pagePrecedente, this::pageSuivante
         );
         partieInferieureAPageNumerotee.setAffichageNumeroPage(getAnnotationNumeroPage());
 
@@ -115,7 +118,8 @@ public class Manuel extends ContenuPopUp {
      * @param topMargin la marge supérieure.
      * @return un FrameLayout.
      */
-    private FrameLayout creationConteneurInstructions(PopUp parent, int height, int topMargin) {
+    @NonNull
+    private FrameLayout creationConteneurInstructions(@NonNull PopUp parent, int height, int topMargin) {
         int margesGDtexte = 60;
         int largeurTexte = parent.getLargeur() - 2 * margesGDtexte;
         FrameLayout conteneurInstructions = new FrameLayout(this.getContext());
@@ -129,7 +133,7 @@ public class Manuel extends ContenuPopUp {
     }
 
     private Manuel(@NonNull PopUp parent) {
-        super(parent.getContext(), "RAPPEL DES REGLES");
+        super(parent.getContext());
         this.parent = parent;
 
         int margesH = 15;
@@ -137,11 +141,11 @@ public class Manuel extends ContenuPopUp {
         int hauteurTexteApproximative = 920;
         int hauteurTexteAvecMarge = hauteurTexteApproximative + margesH + margesB;
         int hauteurPartieInferieure = 100;
-        this.hauteurTotale = hauteurTexteAvecMarge + hauteurPartieInferieure;
+        int height = hauteurTexteAvecMarge + hauteurPartieInferieure;
 
-        int topMarginManuel = parent.getHauteurInitiale();
+        int topMarginManuel = parent.getInitialHeight();
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
-                ConstraintLayout.LayoutParams.MATCH_PARENT, hauteurTotale,
+                ConstraintLayout.LayoutParams.MATCH_PARENT, height,
                 0, topMarginManuel);
         this.setLayoutParams(layoutParams);
 

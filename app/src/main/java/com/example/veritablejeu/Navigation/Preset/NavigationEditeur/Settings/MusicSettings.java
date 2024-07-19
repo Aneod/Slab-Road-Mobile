@@ -36,11 +36,12 @@ public class MusicSettings {
     public static void showMusicSettings(Game game) {
         if(game == null) return;
         PopUp popUp = game.getPopUp();
-        Question contenuPopUp = new Question(
-                popUp, "JUKEBOX", getTextPopUp(game), "PREVIOUS", null, "NEXT", null
+        popUp.setTitle("JUKEBOX");
+        Question question = new Question(
+                popUp, getTextPopUp(game), "PREVIOUS", null, "NEXT", null
         );
-        contenuPopUp.setRunnableA(() -> setPrevious(game, contenuPopUp));
-        contenuPopUp.setRunnableB(() -> setNext(game, contenuPopUp));
-        popUp.setContenu(contenuPopUp);
+        question.setRunnableA(() -> setPrevious(game, question));
+        question.setRunnableB(() -> setNext(game, question));
+        popUp.setContent(question.getSimpleText(), question.getButtons());
     }
 }

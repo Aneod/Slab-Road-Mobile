@@ -1,19 +1,13 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationInGame;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.Preset.NavigationInGame.GameSettings.GameSettings;
-import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
-import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
-import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;
@@ -27,23 +21,17 @@ public class NavigationInGame extends Navigation {
         PopUp popUp = inGame.getPopUp();
         Runnable runnableA = () -> {
             inGame.retourAuMenu();
-            popUp.cacher();
+            popUp.hide();
         };
-        Runnable runnableB = popUp::cacher;
-        Question contenuPopUp = new Question(
-                popUp, "EXIT", "Return to main page ?", "YES", runnableA, "NO", runnableB
-        );
-        popUp.setContenu(contenuPopUp);
+        Runnable runnableB = popUp::hide;
+        popUp.showQuestion("EXIT", "Return to main page ?", "YES", runnableA, "NO", runnableB);
     }
 
     private void propositionReset() {
         PopUp popUp = inGame.getPopUp();
-        Runnable runnableA = popUp::cacher;
-        Runnable runnableB = popUp::cacher;
-        Question contenuPopUp = new Question(
-                popUp, "RESET", "Do you want to reset progress ?", "YES", runnableA, "NO", runnableB
-        );
-        popUp.setContenu(contenuPopUp);
+        Runnable runnableA = popUp::hide;
+        Runnable runnableB = popUp::hide;
+        popUp.showQuestion("RESET", "Do you want to reset progress ?", "YES", runnableA, "NO", runnableB);
     }
 
     private void recadrage() {
@@ -54,7 +42,7 @@ public class NavigationInGame extends Navigation {
 
     private void manuel() {
         PopUp popUp = inGame.getPopUp();
-        popUp.afficherManuel();
+        popUp.showManual();
     }
 
     private void parametres() {

@@ -8,10 +8,9 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
+import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Tools.Elevation;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class OutlineWall extends ModularWall {
     public OutlineWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
         super(modularSquare, direction);
 
-        GradientDrawable normalBackground = CreateSimpleBackground.create(Color.LTGRAY);
+        GradientDrawable normalBackground = SimpleBackground.create(Color.LTGRAY);
         WallAspect wallAspect = new WallAspect(normalBackground, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
     }

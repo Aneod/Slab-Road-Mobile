@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.BoutonDePopUp;
+package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -20,7 +20,7 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstr
  * Crée un curseur appliquant une modification personnalisée selon un 
  * paramètre appartenant à un interval continu.
  */
-public class Curseur extends FrameLayout {
+public class CursorComponent extends FrameLayout {
 
     /**
      * La largeur occupée par le titre, en pct.
@@ -36,11 +36,11 @@ public class Curseur extends FrameLayout {
      */
     private float VALUE;
 
-    public Curseur(@NonNull Context context) {
+    public CursorComponent(@NonNull Context context) {
         super(context);
     }
 
-    public Curseur(@NonNull Context context, String titled, int width, int height, int leftMargin, int topMargin, float startValue, Consumer<Float> consumer, int color) {
+    public CursorComponent(@NonNull Context context, String titled, int width, int height, int leftMargin, int topMargin, float startValue, Consumer<Float> consumer, int color) {
         super(context);
         VALUE = (float) Math.min(Math.max(0.0, startValue), 1.0);
         initializeView(titled, width, height, leftMargin, topMargin, consumer, color);

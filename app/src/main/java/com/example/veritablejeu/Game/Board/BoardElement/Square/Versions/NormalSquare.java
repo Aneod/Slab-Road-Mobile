@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
+import com.example.veritablejeu.Tools.SimpleBackground;
 
 @SuppressLint("ViewConstructor")
 public class NormalSquare extends ModularSquare {
@@ -24,12 +24,12 @@ public class NormalSquare extends ModularSquare {
 
     @Override
     public GradientDrawable getAccessibleBackground() {
-        return CreateSimpleBackground.create(Color.WHITE, Color.LTGRAY, 1);
+        return SimpleBackground.create(Color.WHITE, Color.LTGRAY, 1);
     }
 
     @Override
     public GradientDrawable getInaccessibleBackground() {
-        return CreateSimpleBackground.create(Color.DKGRAY, Color.BLACK, 1);
+        return SimpleBackground.create(Color.DKGRAY, Color.BLACK, 1);
     }
 
     @Override

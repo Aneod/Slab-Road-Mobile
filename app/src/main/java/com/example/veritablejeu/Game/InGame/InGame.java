@@ -37,7 +37,7 @@ public class InGame extends Game implements InterfaceInGame {
     public void niveauTermine() {
         UserData.progressionDansLeScore(this, levelFile);
         enregistrerLeRecord(levelFile);
-        popUp.cacher();
+        popUp.hide();
 
         /*
         Plateau plateauJouable = getPlateau();

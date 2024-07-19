@@ -5,7 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.RGBPanel;
+import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.RGBPanel.RGBPanel;
 import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class BackgroundColors {
 
-    private static List<SettingsPanel.Title_Effect_Association> getTopColorSettings(@NonNull Game game) {
+    private static List<SettingsPanel.SettingComponent> getTopColorSettings(@NonNull Game game) {
         ConstraintLayout constraintLayout = game.getContainer();
         Consumer<Integer> whenModify = color -> {
             game.getBackgroundColors().setTopColor(color);
-            int[] backgroundColors = game.getBackgroundColors().getBackgroundColors();
+            int[] backgroundColors = game.getBackgroundColors().getColors();
             BackgroundColoration.colorierBackground(constraintLayout, backgroundColors);
         };
         int topColor = game.getBackgroundColors().getTopColor();
@@ -27,11 +27,11 @@ public class BackgroundColors {
         return rgbPanel.getCursors();
     }
 
-    private static List<SettingsPanel.Title_Effect_Association> getBottomColorSettings(@NonNull Game game) {
+    private static List<SettingsPanel.SettingComponent> getBottomColorSettings(@NonNull Game game) {
         ConstraintLayout constraintLayout = game.getContainer();
         Consumer<Integer> whenModify = color -> {
             game.getBackgroundColors().setBottomColor(color);
-            int[] backgroundColors = game.getBackgroundColors().getBackgroundColors();
+            int[] backgroundColors = game.getBackgroundColors().getColors();
             BackgroundColoration.colorierBackground(constraintLayout, backgroundColors);
         };
         int bottomColor = game.getBackgroundColors().getBottomColor();
@@ -40,8 +40,8 @@ public class BackgroundColors {
     }
 
     @NonNull
-    private static List<SettingsPanel.Title_Effect_Association> getAllComponents(@NonNull Game game) {
-        List<SettingsPanel.Title_Effect_Association> cursors = new ArrayList<>();
+    private static List<SettingsPanel.SettingComponent> getAllComponents(@NonNull Game game) {
+        List<SettingsPanel.SettingComponent> cursors = new ArrayList<>();
         cursors.addAll(getTopColorSettings(game));
         cursors.addAll(getBottomColorSettings(game));
         return cursors;
@@ -51,7 +51,7 @@ public class BackgroundColors {
         if(game == null) return;
         PopUp popUp = game.getPopUp();
         SettingsPanel settingsPanel = new SettingsPanel(popUp, getAllComponents(game));
-        popUp.setContenu(settingsPanel);
+        popUp.setContent(settingsPanel);
     }
 
 }

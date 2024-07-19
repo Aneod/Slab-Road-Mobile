@@ -23,7 +23,7 @@ public class GameBackgroundColors {
         setBottomColor(DEFAULT_COLOR);
     }
 
-    public int[] getBackgroundColors() {
+    public int[] getColors() {
         return backgroundColors;
     }
 

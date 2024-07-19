@@ -1,10 +1,11 @@
-package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel;
+package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.RGBPanel;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
+
+import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ public class RGBPanel {
     private final Consumer<Integer> whenModify;
 
     @NonNull
-    private SettingsPanel.Title_Consumer_Association getRedCursor() {
+    private SettingsPanel.CursorComponent getRedCursor() {
         Consumer<Float> consumer = value -> {
             if(value != null) {
                 int value_on255 = (int) (value * 255);
@@ -24,12 +25,12 @@ public class RGBPanel {
             }
         };
         float current = Color.red(color) / 255.0f;
-        return new SettingsPanel.Title_Consumer_Association(
+        return new SettingsPanel.CursorComponent(
                 "RED", consumer, current, Color.RED);
     }
 
     @NonNull
-    private SettingsPanel.Title_Consumer_Association getGreenCursor() {
+    private SettingsPanel.CursorComponent getGreenCursor() {
         Consumer<Float> consumer = value -> {
             if(value != null) {
                 int value_on255 = (int) (value * 255);
@@ -38,12 +39,12 @@ public class RGBPanel {
             }
         };
         float current = Color.green(color) / 255.0f;
-        return new SettingsPanel.Title_Consumer_Association(
+        return new SettingsPanel.CursorComponent(
                 "GREEN", consumer, current, Color.GREEN);
     }
 
     @NonNull
-    private SettingsPanel.Title_Consumer_Association getBlueCursor() {
+    private SettingsPanel.CursorComponent getBlueCursor() {
         Consumer<Float> consumer = value -> {
             if(value != null) {
                 int value_on255 = (int) (value * 255);
@@ -52,7 +53,7 @@ public class RGBPanel {
             }
         };
         float current = Color.blue(color) / 255.0f;
-        return new SettingsPanel.Title_Consumer_Association(
+        return new SettingsPanel.CursorComponent(
                 "BLUE", consumer, current, Color.BLUE);
     }
 
@@ -68,8 +69,16 @@ public class RGBPanel {
         this.whenModify = whenModify;
     }
 
-    public List<SettingsPanel.Title_Effect_Association> getCursors() {
-        List<SettingsPanel.Title_Effect_Association> components = new ArrayList<>();
+    public int getColor() {
+        return color;
+    }
+
+    public Consumer<Integer> getWhenModify() {
+        return whenModify;
+    }
+
+    public List<SettingsPanel.SettingComponent> getCursors() {
+        List<SettingsPanel.SettingComponent> components = new ArrayList<>();
         components.add(getRedCursor());
         components.add(getGreenCursor());
         components.add(getBlueCursor());

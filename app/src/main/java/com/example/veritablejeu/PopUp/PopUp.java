@@ -1,128 +1,216 @@
 package com.example.veritablejeu.PopUp;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.content.Context;
+import android.animation.PropertyValuesHolder;
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.ContenuPopUp.ContenuPopUp;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.Manuel;
 import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
-import com.example.veritablejeu.PopUp.PopUpInitiale.PopUpInitiale;
+import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.ScreenUtils;
+import com.example.veritablejeu.Tools.SimpleBackground;
 
-import org.jetbrains.annotations.Contract;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PopUp extends PopUpInitiale implements IPopUp {
+@SuppressLint("ViewConstructor")
+public class PopUp extends FrameLayout implements IPopUp {
+
+    private static final int HORIZONTAL_MARGINS = 50;
+    private static final int VERTICAL_MARGINS = 175;
+    private static final int MAX_HEIGHT = ScreenUtils.getScreenHeight() - 2 * VERTICAL_MARGINS;
+    private static final int INITIAL_HEIGHT = 90;
+    private static final int HEIGHT_BETWEEN_COMPONENTS = 30;
+    private static final int BORDER_WIDTH = 5;
+    private static final int SHOW_ANIMATION_DURATION = 400;
+    private static final int HIDE_ANIMATION_DURATION = 300;
 
     private static PopUp instance;
-    private final ObjectAnimator animationOuverture;
-    private final ObjectAnimator animationFermeture;
-    private ContenuPopUp contenuActuel;
-    private boolean animationEnCours = false;
+    private final List<FrameLayout> contents = new ArrayList<>();
+    private final PopUpTitle title;
+    public final PopUpCross cross;
+    private final int largeur;
 
-    public static PopUp getInstance(@NonNull Context activity) {
+    private PopUp(@NonNull AppCompatActivity activity) {
+        super(activity);
+        setConstraintLayout(activity);
+
+        largeur = ScreenUtils.getScreenWidth() - 2 * HORIZONTAL_MARGINS;
+
+        LayoutParamsDeBase_pourConstraintLayout layoutParams =
+                new LayoutParamsDeBase_pourConstraintLayout(largeur, INITIAL_HEIGHT, HORIZONTAL_MARGINS, VERTICAL_MARGINS);
+        this.setLayoutParams(layoutParams);
+
+        GradientDrawable drawable = SimpleBackground.create(Color.WHITE, Color.BLACK, BORDER_WIDTH);
+        setBackground(drawable);
+
+        this.title = new PopUpTitle(this);
+        this.addView(title);
+
+        this.cross = new PopUpCross(this);
+        this.addView(cross);
+
+        setOnClickListener(v -> {});
+        setElevation(Elevation.PopUp.getElevation());
+    }
+
+    public static PopUp getInstance(@NonNull AppCompatActivity activity) {
         if(instance == null) {
             instance = new PopUp(activity);
         }
         return instance;
     }
 
-    private PopUp(@NonNull Context context) {
-        super(context);
-        if(context instanceof AppCompatActivity) {
-            ConstraintLayout constraintLayout = ((AppCompatActivity) context).findViewById(R.id.main);
-            constraintLayout.addView(this);
-        }
-        croixPopUp.setOnClickListener(v -> cacher());
-        setOnClickListener(v -> {});
-        setElevation(Elevation.PopUp.getElevation());
-        animationOuverture = creationAnimationOuverture();
-        animationFermeture = creationAnimationFermeture();
-    }
-
-    @NonNull
-    @Contract(" -> new")
-    private ObjectAnimator creationAnimationOuverture() {
-        Runnable startEffectDeOuverture = () -> {
-            setVisibility(VISIBLE);
-            animationEnCours = true;
-        };
-        Runnable endEffectDeOuverture = () -> animationEnCours = false;
-        return new AnimationFonduePourPopUp(
-                this, 10, 0.0f, 1.0f, 400, startEffectDeOuverture, endEffectDeOuverture
-        ).getObjectAnimator();
-    }
-
-    @NonNull
-    @Contract(" -> new")
-    private ObjectAnimator creationAnimationFermeture() {
-        Runnable startEffectDeFermeture = () -> animationEnCours = true;
-        Runnable endEffectDeFermeture = () -> {
-            animationEnCours = false;
-            setVisibility(GONE);
-        };
-        return new AnimationFonduePourPopUp(
-                this, -10, 1.0f, 0.0f, 300, startEffectDeFermeture, endEffectDeFermeture
-        ).getObjectAnimator();
-    }
-
     @Override
     public void setConstraintLayout(@NonNull AppCompatActivity activity) {
         ViewParent parent = getParent();
-        ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
         if(parent instanceof ConstraintLayout) {
             ((ConstraintLayout) parent).removeView(this);
-            constraintLayout.addView(this);
+        }
+        ConstraintLayout constraintLayout = activity.findViewById(R.id.main);
+        constraintLayout.addView(this);
+    }
+
+    @Override
+    public int getLargeur() {
+        return largeur;
+    }
+
+    @Override
+    public int getInitialHeight() { return INITIAL_HEIGHT; }
+
+    @Override
+    public int getBORDER_WIDTH() {
+        return BORDER_WIDTH;
+    }
+
+    @Override
+    public void show() {
+        setVisibility(VISIBLE);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                PropertyValuesHolder.ofFloat(View.ALPHA, 0.0f, 1.0f)
+        );
+        objectAnimator.setDuration(SHOW_ANIMATION_DURATION);
+        objectAnimator.start();
+    }
+
+    @Override
+    public void hide() {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this,
+                PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f, 0.0f)
+        );
+        objectAnimator.setDuration(HIDE_ANIMATION_DURATION);
+        objectAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(@NonNull Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(@NonNull Animator animation) {
+                setVisibility(GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(@NonNull Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(@NonNull Animator animation) {}
+        });
+        objectAnimator.start();
+    }
+
+    public void setContent(@NonNull FrameLayout... contents) {
+        clear();
+        for(FrameLayout content : contents) {
+            addContent(content);
+        }
+        show();
+    }
+
+    public void addContent(FrameLayout popUpContent) {
+        if(popUpContent == null || popUpContent.getParent() != null) return;
+        ViewGroup.LayoutParams layoutParams = popUpContent.getLayoutParams();
+        if(layoutParams instanceof FrameLayout.LayoutParams) {
+            ((FrameLayout.LayoutParams) layoutParams).topMargin = get_Height();
+        }
+        popUpContent.setLayoutParams(popUpContent.getLayoutParams());
+        addView(popUpContent);
+        contents.add(popUpContent);
+        addHeight(popUpContent.getLayoutParams().height);
+    }
+
+    public void clear() {
+        contents.forEach(this::removeView);
+        contents.clear();
+        resetHeight();
+    }
+
+    public void setTitle(String nouveauTitre) {
+        title.setTexte(nouveauTitre);
+    }
+
+    private int get_Height() {
+        return getLayoutParams().height;
+    }
+
+    private void setHeight(int height) {
+        getLayoutParams().height = Math.max(0, height);
+    }
+
+    public void refreshHeight() {
+        resetHeight();
+        for(FrameLayout frameLayout : contents) {
+            ViewGroup.LayoutParams layoutParams = frameLayout.getLayoutParams();
+            if(layoutParams instanceof FrameLayout.LayoutParams) {
+                ((FrameLayout.LayoutParams) layoutParams).topMargin = get_Height();
+            }
+            addHeight(frameLayout.getLayoutParams().height);
         }
     }
 
-    @Override
-    public void montrer() {
-        if(animationEnCours) return;
-        animationOuverture.start();
+    private void addHeight(int height) {
+        int newHeight = get_Height() + height + HEIGHT_BETWEEN_COMPONENTS;
+        setHeight(Math.min(newHeight, MAX_HEIGHT));
     }
 
-    @Override
-    public void cacher() {
-        if(animationEnCours) return;
-        animationFermeture.start();
+    private void resetHeight() {
+        setHeight(INITIAL_HEIGHT);
     }
 
-    @Override
-    public boolean isVisible() {
-        return getVisibility() == VISIBLE;
-    }
-
-    @Override
-    public ContenuPopUp getContenu() {
-        return contenuActuel;
-    }
-
-    @Override
-    public void setContenu(@NonNull ContenuPopUp contenuPopUp) {
-        if(animationEnCours) return;
-        removeView(contenuActuel);
-        contenuActuel = contenuPopUp;
-        addView(contenuActuel);
-        setTitre(contenuPopUp.getTitre());
-        int hauteurQuestion = contenuPopUp.getHauteurTotale();
-        setHauteurInitiale_plus_autre(hauteurQuestion);
-        montrer();
+    public void showQuestion(String titre, String text, String reponseA, @Nullable Runnable runnableA, String reponseB, @Nullable Runnable runnableB) {
+        setTitle(titre);
+        Question question = new Question(this, text, reponseA, runnableA, reponseB, runnableB);
+        setContent(question.getSimpleText(), question.getButtons());
     }
 
     public void showMessage(String titre, String texte, int duration) {
-        Message message = new Message(this, titre, texte, duration);
-        setContenu(message);
+        setTitle(titre);
+        Message message = new Message(this, texte, duration);
+        setContent(message);
     }
 
     @Override
-    public void afficherManuel() {
-        setContenu(Manuel.getInstance(this));
+    public void showManual() {
+        setTitle("HOW TO PLAY");
+        setContent(Manuel.getInstance(this));
     }
 
 }

@@ -13,7 +13,7 @@ import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
+import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
@@ -26,7 +26,7 @@ import java.util.List;
 @SuppressLint("ViewConstructor")
 public class SpecSquare extends BoardElement {
 
-    private static final GradientDrawable fenceVisual = CreateSimpleBackground.create(Color.TRANSPARENT, Color.BLACK, 1);
+    private static final GradientDrawable fenceVisual = SimpleBackground.create(Color.TRANSPARENT, Color.BLACK, 1);
 
     private final Board board;
     private final ZdecimalCoordinates coordinates;

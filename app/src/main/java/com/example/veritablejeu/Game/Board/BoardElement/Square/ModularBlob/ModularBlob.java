@@ -99,9 +99,8 @@ public class ModularBlob extends BoardElement {
     }
 
     public void showImpossibleTravelMessage() {
-        PopUp popUp = PopUp.getInstance(getContext());
-        Message message = new Message(popUp, "WARNING", "Can't go here.", 1000);
-        popUp.setContenu(message);
+        PopUp popUp = PopUp.getInstance(board.getGame());
+        popUp.showMessage("WARNING", "Can't go here.", 1000);
     }
 
     public void moveTo(ZdecimalCoordinates coordinates) {
@@ -194,7 +193,7 @@ public class ModularBlob extends BoardElement {
     }
 
     private void openBlobColorSettings() {
-        BlobColorSettings.showGameSettingsPopUp(board);
+        BlobColorSettings.showPanel(board.getBlobs());
     }
 
     @Override

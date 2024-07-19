@@ -4,7 +4,7 @@ import android.graphics.drawable.GradientDrawable;
 
 import androidx.annotation.NonNull;
 
-public class CreateSimpleBackground {
+public class SimpleBackground {
 
     @NonNull
     public static GradientDrawable create(int fillColor, int borderColor, int borderWidth) {

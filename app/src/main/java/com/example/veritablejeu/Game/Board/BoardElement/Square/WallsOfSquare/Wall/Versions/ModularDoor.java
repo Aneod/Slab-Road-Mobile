@@ -17,10 +17,9 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wal
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
+import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
@@ -49,7 +48,7 @@ public class ModularDoor extends ModularWall {
 
         necessarySlabNumber = necessarySlab;
         this.fillColor = fillColor == null ? DEFAULT_FILL_COLOR : fillColor.Int();
-        GradientDrawable background = CreateSimpleBackground.create(this.fillColor, Color.BLACK, 2);
+        GradientDrawable background = SimpleBackground.create(this.fillColor, Color.BLACK, 2);
         wallAspect = new WallAspect(background, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
 
@@ -76,7 +75,7 @@ public class ModularDoor extends ModularWall {
     public void sealing() {
         subjectToSealing = true;
         sealed = true;
-        wall.setBackground(CreateSimpleBackground.create(CouleurDuJeu.Vert.Int(), Color.BLACK, 2));
+        wall.setBackground(SimpleBackground.create(CouleurDuJeu.Vert.Int(), Color.BLACK, 2));
         verify();
     }
 

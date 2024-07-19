@@ -11,7 +11,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.SlabD
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.YellowSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.Board;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
+import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinatesManager;
 import com.example.veritablejeu.Tools.Elevation;
@@ -19,7 +19,7 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 
 public class SlabDesign {
 
-    private static final GradientDrawable OFF_BACKGROUND = CreateSimpleBackground.create(Color.LTGRAY, Color.BLACK, 1);
+    private static final GradientDrawable OFF_BACKGROUND = SimpleBackground.create(Color.LTGRAY, Color.BLACK, 1);
 
     private final ModularSlab dalle;
     private final ModularSquare originSquare;
@@ -37,7 +37,7 @@ public class SlabDesign {
         dalle.setElevation(Elevation.Slab.getElevation());
         dalle.getBoard().addView(dalle);
 
-        GradientDrawable background = CreateSimpleBackground.create(dalle.getFillColor(), Color.BLACK, 1);
+        GradientDrawable background = SimpleBackground.create(dalle.getFillColor(), Color.BLACK, 1);
         dalle.setBackground(background);
     }
 

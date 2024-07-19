@@ -12,6 +12,8 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
+import com.example.veritablejeu.PopUp.ContenuPopUp.DoubleButtons;
+import com.example.veritablejeu.PopUp.ContenuPopUp.SimpleText;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
@@ -29,13 +31,10 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         PopUp popUp = editeur.getPopUp();
         Runnable runnableA = () -> {
             editeur.retourAuMenu();
-            popUp.cacher();
+            popUp.hide();
         };
-        Runnable runnableB = popUp::cacher;
-        Question contenuPopUp = new Question(
-                popUp, "RECOMMENCER", "Retourner à la page principale ?", "OUI", runnableA, "NON", runnableB
-        );
-        popUp.setContenu(contenuPopUp);
+        Runnable runnableB = popUp::hide;
+        popUp.showQuestion("RECOMMENCER", "Retourner à la page principale ?", "OUI", runnableA, "NON", runnableB);
     }
 
     private void openVisualEffectsTools() {
@@ -54,10 +53,21 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         LittleWindow littleWindow = editeur.getLittleWindow();
         List<WindowProposal> propositions = new ArrayList<>();
         propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
-        propositions.add(new WindowProposal("Background bubbles", () -> {}, true));
+        propositions.add(new WindowProposal("Background bubbles", this::test, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));
         littleWindow.set(propositions);
+    }
+
+    private void test() {
+        PopUp popUp = PopUp.getInstance(editeur);
+        popUp.setTitle("TEST");
+        popUp.clear();
+        SimpleText text = new SimpleText(popUp, "Do you want save and quit the game ?");
+        popUp.addContent(text);
+        DoubleButtons buttons = new DoubleButtons(popUp, "YES", () -> {}, "NO", popUp::hide);
+        popUp.addContent(buttons);
+        popUp.show();
     }
 
     private void activerDesactiverGrille(){
@@ -66,22 +76,16 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void propositionSauvegarde() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = popUp::cacher; // Il manque sauvegarderLeLevelFile.
-        Runnable runnableB = popUp::cacher;
-        Question contenuPopUp = new Question(
-                popUp, "SAUVEGARDE", "Sauvegarder votre niveau ?", "OUI", runnableA, "NON", runnableB
-        );
-        popUp.setContenu(contenuPopUp);
+        Runnable runnableA = popUp::hide; // Il manque sauvegarderLeLevelFile.
+        Runnable runnableB = popUp::hide;
+        popUp.showQuestion("SAUVEGARDE", "Sauvegarder votre niveau ?", "OUI", runnableA, "NON", runnableB);
     }
 
     private void propositionEssaiRapide() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = popUp::cacher; // Il manque sauvegarderPuisLancer.
-        Runnable runnableB = popUp::cacher;
-        Question contenuPopUp = new Question(
-                popUp, "ESSAI RAPIDE", "Sauvegarder et commencer l'essai ?", "OUI", runnableA, "NON", runnableB
-        );
-        popUp.setContenu(contenuPopUp);
+        Runnable runnableA = popUp::hide; // Il manque sauvegarderPuisLancer.
+        Runnable runnableB = popUp::hide;
+        popUp.showQuestion("ESSAI RAPIDE", "Sauvegarder et commencer l'essai ?", "OUI", runnableA, "NON", runnableB);
     }
 
     @NonNull

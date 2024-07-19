@@ -10,8 +10,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
-import com.example.veritablejeu.Tools.CreateSimpleBackground;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
+import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Tools.Elevation;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class SimpleWall extends ModularWall {
     public SimpleWall(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction) {
         super(modularSquare, direction);
 
-        GradientDrawable normalBackground = CreateSimpleBackground.create(Color.BLACK);
+        GradientDrawable normalBackground = SimpleBackground.create(Color.BLACK);
         WallAspect wallAspect = new WallAspect(normalBackground, THINKNESS, ELEVATION);
         buildVisual(wallAspect);
     }

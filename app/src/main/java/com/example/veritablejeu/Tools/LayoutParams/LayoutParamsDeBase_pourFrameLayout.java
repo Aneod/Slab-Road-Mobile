@@ -2,6 +2,8 @@ package com.example.veritablejeu.Tools.LayoutParams;
 
 import android.widget.FrameLayout;
 
+import androidx.annotation.NonNull;
+
 public class LayoutParamsDeBase_pourFrameLayout extends FrameLayout.LayoutParams {
 
     /**
@@ -15,5 +17,11 @@ public class LayoutParamsDeBase_pourFrameLayout extends FrameLayout.LayoutParams
         super(largeur, hauteur);
         this.leftMargin = leftMargin;
         this.topMargin = topMargin;
+    }
+
+    public LayoutParamsDeBase_pourFrameLayout(@NonNull ConstraintParams constraintParams) {
+        super(constraintParams.getWidth(), constraintParams.getHeight());
+        this.leftMargin = constraintParams.getLeftMargin();
+        this.topMargin = constraintParams.getTopMargin();
     }
 }

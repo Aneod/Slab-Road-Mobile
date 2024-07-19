@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel;
+package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.RGBPanel;
 
 import android.graphics.Color;
 

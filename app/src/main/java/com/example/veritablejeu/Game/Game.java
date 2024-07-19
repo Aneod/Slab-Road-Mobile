@@ -1,7 +1,6 @@
 package com.example.veritablejeu.Game;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -128,7 +127,7 @@ public class Game extends AppCompatActivity implements IGame {
 
     @Override
     public void colorFlash(int color) {
-        int[] colors = backgroundColors.getBackgroundColors();
+        int[] colors = backgroundColors.getColors();
         BackgroundColoration.colorFlash(container, color, colors);
     }
 
@@ -143,7 +142,7 @@ public class Game extends AppCompatActivity implements IGame {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         littleWindow.hide();
-        popUp.cacher();
+        popUp.hide();
         onToucheListenerPlateauModulaire.onTouchEvent(event, plateauADeplacer);
         return true;
     }
