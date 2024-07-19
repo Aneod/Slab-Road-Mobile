@@ -5,17 +5,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.RGBPanel.RGBPanel;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel.RGBPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BackgroundColors {
 
-    private static List<SettingsPanel.SettingComponent> getTopColorSettings(@NonNull Game game) {
+    private static CursorComponent[] getTopColorSettings(@NonNull Game game) {
         ConstraintLayout constraintLayout = game.getContainer();
         Consumer<Integer> whenModify = color -> {
             game.getBackgroundColors().setTopColor(color);
@@ -23,11 +20,11 @@ public class BackgroundColors {
             BackgroundColoration.colorierBackground(constraintLayout, backgroundColors);
         };
         int topColor = game.getBackgroundColors().getTopColor();
-        RGBPanel rgbPanel = new RGBPanel(topColor, whenModify);
+        RGBPanel rgbPanel = new RGBPanel(game.getPopUp(), topColor, whenModify);
         return rgbPanel.getCursors();
     }
 
-    private static List<SettingsPanel.SettingComponent> getBottomColorSettings(@NonNull Game game) {
+    private static CursorComponent[] getBottomColorSettings(@NonNull Game game) {
         ConstraintLayout constraintLayout = game.getContainer();
         Consumer<Integer> whenModify = color -> {
             game.getBackgroundColors().setBottomColor(color);
@@ -35,23 +32,23 @@ public class BackgroundColors {
             BackgroundColoration.colorierBackground(constraintLayout, backgroundColors);
         };
         int bottomColor = game.getBackgroundColors().getBottomColor();
-        RGBPanel rgbPanel = new RGBPanel(bottomColor, whenModify);
+        RGBPanel rgbPanel = new RGBPanel(game.getPopUp(), bottomColor, whenModify);
         return rgbPanel.getCursors();
     }
 
     @NonNull
-    private static List<SettingsPanel.SettingComponent> getAllComponents(@NonNull Game game) {
-        List<SettingsPanel.SettingComponent> cursors = new ArrayList<>();
-        cursors.addAll(getTopColorSettings(game));
-        cursors.addAll(getBottomColorSettings(game));
-        return cursors;
+    public static CursorComponent[] mergeArrays(@NonNull CursorComponent[] array1, @NonNull CursorComponent[] array2) {
+        CursorComponent[] mergedArray = new CursorComponent[array1.length + array2.length];
+        System.arraycopy(array1, 0, mergedArray, 0, array1.length);
+        System.arraycopy(array2, 0, mergedArray, array1.length, array2.length);
+
+        return mergedArray;
     }
 
     public static void showPanel(Game game) {
         if(game == null) return;
         PopUp popUp = game.getPopUp();
-        SettingsPanel settingsPanel = new SettingsPanel(popUp, getAllComponents(game));
-        popUp.setContent(settingsPanel);
+        popUp.setContent(mergeArrays(getTopColorSettings(game), getBottomColorSettings(game)));
     }
 
 }

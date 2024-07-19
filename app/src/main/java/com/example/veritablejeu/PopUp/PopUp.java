@@ -16,9 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.Manuel;
-import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SimpleText;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.Manuel;
+import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Question;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.SimpleText;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
@@ -136,15 +137,15 @@ public class PopUp extends FrameLayout implements IPopUp {
         objectAnimator.start();
     }
 
-    public void setContent(@NonNull FrameLayout... contents) {
+    public void setContent(@NonNull PopUpComponent... contents) {
         clear();
-        for(FrameLayout content : contents) {
+        for(PopUpComponent content : contents) {
             addContent(content);
         }
         show();
     }
 
-    public void addContent(FrameLayout popUpContent) {
+    public void addContent(PopUpComponent popUpContent) {
         if(popUpContent == null || popUpContent.getParent() != null) return;
         ViewGroup.LayoutParams layoutParams = popUpContent.getLayoutParams();
         if(layoutParams instanceof FrameLayout.LayoutParams) {

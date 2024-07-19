@@ -1,5 +1,7 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationInGame.GameSettings;
 
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
@@ -8,17 +10,19 @@ import com.example.veritablejeu.Game.Board.AccessibleSquaresFinder;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.SettingsPanel;
+import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.jetbrains.annotations.Contract;
 
 public class GameSettings {
 
     @NonNull
-    private static SettingsPanel.CursorComponent getVolumeCursor(InGame inGame) {
+    private static CursorComponent getVolumeCursor(@NonNull InGame inGame) {
+        PopUp popUp = inGame.getPopUp();
         MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance(inGame);
         Consumer<Float> consumerVolume = value -> {
             if(value != null) {
@@ -26,12 +30,14 @@ public class GameSettings {
             }
         };
         float currentVolume = mediaPlayerInstance.getVolume();
-        return new SettingsPanel.CursorComponent(
-                "Music volume", consumerVolume, currentVolume);
+        return new CursorComponent(
+                popUp, "Music volume", 100, currentVolume, consumerVolume, Color.BLACK);
     }
 
+    @Contract("_ -> new")
     @NonNull
-    private static SettingsPanel.CursorComponent getBlobSpeedCursor() {
+    private static CursorComponent getBlobSpeedCursor(@NonNull InGame inGame) {
+        PopUp popUp = inGame.getPopUp();
         Consumer<Float> speedConsumer = value -> {
             if(value != null) {
                 int value_on1000 = (int) (value * 1000);
@@ -40,54 +46,64 @@ public class GameSettings {
             }
         };
         float currentSpeed = 1.0f - (float) ModularBlob.getMovesDuration() / 1000;
-        return new SettingsPanel.CursorComponent(
-                "Move speed", speedConsumer, currentSpeed);
+        return new CursorComponent(
+                popUp, "Move speed", 100, currentSpeed, speedConsumer, Color.BLACK);
     }
 
+    @Contract("_ -> new")
     @NonNull
-    private static SettingsPanel.OnOffButtonComponent getFlashsOnOff() {
+    private static OnOffComponent getFlashsOnOff(@NonNull InGame inGame) {
+        PopUp popUp = inGame.getPopUp();
         Runnable activeEffectFlashs = () -> BackgroundColoration.setFlashesEnable(true);
         Runnable disactiveEffectFlashs = () -> BackgroundColoration.setFlashesEnable(false);
         boolean isFlashesEnable = BackgroundColoration.isFlashesEnable();
-        return new SettingsPanel.OnOffButtonComponent(
-                "Flashes", activeEffectFlashs, disactiveEffectFlashs, isFlashesEnable);
+        return new OnOffComponent(popUp, "Flashes", 100,
+                isFlashesEnable,
+                "ACTIVE", activeEffectFlashs,
+                "DISACTIVE", disactiveEffectFlashs
+        );
     }
 
     @NonNull
-    private static SettingsPanel.OnOffButtonComponent getBubblesOnOff(InGame inGame) {
+    private static OnOffComponent getBubblesOnOff(@NonNull InGame inGame) {
+        PopUp popUp = inGame.getPopUp();
         BainDeSavon bainDeSavon = BainDeSavon.getInstance(inGame);
         Runnable activeEffectBulles = bainDeSavon::show_and_resume;
         Runnable disactiveEffectBulles = bainDeSavon::hide_and_pause;
         boolean currentBulles = bainDeSavon.areBubblesVisible();
-        return new SettingsPanel.OnOffButtonComponent(
-                "Background bubbles", activeEffectBulles, disactiveEffectBulles, currentBulles);
+        return new OnOffComponent(popUp, "Background bubbles", 100,
+                currentBulles,
+                "ACTIVE", activeEffectBulles,
+                "DISACTIVE", disactiveEffectBulles
+        );
     }
 
+    @Contract("_ -> new")
     @NonNull
-    private static SettingsPanel.OnOffButtonComponent getMovesHelperOnOff(InGame inGame) {
+    private static OnOffComponent getMovesHelperOnOff(@NonNull InGame inGame) {
+        PopUp popUp = inGame.getPopUp();
         Runnable runnableA = () -> AccessibleSquaresFinder.setHelperEnableAndRefresh(true, inGame);
         Runnable runnableB = () -> AccessibleSquaresFinder.setHelperEnableAndRefresh(false, inGame);
         boolean isHelperEnable = AccessibleSquaresFinder.isHelperEnable();
-        return new SettingsPanel.OnOffButtonComponent(
-                "Travel assistance", runnableA, runnableB, isHelperEnable);
+        return new OnOffComponent(popUp, "Travel assistance", 100,
+                isHelperEnable,
+                "ACTIVE", runnableA,
+                "DISACTIVE", runnableB
+        );
     }
 
     @NonNull
-    private static List<SettingsPanel.SettingComponent> getAllComponents(InGame inGame) {
-        List<SettingsPanel.SettingComponent> components = new ArrayList<>();
-        components.add(getVolumeCursor(inGame));
-        components.add(getBlobSpeedCursor());
-        components.add(getFlashsOnOff());
-        components.add(getBubblesOnOff(inGame));
-        components.add(getMovesHelperOnOff(inGame));
-        return components;
+    private static PopUpComponent[] getAllComponents(InGame inGame) {
+        return new PopUpComponent[]{
+            getVolumeCursor(inGame), getBlobSpeedCursor(inGame), getFlashsOnOff(inGame),
+            getBubblesOnOff(inGame), getMovesHelperOnOff(inGame)
+        };
     }
 
     public static void showGameSettingsPopUp(InGame inGame) {
         if(inGame == null) return;
         PopUp popUp = inGame.getPopUp();
-        SettingsPanel settingsPanel = new SettingsPanel(popUp, getAllComponents(inGame));
-        popUp.setContent(settingsPanel);
+        popUp.setContent(getAllComponents(inGame));
     }
 
 }

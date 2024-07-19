@@ -13,7 +13,8 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.R;
@@ -62,7 +63,8 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         PopUp popUp = PopUp.getInstance(editeur);
         popUp.setTitle("TEST");
         CursorComponent cursorComponent = new CursorComponent(popUp, "Title", 100, .5f, null, Color.BLACK);
-        popUp.setContent(cursorComponent);
+        OnOffComponent onOffComponent = new OnOffComponent(popUp, "OnOff", 100, false, "Active", null, "Non", null);
+        popUp.setContent(cursorComponent, onOffComponent);
     }
 
     private void activerDesactiverGrille(){
