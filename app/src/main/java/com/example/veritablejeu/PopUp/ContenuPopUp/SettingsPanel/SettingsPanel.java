@@ -26,7 +26,7 @@ public class SettingsPanel extends FrameLayout {
     public SettingsPanel(@NonNull PopUp popUp, @NonNull List<SettingComponent> components) {
         super(popUp.getContext());
 
-        int width = popUp.getLargeur() - 2 * LEFT_RIGHT_MARGINS;
+        int width = popUp.get_width() - 2 * LEFT_RIGHT_MARGINS;
         int height = components.size() * (COMPONENTS_HEIGHT + HEIGHT_BETWEEN_COMPONENTS);
 
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
@@ -42,8 +42,8 @@ public class SettingsPanel extends FrameLayout {
                 Consumer<Float> consumer = ((CursorComponent) component).consumer;
                 int color = ((CursorComponent) component).color;
                 com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.CursorComponent cursor = new com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.CursorComponent(
-                        getContext(), title,
-                        width, COMPONENTS_HEIGHT, 0, topMargin,
+                        popUp, title,
+                        COMPONENTS_HEIGHT,
                         startValue, consumer, color
                 );
                 addView(cursor);
@@ -54,7 +54,7 @@ public class SettingsPanel extends FrameLayout {
                 Runnable runnableA = ((OnOffButtonComponent) component).runnableA;
                 Runnable runnableB = ((OnOffButtonComponent) component).runnableB;
                 OnOffComponent onOffComponent = new OnOffComponent(
-                        getContext(), title,
+                        popUp, title,
                         width, COMPONENTS_HEIGHT, 0, topMargin,
                         startState,
                         "ON", runnableA,
@@ -80,9 +80,6 @@ public class SettingsPanel extends FrameLayout {
             this.title = title;
         }
 
-        public FrameLayout getUICOmponent() {
-            return null;
-        }
     }
 
     /**
@@ -106,9 +103,6 @@ public class SettingsPanel extends FrameLayout {
             this.color = color;
         }
 
-        public FrameLayout getUICOmponent() {
-            return null;
-        }
     }
 
     /**
@@ -127,8 +121,5 @@ public class SettingsPanel extends FrameLayout {
             this.runnableB = runnableB;
         }
 
-        public FrameLayout getUICOmponent() {
-            return null;
-        }
     }
 }

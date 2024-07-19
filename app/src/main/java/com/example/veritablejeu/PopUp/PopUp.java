@@ -6,7 +6,6 @@ import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -18,8 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.PopUp.ContenuPopUp.Manuel.Manuel;
-import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
 import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
+import com.example.veritablejeu.PopUp.ContenuPopUp.SimpleText;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
@@ -60,11 +59,11 @@ public class PopUp extends FrameLayout implements IPopUp {
         GradientDrawable drawable = SimpleBackground.create(Color.WHITE, Color.BLACK, BORDER_WIDTH);
         setBackground(drawable);
 
-        this.title = new PopUpTitle(this);
-        this.addView(title);
+        title = new PopUpTitle(this);
+        addView(title);
 
-        this.cross = new PopUpCross(this);
-        this.addView(cross);
+        cross = new PopUpCross(this);
+        addView(cross);
 
         setOnClickListener(v -> {});
         setElevation(Elevation.PopUp.getElevation());
@@ -88,7 +87,7 @@ public class PopUp extends FrameLayout implements IPopUp {
     }
 
     @Override
-    public int getLargeur() {
+    public int get_width() {
         return largeur;
     }
 
@@ -167,7 +166,7 @@ public class PopUp extends FrameLayout implements IPopUp {
         title.setTexte(nouveauTitre);
     }
 
-    private int get_Height() {
+    public int get_Height() {
         return getLayoutParams().height;
     }
 
@@ -201,10 +200,10 @@ public class PopUp extends FrameLayout implements IPopUp {
         setContent(question.getSimpleText(), question.getButtons());
     }
 
-    public void showMessage(String titre, String texte, int duration) {
+    public void showMessage(String titre, String text) {
         setTitle(titre);
-        Message message = new Message(this, texte, duration);
-        setContent(message);
+        SimpleText affirmation = new SimpleText(this, text);
+        setContent(affirmation);
     }
 
     @Override

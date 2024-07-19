@@ -1,32 +1,33 @@
 package com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.PopUp.ContenuPopUp.PopUpComponent;
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 /**
  * Crée un curseur appliquant une modification personnalisée selon un 
  * paramètre appartenant à un interval continu.
  */
-public class CursorComponent extends FrameLayout {
+@SuppressLint("ViewConstructor")
+public class CursorComponent extends PopUpComponent {
 
     /**
      * La largeur occupée par le titre, en pct.
      */
     private static final float WIDTH_TITLED_DISTRIBUTION = .6f;
-    private static final int TEXT_SIZE = 16;
     private static final int CURSOR_LINE_HEIGHT = 6;
     private static final int CURSOR_LINE_COLOR = Color.LTGRAY;
     private static final int CURSOR_DIAMETER = 25;
@@ -36,22 +37,16 @@ public class CursorComponent extends FrameLayout {
      */
     private float VALUE;
 
-    public CursorComponent(@NonNull Context context) {
-        super(context);
-    }
-
-    public CursorComponent(@NonNull Context context, String titled, int width, int height, int leftMargin, int topMargin, float startValue, Consumer<Float> consumer, int color) {
-        super(context);
+    public CursorComponent(@NonNull PopUp popUp, String title, int height, float startValue, @Nullable Consumer<Float> consumer, int color) {
+        super(popUp);
         VALUE = (float) Math.min(Math.max(0.0, startValue), 1.0);
-        initializeView(titled, width, height, leftMargin, topMargin, consumer, color);
+        initializeView(title, height, consumer, color);
     }
 
-    private void initializeView(String titled, int width, int height, int leftMargin, int topMargin, Consumer<Float> consumer, int color) {
-        ConstraintLayout.LayoutParams layoutParams =
-                new LayoutParamsDeBase_pourConstraintLayout(width, height, leftMargin, topMargin);
-        setLayoutParams(layoutParams);
-        setBackgroundColor(Color.WHITE);
+    private void initializeView(String titled, int height, Consumer<Float> consumer, int color) {
+        setHeight(height);
 
+        int width = getLayoutParams().width;
         int titledWidth = (int) (width * WIDTH_TITLED_DISTRIBUTION);
         addTitled(titled, titledWidth);
 
@@ -129,7 +124,9 @@ public class CursorComponent extends FrameLayout {
                         cursor.setTranslationX(cursor.getTranslationX() + dx);
                         VALUE = (cursor.getTranslationX() + halfDiameter - cursorLineLeftMargin) / cursorLineWidth;
 
-                        consumer.accept(VALUE);
+                        if(consumer != null) {
+                            consumer.accept(VALUE);
+                        }
 
                         xPos = event.getRawX();
                         break;

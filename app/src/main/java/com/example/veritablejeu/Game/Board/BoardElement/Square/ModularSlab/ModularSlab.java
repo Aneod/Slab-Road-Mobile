@@ -97,13 +97,13 @@ public abstract class ModularSlab extends BoardElement {
     public void setWeight(int weight) {
         boolean notEnoughSpace = !enoughSpace(weight);
         if(notEnoughSpace) {
-            game.getPopUp().showMessage("WARNING", "Not enough space. Slabs need a floor.", 1500);
+            game.getPopUp().showMessage("WARNING", "Not enough space. Slabs need a floor.");
             return;
         }
         if(weight < MIN_WEIGHT) {
-            game.getPopUp().showMessage("WARNING", "A slab weight can't be lower than " + MIN_WEIGHT, 1500);
+            game.getPopUp().showMessage("WARNING", "A slab weight can't be lower than " + MIN_WEIGHT);
         } else if(weight > MAX_WEIGHT) {
-            game.getPopUp().showMessage("WARNING", "A slab weight can't be higher than " + MAX_WEIGHT, 1500);
+            game.getPopUp().showMessage("WARNING", "A slab weight can't be higher than " + MAX_WEIGHT);
         }
         this.weight = Math.min(Math.max(MIN_WEIGHT, weight), MAX_WEIGHT);
         slabDesign.refresh();

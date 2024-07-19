@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.PopUp.PopUpButton.OnOffButton;
 import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
@@ -48,8 +49,8 @@ public class OnOffComponent extends FrameLayout {
         return texte;
     }
 
-    public OnOffComponent(@NonNull Context context, String contenuTexte, int width, int height, int leftMargin, int topMargin, boolean estActiveDeBase, String texteActive, Runnable activeEffect, String texteDesactive, Runnable disactiveEffect) {
-        super(context);
+    public OnOffComponent(@NonNull PopUp popUp, String contenuTexte, int width, int height, int leftMargin, int topMargin, boolean estActiveDeBase, String texteActive, Runnable activeEffect, String texteDesactive, Runnable disactiveEffect) {
+        super(popUp.getContext());
 
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 width, height, leftMargin, topMargin);
@@ -65,7 +66,7 @@ public class OnOffComponent extends FrameLayout {
         int topMarginButton = (height - buttonHeight) / 2;
         ConstraintParams constraintParams = new ConstraintParams(buttonWidth, buttonHeight, titledWidth, topMarginButton);
         bouton = new OnOffButton(
-                this, constraintParams,
+                popUp, constraintParams,
                 estActiveDeBase,
                 texteActive, activeEffect,
                 texteDesactive, disactiveEffect);

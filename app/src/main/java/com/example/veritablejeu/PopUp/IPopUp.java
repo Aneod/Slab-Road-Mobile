@@ -9,7 +9,7 @@ public interface IPopUp {
      * Renvoie en pixel la largeur totale de la pop-up.
      * @return un int.
      */
-    int getLargeur();
+    int get_width();
 
     /**
      * Renvoie en pixel la hauteur de la barre supérieure de la pop-up.

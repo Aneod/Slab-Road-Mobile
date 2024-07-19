@@ -16,7 +16,6 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Modul
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
-import com.example.veritablejeu.PopUp.ContenuPopUp.Message.Message;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
@@ -100,7 +99,7 @@ public class ModularBlob extends BoardElement {
 
     public void showImpossibleTravelMessage() {
         PopUp popUp = PopUp.getInstance(board.getGame());
-        popUp.showMessage("WARNING", "Can't go here.", 1000);
+        popUp.showMessage("WARNING", "Can't go here.");
     }
 
     public void moveTo(ZdecimalCoordinates coordinates) {

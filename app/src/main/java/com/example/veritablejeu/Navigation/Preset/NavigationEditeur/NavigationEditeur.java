@@ -1,5 +1,6 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
+import android.graphics.Color;
 import android.graphics.Point;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,9 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
-import com.example.veritablejeu.PopUp.ContenuPopUp.DoubleButtons;
-import com.example.veritablejeu.PopUp.ContenuPopUp.SimpleText;
+import com.example.veritablejeu.PopUp.ContenuPopUp.SettingsPanel.CursorComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
-import com.example.veritablejeu.PopUp.ContenuPopUp.QuestionFermee.Question;
 import com.example.veritablejeu.R;
 
 import java.util.ArrayList;
@@ -62,12 +61,8 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
         popUp.setTitle("TEST");
-        popUp.clear();
-        SimpleText text = new SimpleText(popUp, "Do you want save and quit the game ?");
-        popUp.addContent(text);
-        DoubleButtons buttons = new DoubleButtons(popUp, "YES", () -> {}, "NO", popUp::hide);
-        popUp.addContent(buttons);
-        popUp.show();
+        CursorComponent cursorComponent = new CursorComponent(popUp, "Title", 100, .5f, null, Color.BLACK);
+        popUp.setContent(cursorComponent);
     }
 
     private void activerDesactiverGrille(){

@@ -12,6 +12,11 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 public class PopUpComponent extends FrameLayout {
 
     private static final int SIDE_MARGINS = 30;
+    protected static final int TEXT_SIZE = 18;
+
+    public static int getTextSize() {
+        return TEXT_SIZE;
+    }
 
     private final PopUp popUp;
     private final FrameLayout.LayoutParams layoutParams;

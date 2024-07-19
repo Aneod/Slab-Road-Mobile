@@ -1,6 +1,7 @@
 package com.example.veritablejeu.PopUp.PopUpButton;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.PopUp.ContenuPopUp.PopUpComponent;
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
@@ -23,8 +26,8 @@ public class PopUpButton extends AppCompatButton {
         this.setLayoutParams(layoutParams);
     }
 
-    public PopUpButton(@NonNull FrameLayout parent, ConstraintParams constraintParams) {
-        super(parent.getContext());
+    public PopUpButton(@NonNull PopUp popUp, ConstraintParams constraintParams) {
+        super(popUp.getContext());
         setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         setLayoutParams(constraintParams);
     }

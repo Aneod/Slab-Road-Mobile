@@ -3,6 +3,7 @@ package com.example.veritablejeu.PopUp.PopUpButton;
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
 
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 
 @SuppressLint("ViewConstructor")
@@ -13,11 +14,11 @@ public class OnOffButton extends PopUpButton {
     private final String disactiveText;
     private final Runnable disactivation;
 
-    public OnOffButton(FrameLayout parent, ConstraintParams constraintParams,
+    public OnOffButton(PopUp popUp, ConstraintParams constraintParams,
                        boolean active,
                        String activeText, Runnable activation,
                        String disactiveText, Runnable disactivation) {
-        super(parent, constraintParams);
+        super(popUp, constraintParams);
         this.activeText = activeText;
         this.activation = activation;
         this.disactiveText = disactiveText;

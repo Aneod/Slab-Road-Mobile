@@ -230,7 +230,7 @@ public class ModularDoor extends ModularWall {
         if(cableColorMatch(cable)) {
             cable.connectDoor(this);
         } else {
-            game.getPopUp().showMessage("WARNING", "Doors and cables must have the same color.", 1500);
+            game.getPopUp().showMessage("WARNING", "Doors and cables must have the same color.");
         }
     }
 

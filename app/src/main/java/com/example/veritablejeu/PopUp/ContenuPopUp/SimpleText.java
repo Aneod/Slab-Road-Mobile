@@ -17,7 +17,6 @@ import com.example.veritablejeu.Tools.ScreenUtils;
 @SuppressLint("ViewConstructor")
 public class SimpleText extends PopUpComponent {
 
-    private static final int TEXT_SIZE = 18;
     private static final int TEXT_COLOR = Color.BLACK;
     private static final int TEXT_GRAVITY = Gravity.CENTER;
 

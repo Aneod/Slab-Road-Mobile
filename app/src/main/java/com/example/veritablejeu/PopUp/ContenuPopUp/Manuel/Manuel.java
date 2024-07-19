@@ -106,7 +106,7 @@ public class Manuel extends FrameLayout {
      * @return une PageInstruction.
      */
     private PageInstruction creationPageInstruction(PopUp parent) {
-        PageInstruction pageInstruction = new PageInstruction(this, parent.getLargeur());
+        PageInstruction pageInstruction = new PageInstruction(this, parent.get_width());
         pageInstruction.setALaPage(pageActuelle + 1);
         return pageInstruction;
     }
@@ -121,7 +121,7 @@ public class Manuel extends FrameLayout {
     @NonNull
     private FrameLayout creationConteneurInstructions(@NonNull PopUp parent, int height, int topMargin) {
         int margesGDtexte = 60;
-        int largeurTexte = parent.getLargeur() - 2 * margesGDtexte;
+        int largeurTexte = parent.get_width() - 2 * margesGDtexte;
         FrameLayout conteneurInstructions = new FrameLayout(this.getContext());
         FrameLayout.LayoutParams layoutParamsTexte = new LayoutParamsDeBase_pourFrameLayout(
                 largeurTexte, height, margesGDtexte, topMargin);
@@ -155,7 +155,7 @@ public class Manuel extends FrameLayout {
 
         this.nombreDePages = getNbPagesNormal();
 
-        int largeurPartieInferieure = parent.getLargeur();
+        int largeurPartieInferieure = parent.get_width();
         this.partieInferieureAPageNumerotee = creationPartieInferieure(
                 largeurPartieInferieure, hauteurPartieInferieure, hauteurTexteAvecMarge);
         partieInferieureAPageNumerotee.removeView(boutonGauche);

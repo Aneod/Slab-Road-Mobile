@@ -395,7 +395,7 @@ public abstract class ModularSquare extends BoardElement {
      */
     private void createSecureWall(WallsOfSquare.Direction direction, String code) {
         if(thereIsAlreadyAWallAt(direction)) {
-            game.getPopUp().showMessage("WARNING", "There is already a wall on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a wall on this place.");
             return;
         }
         walls.setByCode(direction, code);
@@ -412,11 +412,11 @@ public abstract class ModularSquare extends BoardElement {
      */
     private void createSecureSlab(String code) {
         if(thereIsAlreadyASlab()) {
-            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.");
             return;
         }
         if(thereIsABlob()) {
-            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.");
             return;
         }
         createSlab(code);
@@ -448,15 +448,15 @@ public abstract class ModularSquare extends BoardElement {
 
     private boolean checkIfFreePlace(ModularSquare square) {
         if(square == null) {
-            game.getPopUp().showMessage("WARNING", "There isn't enough space.", 1500);
+            game.getPopUp().showMessage("WARNING", "There isn't enough space.");
             return false;
         }
         if(square.thereIsAlreadyASlab()) {
-            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.");
             return false;
         }
         if(square.thereIsABlob()) {
-            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.");
             return false;
         }
         return true;
@@ -467,7 +467,7 @@ public abstract class ModularSquare extends BoardElement {
      */
     private void createSecureBlob() {
         if(thereIsABlob()) {
-            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.", 1500);
+            game.getPopUp().showMessage("WARNING", "There is already a blob on this place.");
             return;
         }
         createBlob();

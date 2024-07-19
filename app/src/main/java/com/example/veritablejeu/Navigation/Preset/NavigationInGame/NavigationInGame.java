@@ -36,7 +36,7 @@ public class NavigationInGame extends Navigation {
 
     private void recadrage() {
         PopUp popUp = inGame.getPopUp();
-        popUp.showMessage("SYSTEM", "Refocused tray.", 1000);
+        popUp.showMessage("SYSTEM", "Refocused tray.");
         inGame.getPlateauModulaireSet().forEach(Board::cropping);
     }
 
