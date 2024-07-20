@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.InlineComponent.InlineComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.Preset;
 
 import android.annotation.SuppressLint;
 import android.view.Gravity;
@@ -9,21 +9,18 @@ import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Cursor;
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Text;
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
-/**
- * Crée un curseur appliquant une modification personnalisée selon un 
- * paramètre appartenant à un interval continu.
- */
 @SuppressLint("ViewConstructor")
-public class CursorComponent extends PopUpComponent {
+public class CursorComponent extends InlineComponent {
 
     private static final float WIDTH_TITLED_DISTRIBUTION = .5f;
 
     private final Cursor cursor;
 
-    public CursorComponent(@NonNull PopUp popUp, String title, float startValue, @Nullable Consumer<Float> consumer, int color) {
+    public CursorComponent(@NonNull PopUp popUp, String title, float startValue,
+                           @Nullable Consumer<Float> consumer, int color) {
         super(popUp);
         float correctValue = (float) Math.min(Math.max(0.0, startValue), 1.0);
 

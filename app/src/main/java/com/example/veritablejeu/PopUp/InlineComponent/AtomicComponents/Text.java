@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 public class Text extends AppCompatTextView {
@@ -20,14 +20,17 @@ public class Text extends AppCompatTextView {
         super(context);
     }
 
-    public Text(@NonNull PopUpComponent popUpComponent, String text, int width, int minHeight, int gravity) {
-        super(popUpComponent.getContext());
+    /**
+     * The texts in {@link InlineComponent} take place at the left.
+     */
+    public Text(@NonNull InlineComponent inlineComponent, String text, int width, int minHeight, int gravity) {
+        super(inlineComponent.getContext());
         setText(text);
-        setTextSize(PopUpComponent.getTextSize());
+        setTextSize(InlineComponent.getTextSize());
         setTextColor(TEXT_COLOR);
         setGravity(gravity);
 
-        popUpComponent.setHeight(Integer.MAX_VALUE);
+        inlineComponent.setHeight(Integer.MAX_VALUE);
 
         FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 width, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0);
@@ -39,7 +42,7 @@ public class Text extends AppCompatTextView {
                 getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 int height = getMeasuredHeight();
                 int newHeight = Math.max(minHeight, height);
-                popUpComponent.setHeight(newHeight);
+                inlineComponent.setHeight(newHeight);
                 layoutParams.height = newHeight;
                 setLayoutParams(layoutParams);
             }

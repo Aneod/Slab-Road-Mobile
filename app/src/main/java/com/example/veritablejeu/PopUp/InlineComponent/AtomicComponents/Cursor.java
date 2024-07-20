@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 @SuppressLint("ViewConstructor")
@@ -33,7 +34,12 @@ public class Cursor extends FrameLayout {
     private final View cursorLine;
     private final View cursor;
 
-    public Cursor(@NonNull CursorComponent cursorComponent, int width, @FloatRange(from = 0.0f, to = 1.0f) float startValue, Consumer<Float> consumer, int color) {
+    /**
+     * A cursor take place at the right of the {@link InlineComponent}.
+     */
+    public Cursor(@NonNull CursorComponent cursorComponent, int width,
+                  @FloatRange(from = 0.0f, to = 1.0f) float startValue,
+                  Consumer<Float> consumer, int color) {
         super(cursorComponent.getContext());
         this.cursorComponent = cursorComponent;
         this.value = startValue;

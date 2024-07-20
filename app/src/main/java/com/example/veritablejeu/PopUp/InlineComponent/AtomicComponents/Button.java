@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.Tools.SimpleBackground;
 
@@ -24,19 +24,19 @@ public class Button extends AppCompatButton {
 
     private final int width;
     private final int leftMargin;
-    private final PopUpComponent popUpComponent;
+    private final InlineComponent inlineComponent;
 
     private void setLayoutParams() {
-        int heigtPopUpCOmponent = popUpComponent.getLayoutParams().height;
+        int heigtPopUpCOmponent = inlineComponent.getLayoutParams().height;
         int topMargin = (heigtPopUpCOmponent - HEIGHT) / 2;
         FrameLayout.LayoutParams layoutParams =
                 new LayoutParamsDeBase_pourFrameLayout(width, HEIGHT, leftMargin, topMargin);
         this.setLayoutParams(layoutParams);
     }
 
-    public Button(@NonNull PopUpComponent popUpComponent, int width, int leftMargin) {
-        super(popUpComponent.getContext());
-        this.popUpComponent = popUpComponent;
+    public Button(@NonNull InlineComponent inlineComponent, int width, int leftMargin) {
+        super(inlineComponent.getContext());
+        this.inlineComponent = inlineComponent;
         this.width = width;
         this.leftMargin = leftMargin;
         setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

@@ -13,8 +13,9 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.OnOffComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.OnOffComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleImage;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.R;
@@ -65,8 +66,9 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
         CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null, Color.BLACK);
-        OnOffComponent onOffComponent = new OnOffComponent(popUp, "OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, ", false, "Active", null, "Non", null);
-        popUp.setContent("TEST", cursorComponent, onOffComponent);
+        SimpleImage simpleImage = new SimpleImage(popUp, R.drawable.img6);
+        SimpleImage simpleImage2 = new SimpleImage(popUp, R.drawable.pixel_art_menu2);
+        popUp.setContent("TEST", cursorComponent, simpleImage, simpleImage2);
     }
 
     private void showManual() {

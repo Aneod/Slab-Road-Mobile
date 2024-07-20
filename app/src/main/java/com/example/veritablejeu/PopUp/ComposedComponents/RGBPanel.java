@@ -5,7 +5,7 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.ARGBComposer;
 

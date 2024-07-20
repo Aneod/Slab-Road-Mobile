@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.InlineComponent.InlineComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.Preset;
 
 import android.annotation.SuppressLint;
 import android.view.Gravity;
@@ -6,11 +6,11 @@ import android.view.Gravity;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Text;
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
 @SuppressLint("ViewConstructor")
-public class SimpleText extends PopUpComponent {
+public class SimpleText extends InlineComponent {
 
     private final Text textView;
 

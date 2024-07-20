@@ -1,15 +1,15 @@
-package com.example.veritablejeu.PopUp.InlineComponent.InlineComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.Preset;
 
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Button;
 
 @SuppressLint("ViewConstructor")
-public class DoubleButtons extends PopUpComponent {
+public class DoubleButtons extends InlineComponent {
 
     private static final float TOTAL_BUTTONS_WIDTH_OCCUPATION_PERCENTAGE = .7f;
 

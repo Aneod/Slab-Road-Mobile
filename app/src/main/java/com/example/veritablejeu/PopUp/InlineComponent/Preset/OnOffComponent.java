@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.InlineComponent.InlineComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.Preset;
 
 import android.annotation.SuppressLint;
 import android.view.Gravity;
@@ -8,15 +8,12 @@ import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Text;
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.OnOffButton;
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
 @SuppressLint("ViewConstructor")
-public class OnOffComponent extends PopUpComponent {
+public class OnOffComponent extends InlineComponent {
 
-    /**
-     * La largeur occupée par le titre, en pct.
-     */
     private static final float WIDTH_TITLED_DISTRIBUTION = .6f;
 
     private final OnOffButton bouton;

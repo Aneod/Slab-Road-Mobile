@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 
 import androidx.annotation.Nullable;
 
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 
 @SuppressLint("ViewConstructor")
 public class OnOffButton extends Button {
@@ -14,11 +14,11 @@ public class OnOffButton extends Button {
     private final String disactiveText;
     private final Runnable disactivation;
 
-    public OnOffButton(PopUpComponent popUpComponent, int width, int leftMargin,
+    public OnOffButton(InlineComponent inlineComponent, int width, int leftMargin,
                        boolean active,
                        String activeText, @Nullable Runnable activation,
                        String disactiveText, @Nullable Runnable disactivation) {
-        super(popUpComponent, width, leftMargin);
+        super(inlineComponent, width, leftMargin);
         this.activeText = activeText;
         this.activation = activation;
         this.disactiveText = disactiveText;

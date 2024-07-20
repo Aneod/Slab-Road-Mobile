@@ -5,8 +5,8 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.DoubleButtons;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.SimpleText;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.DoubleButtons;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
 import com.example.veritablejeu.PopUp.PopUp;
 
 @SuppressLint("ViewConstructor")

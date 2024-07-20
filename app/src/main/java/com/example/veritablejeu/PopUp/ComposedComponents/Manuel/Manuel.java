@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.PartieInferieureAPageNumerotee.ContainerDeFleche;
 import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
@@ -17,7 +17,7 @@ import com.example.veritablejeu.R;
 import org.jetbrains.annotations.Contract;
 
 @SuppressLint("ViewConstructor")
-public class Manuel extends PopUpComponent {
+public class Manuel extends InlineComponent {
 
     private static Manuel instance;
     private final PopUp parent;
@@ -106,6 +106,7 @@ public class Manuel extends PopUpComponent {
      * @param parent la popUp parente de la classe.
      * @return une PageInstruction.
      */
+    @NonNull
     private PageInstruction creationPageInstruction(PopUp parent) {
         PageInstruction pageInstruction = new PageInstruction(this, parent.get_width());
         pageInstruction.setALaPage(pageActuelle + 1);

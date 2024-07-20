@@ -10,9 +10,9 @@ import com.example.veritablejeu.Game.Board.AccessibleSquaresFinder;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.OnOffComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.Preset.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 
@@ -93,8 +93,8 @@ public class GameSettings {
     }
 
     @NonNull
-    private static PopUpComponent[] getAllComponents(InGame inGame) {
-        return new PopUpComponent[]{
+    private static InlineComponent[] getAllComponents(InGame inGame) {
+        return new InlineComponent[]{
             getVolumeCursor(inGame), getBlobSpeedCursor(inGame), getFlashsOnOff(inGame),
             getBubblesOnOff(inGame), getMovesHelperOnOff(inGame)
         };
