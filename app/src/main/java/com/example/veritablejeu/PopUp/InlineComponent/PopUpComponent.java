@@ -42,4 +42,5 @@ public class PopUpComponent extends FrameLayout {
     public void setTopMargin(int topMargin) {
         layoutParams.topMargin = topMargin;
     }
+
 }
