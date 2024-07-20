@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
@@ -22,21 +24,29 @@ public class Cursor extends FrameLayout {
     private static final int CURSOR_DIAMETER = 25;
 
     private float value;
+    private final CursorComponent cursorComponent;
+    private final View cursorLine;
+    private final View cursor;
 
-    public Cursor(@NonNull CursorComponent cursorComponent, float startValue, Consumer<Float> consumer, int color) {
+    public Cursor(@NonNull CursorComponent cursorComponent, int width, @FloatRange(from = 0.0f, to = 1.0f) float startValue, Consumer<Float> consumer, int color) {
         super(cursorComponent.getContext());
+        this.cursorComponent = cursorComponent;
         this.value = startValue;
         int halfDiameter = CURSOR_DIAMETER / 2;
-        int width = cursorComponent.getLayoutParams().width;
-        int titledWidth = (int) (width * CursorComponent.getWidthTitledDistribution());
-        int cursorLineWidth = width - titledWidth - CURSOR_DIAMETER;
-        int cursorLineLeftMargin = titledWidth + halfDiameter;
+        int cursorLineWidth = width - CURSOR_DIAMETER;
+        int leftMargin = cursorComponent.getLayoutParams().width - width;
+        int cursorLineLeftMargin = leftMargin + halfDiameter;
         int cursorLineTopMargin = (cursorComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
-        addCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
-        addCursor(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin, consumer, color);
+
+        cursorLine = getCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
+        addView(cursorLine);
+
+        cursor = getCursor(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin, consumer, color);
+        addView(cursor);
     }
 
-    private void addCursorLine(int cursorLineWidth, int cursorLineLeftMargin, int cursorLingTopMargin) {
+    @NonNull
+    private View getCursorLine(int cursorLineWidth, int cursorLineLeftMargin, int cursorLingTopMargin) {
         View cursorLine = new View(getContext());
         cursorLine.setBackgroundColor(CURSOR_LINE_COLOR);
 
@@ -44,10 +54,11 @@ public class Cursor extends FrameLayout {
                 cursorLineWidth, CURSOR_LINE_HEIGHT, cursorLineLeftMargin, cursorLingTopMargin);
         cursorLine.setLayoutParams(layoutParams);
 
-        addView(cursorLine);
+        return cursorLine;
     }
 
-    private void addCursor(int cursorLineWidth, int cursorLineLeftMargin, int cursorLineTopMargin, Consumer<Float> consumer, int color) {
+    @NonNull
+    private View getCursor(int cursorLineWidth, int cursorLineLeftMargin, int cursorLineTopMargin, Consumer<Float> consumer, int color) {
         View cursor = new View(getContext());
 
         GradientDrawable drawable = new GradientDrawable();
@@ -66,8 +77,6 @@ public class Cursor extends FrameLayout {
                 CURSOR_DIAMETER, CURSOR_DIAMETER, 0, topMargin);
         cursor.setLayoutParams(layoutParams);
         cursor.setTranslationX(startXpos);
-
-        addView(cursor);
 
         setOnTouchListener(new OnTouchListener() {
             private float xPos;
@@ -99,5 +108,27 @@ public class Cursor extends FrameLayout {
                 return true;
             }
         });
+        return cursor;
+    }
+
+    public void refreshHeight() {
+        int cursorLineTopMargin = (cursorComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
+
+        ViewGroup.LayoutParams layoutParamsLine = cursorLine.getLayoutParams();
+        if(layoutParamsLine instanceof ConstraintLayout.LayoutParams) {
+            ((ConstraintLayout.LayoutParams) layoutParamsLine).topMargin = cursorLineTopMargin;
+        } else if(layoutParamsLine instanceof FrameLayout.LayoutParams) {
+            ((FrameLayout.LayoutParams) layoutParamsLine).topMargin = cursorLineTopMargin;
+        }
+
+        int halfDiameter = CURSOR_DIAMETER / 2;
+        int yCursorLineCenter = cursorLineTopMargin + CURSOR_LINE_HEIGHT / 2;
+        int cursorTopMargin = yCursorLineCenter - halfDiameter;
+        ViewGroup.LayoutParams layoutParamsCursor = cursor.getLayoutParams();
+        if(layoutParamsCursor instanceof ConstraintLayout.LayoutParams) {
+            ((ConstraintLayout.LayoutParams) layoutParamsCursor).topMargin = cursorTopMargin;
+        } else if(layoutParamsCursor instanceof FrameLayout.LayoutParams) {
+            ((FrameLayout.LayoutParams) layoutParamsCursor).topMargin = cursorTopMargin;
+        }
     }
 }

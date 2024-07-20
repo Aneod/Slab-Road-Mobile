@@ -13,14 +13,13 @@ import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 public class DoubleButtons extends PopUpComponent {
 
     private static final float TOTAL_BUTTONS_WIDTH_OCCUPATION_PERCENTAGE = .7f;
-    private static final int BUTTONS_HEIGHT = 75;
 
     private final PopUpButton boutonA;
     private final PopUpButton boutonB;
 
     public DoubleButtons(@NonNull PopUp popUp, String textA, Runnable runA, String textB, Runnable runB) {
         super(popUp);
-        setHeight(BUTTONS_HEIGHT);
+        setHeight(PopUpButton.getHEIGHT());
 
         int disponibleWidth = getLayoutParams().width;
         float buttonsWidth = disponibleWidth * TOTAL_BUTTONS_WIDTH_OCCUPATION_PERCENTAGE;
@@ -28,15 +27,14 @@ public class DoubleButtons extends PopUpComponent {
         float side_margins = (disponibleWidth - buttonsWidth) / 4;
         float buttonsGap = 2 * side_margins;
 
-        ConstraintParams constraintParams1 = new ConstraintParams((int) buttonWidth, BUTTONS_HEIGHT, (int) side_margins + popUp.getBORDER_WIDTH(), 0);
-        boutonA = new PopUpButton(popUp, constraintParams1);
+        int leftMarginFirst = (int) side_margins + popUp.getBORDER_WIDTH();
+        boutonA = new PopUpButton(this, (int) buttonWidth, leftMarginFirst);
         boutonA.takeWhiteAppearance(textA);
         boutonA.setRunnable(runA);
         this.addView(boutonA);
 
-        float leftMargin = side_margins + buttonWidth + buttonsGap;
-        ConstraintParams constraintParams2 = new ConstraintParams((int) buttonWidth, BUTTONS_HEIGHT, (int) leftMargin + popUp.getBORDER_WIDTH(), 0);
-        boutonB = new PopUpButton(popUp, constraintParams2);
+        int leftMarginSecond = (int) (side_margins + buttonWidth + buttonsGap + popUp.getBORDER_WIDTH());
+        boutonB = new PopUpButton(this, (int) buttonWidth, leftMarginSecond);
         boutonB.takeBlackAppearance(textB);
         boutonB.setRunnable(runB);
         this.addView(boutonB);

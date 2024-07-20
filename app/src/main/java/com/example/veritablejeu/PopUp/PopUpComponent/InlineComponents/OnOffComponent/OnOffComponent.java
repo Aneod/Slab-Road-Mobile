@@ -19,7 +19,6 @@ public class OnOffComponent extends PopUpComponent {
      * La largeur occupée par le titre, en pct.
      */
     private static final float WIDTH_TITLED_DISTRIBUTION = .6f;
-    private static final float HEIGHT_ON_OFF_BUTTON_PERCENTAGE = .75f;
 
     private final OnOffButton bouton;
 
@@ -32,21 +31,27 @@ public class OnOffComponent extends PopUpComponent {
                           String texteActive, @Nullable Runnable activeEffect,
                           String texteDesactive, @Nullable Runnable disactiveEffect) {
         super(popUp);
-        setHeight(height);
         int width = getLayoutParams().width;
         int titledWidth = (int) (width * WIDTH_TITLED_DISTRIBUTION);
         PopUpText popUpText = new PopUpText(this, title, titledWidth, height, Gravity.CENTER_VERTICAL);
         addView(popUpText);
 
         int buttonWidth = width - titledWidth;
-        int buttonHeight = (int) (height * HEIGHT_ON_OFF_BUTTON_PERCENTAGE);
-        int topMarginButton = (height - buttonHeight) / 2;
-        ConstraintParams constraintParams = new ConstraintParams(buttonWidth, buttonHeight, titledWidth, topMarginButton);
         bouton = new OnOffButton(
-                popUp, constraintParams,
+                this, buttonWidth, titledWidth,
                 estActiveDeBase,
                 texteActive, activeEffect,
                 texteDesactive, disactiveEffect);
         addView(bouton);
+    }
+
+    @Override
+    public void setHeight(int height) {
+        layoutParams.height = height;
+        setLayoutParams(layoutParams);
+        popUp.refreshHeight();
+        if(bouton != null) {
+            bouton.refreshHeight();
+        }
     }
 }

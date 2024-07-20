@@ -1,16 +1,12 @@
 package com.example.veritablejeu.PopUp.PopUpComponent;
 
 import android.annotation.SuppressLint;
-import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SuppressLint("ViewConstructor")
 public class PopUpComponent extends FrameLayout {
@@ -22,8 +18,8 @@ public class PopUpComponent extends FrameLayout {
         return TEXT_SIZE;
     }
 
-    private final PopUp popUp;
-    private final FrameLayout.LayoutParams layoutParams;
+    protected final PopUp popUp;
+    protected final FrameLayout.LayoutParams layoutParams;
 
     public PopUpComponent(@NonNull PopUp popUp) {
         super(popUp.getContext());

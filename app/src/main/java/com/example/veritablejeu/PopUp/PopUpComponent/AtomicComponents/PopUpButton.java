@@ -4,29 +4,45 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
+import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.Tools.SimpleBackground;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 @SuppressLint("ViewConstructor")
 public class PopUpButton extends AppCompatButton {
 
-    private void setLayoutParams(ConstraintParams constraintParams) {
-        ConstraintLayout.LayoutParams layoutParams =
-                new LayoutParamsDeBase_pourConstraintLayout(constraintParams);
+    private static final int HEIGHT = 75;
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    private final int width;
+    private final int leftMargin;
+    private final PopUpComponent popUpComponent;
+
+    private void setLayoutParams() {
+        int heigtPopUpCOmponent = popUpComponent.getLayoutParams().height;
+        int topMargin = (heigtPopUpCOmponent - HEIGHT) / 2;
+        FrameLayout.LayoutParams layoutParams =
+                new LayoutParamsDeBase_pourFrameLayout(width, HEIGHT, leftMargin, topMargin);
         this.setLayoutParams(layoutParams);
     }
 
-    public PopUpButton(@NonNull PopUp popUp, ConstraintParams constraintParams) {
-        super(popUp.getContext());
+    public PopUpButton(@NonNull PopUpComponent popUpComponent, int width, int leftMargin) {
+        super(popUpComponent.getContext());
+        this.popUpComponent = popUpComponent;
+        this.width = width;
+        this.leftMargin = leftMargin;
         setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        setLayoutParams(constraintParams);
+        setLayoutParams();
     }
     
     public void takeBlackAppearance(String text) {
@@ -48,5 +64,9 @@ public class PopUpButton extends AppCompatButton {
                 runnable.run();
             }
         });
+    }
+
+    public void refreshHeight() {
+        setLayoutParams();
     }
 }
