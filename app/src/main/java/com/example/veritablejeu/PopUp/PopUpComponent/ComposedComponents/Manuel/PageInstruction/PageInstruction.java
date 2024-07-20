@@ -1,15 +1,15 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction;
 
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.Manuel;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction.ImageInstruction;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ParagrapheInstruction.ParagrapheInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ParagrapheInstruction.ParagrapheInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.Manuel;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction.ImageInstruction;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ModificateurDePage.ModificateurDePage;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ModificateurDePage.ModificateurDePage;
 
 @SuppressLint("ViewConstructor")
 public class PageInstruction extends FrameLayout implements IPageInstruction {

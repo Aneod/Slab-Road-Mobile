@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction;
 
 public interface IImageInstruction {
 

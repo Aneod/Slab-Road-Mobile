@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel;
 
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;
@@ -6,9 +6,9 @@ import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.PageInstruction;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PartieInferieureAPageNumerotee.ContainerDeFleche;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.PageInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PartieInferieureAPageNumerotee.ContainerDeFleche;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;

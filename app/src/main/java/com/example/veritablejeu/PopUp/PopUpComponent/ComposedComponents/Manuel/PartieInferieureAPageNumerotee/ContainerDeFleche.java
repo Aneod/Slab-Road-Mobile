@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PartieInferieureAPageNumerotee;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PartieInferieureAPageNumerotee;
 
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;

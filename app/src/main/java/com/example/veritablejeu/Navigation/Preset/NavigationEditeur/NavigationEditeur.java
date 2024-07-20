@@ -62,7 +62,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
         popUp.setTitle("TEST");
-        CursorComponent cursorComponent = new CursorComponent(popUp, "Title", 100, .5f, null, Color.BLACK);
+        CursorComponent cursorComponent = new CursorComponent(popUp, "Title, Title, Title, Title, Title, Title, Title, Title, Title, Title", 100, .5f, null, Color.BLACK);
         OnOffComponent onOffComponent = new OnOffComponent(popUp, "OnOff", 100, false, "Active", null, "Non", null);
         popUp.setContent(cursorComponent, onOffComponent);
     }

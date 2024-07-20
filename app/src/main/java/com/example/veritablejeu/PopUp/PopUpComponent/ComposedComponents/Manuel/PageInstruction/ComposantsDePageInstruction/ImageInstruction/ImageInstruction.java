@@ -1,10 +1,10 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ImageInstruction;
 
 import android.annotation.SuppressLint;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.PageInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")

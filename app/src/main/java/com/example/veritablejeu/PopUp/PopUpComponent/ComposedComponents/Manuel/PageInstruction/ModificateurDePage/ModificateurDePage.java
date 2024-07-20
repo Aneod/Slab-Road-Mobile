@@ -1,6 +1,6 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ModificateurDePage;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ModificateurDePage;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.PageInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.R;
 
 public class ModificateurDePage implements IModificateurDePage {

@@ -1,11 +1,12 @@
 package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent;
 
 import android.annotation.SuppressLint;
+import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.LeftText;
+import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.PopUpText;
 import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.OnOffButton;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUp;
@@ -34,8 +35,8 @@ public class OnOffComponent extends PopUpComponent {
         setHeight(height);
         int width = getLayoutParams().width;
         int titledWidth = (int) (width * WIDTH_TITLED_DISTRIBUTION);
-        LeftText leftText = new LeftText(this, title, titledWidth);
-        addView(leftText);
+        PopUpText popUpText = new PopUpText(this, title, titledWidth, height, Gravity.CENTER_VERTICAL);
+        addView(popUpText);
 
         int buttonWidth = width - titledWidth;
         int buttonHeight = (int) (height * HEIGHT_ON_OFF_BUTTON_PERCENTAGE);

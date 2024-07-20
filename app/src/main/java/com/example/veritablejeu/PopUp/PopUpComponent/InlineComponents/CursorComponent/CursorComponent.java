@@ -1,13 +1,14 @@
 package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
 
 import android.annotation.SuppressLint;
+import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.Cursor;
-import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.LeftText;
+import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.PopUpText;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
@@ -38,8 +39,8 @@ public class CursorComponent extends PopUpComponent {
 
         int width = getLayoutParams().width;
         int titledWidth = (int) (width * WIDTH_TITLED_DISTRIBUTION);
-        LeftText leftText = new LeftText(this, titled, titledWidth);
-        addView(leftText);
+        PopUpText popUpText = new PopUpText(this, titled, titledWidth, height, Gravity.CENTER_VERTICAL);
+        addView(popUpText);
 
         Cursor cursor = new Cursor(this, value, consumer, color);
         addView(cursor);

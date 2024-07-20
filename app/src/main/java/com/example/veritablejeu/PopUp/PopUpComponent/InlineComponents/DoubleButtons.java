@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.PopUp.PopUpButton.PopUpButton;
+import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.PopUpButton;
 import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 
 @SuppressLint("ViewConstructor")

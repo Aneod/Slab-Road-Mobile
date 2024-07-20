@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.Manuel;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.Manuel;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Question;
 import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.SimpleText;
@@ -42,7 +42,7 @@ public class PopUp extends FrameLayout implements IPopUp {
     private static final int HIDE_ANIMATION_DURATION = 300;
 
     private static PopUp instance;
-    private final List<FrameLayout> contents = new ArrayList<>();
+    private final List<PopUpComponent> contents = new ArrayList<>();
     private final PopUpTitle title;
     public final PopUpCross cross;
     private final int largeur;
@@ -177,12 +177,12 @@ public class PopUp extends FrameLayout implements IPopUp {
 
     public void refreshHeight() {
         resetHeight();
-        for(FrameLayout frameLayout : contents) {
-            ViewGroup.LayoutParams layoutParams = frameLayout.getLayoutParams();
+        for(PopUpComponent popUpComponent : contents) {
+            ViewGroup.LayoutParams layoutParams = popUpComponent.getLayoutParams();
             if(layoutParams instanceof FrameLayout.LayoutParams) {
                 ((FrameLayout.LayoutParams) layoutParams).topMargin = get_Height();
             }
-            addHeight(frameLayout.getLayoutParams().height);
+            addHeight(popUpComponent.getLayoutParams().height);
         }
     }
 

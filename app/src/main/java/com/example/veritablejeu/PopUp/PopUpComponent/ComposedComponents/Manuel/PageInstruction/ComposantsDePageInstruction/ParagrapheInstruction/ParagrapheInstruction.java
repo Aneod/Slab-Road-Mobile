@@ -1,11 +1,11 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ParagrapheInstruction;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.ComposantsDePageInstruction.ParagrapheInstruction;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.Manuel.PageInstruction.PageInstruction;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.PageInstruction.PageInstruction;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")

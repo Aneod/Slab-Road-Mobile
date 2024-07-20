@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.PopUpButton;
+package com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
