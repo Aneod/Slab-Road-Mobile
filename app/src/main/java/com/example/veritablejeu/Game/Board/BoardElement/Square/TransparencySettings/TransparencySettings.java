@@ -7,7 +7,7 @@ import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
 import org.jetbrains.annotations.Contract;

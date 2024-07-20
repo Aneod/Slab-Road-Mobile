@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Manuel.Manuel;
-import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Question;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.SimpleText;
+import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.Manuel;
+import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.ComposedComponents.Question;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.SimpleText;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;

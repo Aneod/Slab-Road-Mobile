@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.MediaPlayerInstance.BanqueDeSon.BanqueDeSon;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.Question;
+import com.example.veritablejeu.PopUp.ComposedComponents.Question;
 import com.example.veritablejeu.PopUp.PopUp;
 
 public class MusicSettings {

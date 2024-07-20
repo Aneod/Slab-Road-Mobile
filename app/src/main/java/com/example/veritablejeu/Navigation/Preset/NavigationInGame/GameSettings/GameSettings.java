@@ -10,9 +10,9 @@ import com.example.veritablejeu.Game.Board.AccessibleSquaresFinder;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
-import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.PopUpComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 

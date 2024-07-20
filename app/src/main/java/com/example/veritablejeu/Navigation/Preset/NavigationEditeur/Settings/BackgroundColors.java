@@ -5,8 +5,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.ComposedComponents.RGBPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 

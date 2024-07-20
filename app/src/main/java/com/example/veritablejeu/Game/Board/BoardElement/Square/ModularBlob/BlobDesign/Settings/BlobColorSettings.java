@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.GroupOfBlobsOfBoard;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.ComposedComponents.RGBPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 
 import org.jetbrains.annotations.Contract;
