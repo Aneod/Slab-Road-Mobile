@@ -1,12 +1,13 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
+package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents;
 
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
 import com.example.veritablejeu.PopUp.PopUp;
+import com.example.veritablejeu.Tools.ARGBComposer;
 
 public class RGBPanel {
 
@@ -24,7 +25,7 @@ public class RGBPanel {
             }
         };
         float current = Color.red(color) / 255.0f;
-        return new CursorComponent(popUp, "RED", 100, current, consumer, Color.RED);
+        return new CursorComponent(popUp, "RED", current, consumer, Color.RED);
     }
 
     @NonNull
@@ -37,7 +38,7 @@ public class RGBPanel {
             }
         };
         float current = Color.green(color) / 255.0f;
-        return new CursorComponent(popUp, "GREEN", 100, current, consumer, Color.GREEN);
+        return new CursorComponent(popUp, "GREEN", current, consumer, Color.GREEN);
     }
 
     @NonNull
@@ -50,7 +51,7 @@ public class RGBPanel {
             }
         };
         float current = Color.blue(color) / 255.0f;
-        return new CursorComponent(popUp, "BLUE", 100, current, consumer, Color.BLUE);
+        return new CursorComponent(popUp, "BLUE", current, consumer, Color.BLUE);
     }
 
     /**
@@ -63,14 +64,6 @@ public class RGBPanel {
         this.popUp = popUp;
         this.color = initialColor;
         this.whenModify = whenModify;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public Consumer<Integer> getWhenModify() {
-        return whenModify;
     }
 
     public CursorComponent[] getCursors() {

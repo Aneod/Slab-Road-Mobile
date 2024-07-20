@@ -1,6 +1,8 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
+package com.example.veritablejeu.Tools;
 
 import android.graphics.Color;
+
+import androidx.annotation.IntRange;
 
 public class ARGBComposer {
 
@@ -15,7 +17,8 @@ public class ARGBComposer {
         return MAX_VALUE;
     }
 
-    private static int getCorrectQuantity(int quantity) {
+    @IntRange(from = MIN_VALUE, to = MAX_VALUE)
+    private static int getValidQuantity(int quantity) {
         return Math.min(Math.max(MIN_VALUE, quantity), MAX_VALUE);
     }
 
@@ -26,7 +29,7 @@ public class ARGBComposer {
      * @return the given color with the new quantity of alpha.
      */
     public static int setAlpha(int color, int quantity) {
-        int alpha = getCorrectQuantity(quantity);
+        int alpha = getValidQuantity(quantity);
         int red = Color.red(color);
         int green = Color.green(color);
         int blue = Color.blue(color);
@@ -41,7 +44,7 @@ public class ARGBComposer {
      */
     public static int setRed(int color, int quantity) {
         int alpha = Color.alpha(color);
-        int red = getCorrectQuantity(quantity);
+        int red = getValidQuantity(quantity);
         int green = Color.green(color);
         int blue = Color.blue(color);
         return Color.argb(alpha, red, green, blue);
@@ -56,7 +59,7 @@ public class ARGBComposer {
     public static int setGreen(int color, int quantity) {
         int alpha = Color.alpha(color);
         int red = Color.red(color);
-        int green = getCorrectQuantity(quantity);
+        int green = getValidQuantity(quantity);
         int blue = Color.blue(color);
         return Color.argb(alpha, red, green, blue);
     }
@@ -71,7 +74,7 @@ public class ARGBComposer {
         int alpha = Color.alpha(color);
         int red = Color.red(color);
         int green = Color.green(color);
-        int blue = getCorrectQuantity(quantity);
+        int blue = getValidQuantity(quantity);
         return Color.argb(alpha, red, green, blue);
     }
 

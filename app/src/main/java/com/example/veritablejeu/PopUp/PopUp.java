@@ -27,6 +27,7 @@ import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.Tools.SimpleBackground;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
@@ -137,11 +138,12 @@ public class PopUp extends FrameLayout implements IPopUp {
         objectAnimator.start();
     }
 
-    public void setContent(@NonNull PopUpComponent... contents) {
+    public void setContent(String title, @NonNull PopUpComponent... contents) {
+        setTitle(title);
         clear();
-        for(PopUpComponent content : contents) {
-            addContent(content);
-        }
+        Arrays.stream(contents)
+                .sequential()
+                .forEach(this::addContent);
         show();
     }
 
@@ -195,22 +197,19 @@ public class PopUp extends FrameLayout implements IPopUp {
         setHeight(INITIAL_HEIGHT);
     }
 
-    public void showQuestion(String titre, String text, String reponseA, @Nullable Runnable runnableA, String reponseB, @Nullable Runnable runnableB) {
-        setTitle(titre);
+    public void showQuestion(String title, String text, String reponseA, @Nullable Runnable runnableA, String reponseB, @Nullable Runnable runnableB) {
         Question question = new Question(this, text, reponseA, runnableA, reponseB, runnableB);
-        setContent(question.getSimpleText(), question.getButtons());
+        setContent(title, question.getSimpleText(), question.getButtons());
     }
 
-    public void showMessage(String titre, String text) {
-        setTitle(titre);
+    public void showMessage(String title, String text) {
         SimpleText affirmation = new SimpleText(this, text);
-        setContent(affirmation);
+        setContent(title, affirmation);
     }
 
     @Override
     public void showManual() {
-        setTitle("HOW TO PLAY");
-        setContent(Manuel.getInstance(this));
+        setContent("HOW TO PLAY", Manuel.getInstance(this));
     }
 
 }

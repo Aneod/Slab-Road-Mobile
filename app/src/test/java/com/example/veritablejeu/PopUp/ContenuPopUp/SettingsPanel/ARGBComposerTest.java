@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import android.graphics.Color;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel.ARGBComposer;
+import com.example.veritablejeu.Tools.ARGBComposer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

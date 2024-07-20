@@ -16,7 +16,6 @@ public class SimpleText extends PopUpComponent {
 
     public SimpleText(@NonNull PopUp popUp, String text) {
         super(popUp);
-        setHeight(Integer.MAX_VALUE);
         textView = new PopUpText(this, text, getLayoutParams().width, 0, Gravity.CENTER);
         addView(textView);
     }

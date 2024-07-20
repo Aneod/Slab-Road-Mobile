@@ -11,8 +11,8 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.Modul
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent.OnOffComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 
@@ -31,7 +31,7 @@ public class GameSettings {
         };
         float currentVolume = mediaPlayerInstance.getVolume();
         return new CursorComponent(
-                popUp, "Music volume", 100, currentVolume, consumerVolume, Color.BLACK);
+                popUp, "Music volume", currentVolume, consumerVolume, Color.BLACK);
     }
 
     @Contract("_ -> new")
@@ -47,7 +47,7 @@ public class GameSettings {
         };
         float currentSpeed = 1.0f - (float) ModularBlob.getMovesDuration() / 1000;
         return new CursorComponent(
-                popUp, "Move speed", 100, currentSpeed, speedConsumer, Color.BLACK);
+                popUp, "Move speed", currentSpeed, speedConsumer, Color.BLACK);
     }
 
     @Contract("_ -> new")
@@ -57,7 +57,7 @@ public class GameSettings {
         Runnable activeEffectFlashs = () -> BackgroundColoration.setFlashesEnable(true);
         Runnable disactiveEffectFlashs = () -> BackgroundColoration.setFlashesEnable(false);
         boolean isFlashesEnable = BackgroundColoration.isFlashesEnable();
-        return new OnOffComponent(popUp, "Flashes", 100,
+        return new OnOffComponent(popUp, "Flashes",
                 isFlashesEnable,
                 "ACTIVE", activeEffectFlashs,
                 "DISACTIVE", disactiveEffectFlashs
@@ -71,7 +71,7 @@ public class GameSettings {
         Runnable activeEffectBulles = bainDeSavon::show_and_resume;
         Runnable disactiveEffectBulles = bainDeSavon::hide_and_pause;
         boolean currentBulles = bainDeSavon.areBubblesVisible();
-        return new OnOffComponent(popUp, "Background bubbles", 100,
+        return new OnOffComponent(popUp, "Background bubbles",
                 currentBulles,
                 "ACTIVE", activeEffectBulles,
                 "DISACTIVE", disactiveEffectBulles
@@ -85,7 +85,7 @@ public class GameSettings {
         Runnable runnableA = () -> AccessibleSquaresFinder.setHelperEnableAndRefresh(true, inGame);
         Runnable runnableB = () -> AccessibleSquaresFinder.setHelperEnableAndRefresh(false, inGame);
         boolean isHelperEnable = AccessibleSquaresFinder.isHelperEnable();
-        return new OnOffComponent(popUp, "Travel assistance", 100,
+        return new OnOffComponent(popUp, "Travel assistance",
                 isHelperEnable,
                 "ACTIVE", runnableA,
                 "DISACTIVE", runnableB
@@ -103,7 +103,7 @@ public class GameSettings {
     public static void showGameSettingsPopUp(InGame inGame) {
         if(inGame == null) return;
         PopUp popUp = inGame.getPopUp();
-        popUp.setContent(getAllComponents(inGame));
+        popUp.setContent("SETTINGS", getAllComponents(inGame));
     }
 
 }

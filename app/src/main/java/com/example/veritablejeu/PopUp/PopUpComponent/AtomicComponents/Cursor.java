@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 
 @SuppressLint("ViewConstructor")
@@ -22,6 +22,11 @@ public class Cursor extends FrameLayout {
     private static final int CURSOR_LINE_HEIGHT = 6;
     private static final int CURSOR_LINE_COLOR = Color.LTGRAY;
     private static final int CURSOR_DIAMETER = 25;
+    private static final int CURSOR_HEIGHT = 100;
+
+    public static int getCursorHeight() {
+        return CURSOR_HEIGHT;
+    }
 
     private float value;
     private final CursorComponent cursorComponent;

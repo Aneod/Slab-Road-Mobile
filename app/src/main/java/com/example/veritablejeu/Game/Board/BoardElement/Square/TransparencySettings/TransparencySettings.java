@@ -7,7 +7,7 @@ import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
 import org.jetbrains.annotations.Contract;
@@ -25,7 +25,7 @@ public class TransparencySettings {
         PopUp popUp = board.getGame().getPopUp();
         float currentTransparency = board.getBoardTransparency().getTransparency();
         return new CursorComponent(
-                popUp, "Transparency", 100, currentTransparency, consumer, Color.BLACK);
+                popUp, "Transparency", currentTransparency, consumer, Color.BLACK);
     }
 
     public static void showGameSettingsPopUp(ModularSquare square) {
@@ -33,6 +33,6 @@ public class TransparencySettings {
         PopUp popUp = square.getGame().getPopUp();
         Board board = square.getBoard();
         CursorComponent cursor = getTransparencyCursor(board);
-        popUp.setContent(cursor);
+        popUp.setContent("SQUARE", cursor);
     }
 }

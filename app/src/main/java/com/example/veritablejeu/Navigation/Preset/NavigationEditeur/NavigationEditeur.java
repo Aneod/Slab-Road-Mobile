@@ -13,8 +13,8 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent.OnOffComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.R;
@@ -54,17 +54,24 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         List<WindowProposal> propositions = new ArrayList<>();
         propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
         propositions.add(new WindowProposal("Background bubbles", this::test, true));
+        propositions.add(new WindowProposal("Manual", this::showManual, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));
         littleWindow.set(propositions);
+        PopUp popUp = PopUp.getInstance(editeur);
+        popUp.hide();
     }
 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
-        popUp.setTitle("TEST");
-        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", 100, .5f, null, Color.BLACK);
-        OnOffComponent onOffComponent = new OnOffComponent(popUp, "OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, ", 100, false, "Active", null, "Non", null);
-        popUp.setContent(cursorComponent, onOffComponent);
+        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null, Color.BLACK);
+        OnOffComponent onOffComponent = new OnOffComponent(popUp, "OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, OnOff, ", false, "Active", null, "Non", null);
+        popUp.setContent("TEST", cursorComponent, onOffComponent);
+    }
+
+    private void showManual() {
+        PopUp popUp = PopUp.getInstance(editeur);
+        popUp.showManual();
     }
 
     private void activerDesactiverGrille(){

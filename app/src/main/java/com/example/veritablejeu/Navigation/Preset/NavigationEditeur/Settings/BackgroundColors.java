@@ -5,8 +5,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Game;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel.RGBPanel;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 
@@ -48,7 +48,7 @@ public class BackgroundColors {
     public static void showPanel(Game game) {
         if(game == null) return;
         PopUp popUp = game.getPopUp();
-        popUp.setContent(mergeArrays(getTopColorSettings(game), getBottomColorSettings(game)));
+        popUp.setContent("BACKGROUND COLOR", mergeArrays(getTopColorSettings(game), getBottomColorSettings(game)));
     }
 
 }

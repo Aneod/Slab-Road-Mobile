@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.GroupOfBlobsOfBoard;
-import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent.CursorComponent;
-import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel.RGBPanel;
+import com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.CursorComponent;
+import com.example.veritablejeu.PopUp.PopUpComponent.ComposedComponents.RGBPanel;
 import com.example.veritablejeu.PopUp.PopUp;
 
 import org.jetbrains.annotations.Contract;
@@ -25,7 +25,7 @@ public class BlobColorSettings {
     public static void showPanel(GroupOfBlobsOfBoard groupOfBlobsOfBoard) {
         if(groupOfBlobsOfBoard == null) return;
         PopUp popUp = groupOfBlobsOfBoard.getBoard().getGame().getPopUp();
-        popUp.setContent(getCursors(groupOfBlobsOfBoard));
+        popUp.setContent("BLOBS COLOR", getCursors(groupOfBlobsOfBoard));
     }
 
 }

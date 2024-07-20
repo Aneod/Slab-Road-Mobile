@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents.OnOffComponent;
+package com.example.veritablejeu.PopUp.PopUpComponent.InlineComponents;
 
 import android.annotation.SuppressLint;
 import android.view.Gravity;
@@ -10,7 +10,6 @@ import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.PopUpText;
 import com.example.veritablejeu.PopUp.PopUpComponent.AtomicComponents.OnOffButton;
 import com.example.veritablejeu.PopUp.PopUpComponent.PopUpComponent;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.Tools.LayoutParams.ConstraintParams;
 
 @SuppressLint("ViewConstructor")
 public class OnOffComponent extends PopUpComponent {
@@ -26,12 +25,13 @@ public class OnOffComponent extends PopUpComponent {
         return bouton;
     }
 
-    public OnOffComponent(@NonNull PopUp popUp, String title, int height,
+    public OnOffComponent(@NonNull PopUp popUp, String title,
                           boolean estActiveDeBase,
                           String texteActive, @Nullable Runnable activeEffect,
                           String texteDesactive, @Nullable Runnable disactiveEffect) {
         super(popUp);
         int width = getLayoutParams().width;
+        int height = OnOffButton.getHEIGHT();
         int titledWidth = (int) (width * WIDTH_TITLED_DISTRIBUTION);
         PopUpText popUpText = new PopUpText(this, title, titledWidth, height, Gravity.CENTER_VERTICAL);
         addView(popUpText);
