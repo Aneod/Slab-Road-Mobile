@@ -12,11 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
+import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 public class Image extends AppCompatImageView {
 
     private static final float WIDTH_PORCENTAGE = .8f;
+
+    public static float getWidthPorcentage() {
+        return WIDTH_PORCENTAGE;
+    }
+
+    private FrameLayout.LayoutParams layoutParams;
+
+    @Override
+    public FrameLayout.LayoutParams getLayoutParams() {
+        return layoutParams;
+    }
 
     public Image(@NonNull Context context) {
         super(context);
@@ -32,20 +44,21 @@ public class Image extends AppCompatImageView {
      */
     public Image(@NonNull InlineComponent inlineComponent, int res) {
         super(inlineComponent.getContext());
-        setLayoutParams(inlineComponent, res);
+        layoutParams = getLayoutParams(inlineComponent, res);
+        setLayoutParams(layoutParams);
         setImageResource(res);
         int height = getLayoutParams().height;
         inlineComponent.setHeight(height);
     }
 
-    private void setLayoutParams(InlineComponent inlineComponent, int res) {
+    private FrameLayout.LayoutParams getLayoutParams(InlineComponent inlineComponent, int res) {
         int width = getWidth(inlineComponent);
         int height = get_Height(width, res);
         int leftMargin = getLeftMargin(inlineComponent, width);
-        FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
+        layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 width, height, leftMargin, 0
         );
-        setLayoutParams(layoutParams);
+        return layoutParams;
     }
 
     private int getWidth(InlineComponent inlineComponent) {
@@ -71,30 +84,24 @@ public class Image extends AppCompatImageView {
     }
 
     private float get_Height_Width_ImageRatio(int res) {
-        @SuppressLint("UseCompatLoadingForDrawables")
-        Drawable drawable = getContext().getResources().getDrawable(res, null);
-
-        Bitmap bitmap;
-        if (drawable instanceof BitmapDrawable) {
-            bitmap = ((BitmapDrawable) drawable).getBitmap();
-        } else {
-            // Si ce n'est pas un BitmapDrawable, essayer de charger l'image comme Bitmap
-            bitmap = BitmapFactory.decodeResource(getContext().getResources(), res);
-        }
+        Bitmap bitmap = intToBitmap(res);
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         return (float) height / (float) width;
     }
 
-    private float getResWidth(Bitmap res) {
-        if(res == null)
-            return 0;
-        return res.getWidth();
+    private Bitmap intToBitmap(int res) {
+        Drawable drawable = intToDrawable(res);
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else {
+            return BitmapFactory.decodeResource(getContext().getResources(), res);
+        }
     }
 
-    private int getResHeight(Bitmap res) {
-        if(res == null)
-            return 0;
-        return res.getHeight();
+    private Drawable intToDrawable(int res) {
+        @SuppressLint("UseCompatLoadingForDrawables")
+        Drawable drawable = getContext().getResources().getDrawable(res, null);
+        return drawable;
     }
 }

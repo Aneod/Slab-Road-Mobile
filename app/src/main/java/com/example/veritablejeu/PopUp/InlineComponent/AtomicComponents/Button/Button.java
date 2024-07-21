@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Button;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -14,13 +14,34 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 import com.example.veritablejeu.Tools.SimpleBackground;
 
 @SuppressLint("ViewConstructor")
-public class Button extends AppCompatButton {
+public class Button extends AppCompatButton implements IButton {
 
     private static final int HEIGHT = 75;
+    private static final GradientDrawable WHITE_APPEARENCE = SimpleBackground.create(Color.WHITE, Color.BLACK, 2);
+    private static final GradientDrawable BLACK_APPEARENCE = SimpleBackground.create(Color.BLACK);
+    private static final int TEXT_COLOR_WHITE_APPEARENCE = Color.BLACK;
+    private static final int TEXT_COLOR_BLACK_APPEARENCE = Color.WHITE;
 
     public static int getHEIGHT() {
         return HEIGHT;
     }
+
+    public static GradientDrawable getWhiteAppearence() {
+        return WHITE_APPEARENCE;
+    }
+
+    public static GradientDrawable getBlackAppearence() {
+        return BLACK_APPEARENCE;
+    }
+
+    public static int getTextColorWhiteAppearence() {
+        return TEXT_COLOR_WHITE_APPEARENCE;
+    }
+
+    public static int getTextColorBlackAppearence() {
+        return TEXT_COLOR_BLACK_APPEARENCE;
+    }
+
 
     private final int width;
     private final int leftMargin;
@@ -43,19 +64,21 @@ public class Button extends AppCompatButton {
         setLayoutParams();
     }
     
+    @Override
     public void takeBlackAppearance(String text) {
-        this.setBackgroundColor(Color.BLACK);
         this.setText(text);
-        this.setTextColor(Color.WHITE);
+        this.setTextColor(TEXT_COLOR_BLACK_APPEARENCE);
+        this.setBackground(BLACK_APPEARENCE);
     }
     
+    @Override
     public void takeWhiteAppearance(String text) {
-        GradientDrawable border = SimpleBackground.create(Color.WHITE, Color.BLACK, 2);
-        this.setBackground(border);
         this.setText(text);
-        this.setTextColor(Color.BLACK);
+        this.setTextColor(TEXT_COLOR_WHITE_APPEARENCE);
+        this.setBackground(WHITE_APPEARENCE);
     }
 
+    @Override
     public void setRunnable(Runnable runnable) {
         setOnClickListener(v -> {
             if(runnable != null) {
@@ -64,7 +87,8 @@ public class Button extends AppCompatButton {
         });
     }
 
-    public void refreshHeight() {
+    @Override
+    public void refreshLayoutParams() {
         setLayoutParams();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp.ComposedComponents.Manuel.PartieInferieureAPageNumerotee;
+package com.example.veritablejeu.Menu.PageDeSelection.PartieInferieureAPageNumerotee;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;

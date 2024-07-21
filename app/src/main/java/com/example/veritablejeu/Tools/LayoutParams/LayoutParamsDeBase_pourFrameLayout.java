@@ -18,10 +18,4 @@ public class LayoutParamsDeBase_pourFrameLayout extends FrameLayout.LayoutParams
         this.leftMargin = leftMargin;
         this.topMargin = topMargin;
     }
-
-    public LayoutParamsDeBase_pourFrameLayout(@NonNull ConstraintParams constraintParams) {
-        super(constraintParams.getWidth(), constraintParams.getHeight());
-        this.leftMargin = constraintParams.getLeftMargin();
-        this.topMargin = constraintParams.getTopMargin();
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.veritablejeu.PopUp.ComposedComponents;
 
 import android.annotation.SuppressLint;
+import android.view.Gravity;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ public class Question extends FrameLayout {
 
     public Question(@NonNull PopUp popUp, String text, String textA, Runnable runA, String textB, Runnable runB) {
         super(popUp.getContext());
-        simpleText = new SimpleText(popUp, text);
+        simpleText = new SimpleText(popUp, text, Gravity.CENTER);
         buttons = new DoubleButtons(popUp, textA, runA, textB, runB);
     }
 

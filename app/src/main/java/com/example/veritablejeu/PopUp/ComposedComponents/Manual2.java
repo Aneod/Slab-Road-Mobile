@@ -8,10 +8,26 @@ import com.example.veritablejeu.R;
 
 public class Manual2 {
 
-    public static void show(PopUp popUp) {
-        if(popUp == null) return;
+    private static Manual2 instance;
+    private final PopUp popUp;
+    private final InlineComponent[] components;
 
-        InlineComponent[] components = new InlineComponent[]{
+    private Manual2(PopUp popUp) {
+        this.popUp = popUp;
+        components = getComponents(popUp);
+    }
+
+    public static Manual2 getInstance(PopUp popUp) {
+        if(instance == null) {
+            instance = new Manual2(popUp);
+        }
+        return instance;
+    }
+
+    private InlineComponent[] getComponents(PopUp popUp) {
+        if(popUp == null) return null;
+
+        return new InlineComponent[]{
 
                 new SimpleText(popUp, "Gameplay très simple :\n\n" +
                         "Cliquer sur un blob pour le sélectionner. Il changera alors de couleur."),
@@ -88,7 +104,10 @@ public class Manual2 {
 
                 new SimpleImage(popUp, R.drawable.img15)
         };
+    }
 
+    public void show() {
+        if(popUp == null || components == null) return;
         popUp.setContent("HOW TO PLAY", components);
     }
 

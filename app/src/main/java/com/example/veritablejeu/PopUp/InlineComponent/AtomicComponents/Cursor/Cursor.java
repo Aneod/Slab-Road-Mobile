@@ -1,11 +1,10 @@
-package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Cursor;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.FloatRange;
@@ -14,62 +13,72 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
+import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 @SuppressLint("ViewConstructor")
-public class Cursor extends FrameLayout {
+public class Cursor extends FrameLayout implements ICursor {
 
+    private static final int HEIGHT = 100;
     private static final int CURSOR_LINE_HEIGHT = 6;
     private static final int CURSOR_LINE_COLOR = Color.LTGRAY;
     private static final int CURSOR_DIAMETER = 25;
-    private static final int CURSOR_HEIGHT = 100;
 
-    public static int getCursorHeight() {
-        return CURSOR_HEIGHT;
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static int getCursorLineHeight() {
+        return CURSOR_LINE_HEIGHT;
+    }
+
+    public static int getCursorDiameter() {
+        return CURSOR_DIAMETER;
     }
 
     private float value;
-    private final CursorComponent cursorComponent;
+    private final InlineComponent inlineComponent;
     private final View cursorLine;
     private final View cursor;
+    private FrameLayout.LayoutParams layoutParamsLine;
+    private FrameLayout.LayoutParams layoutParamsCursor;
 
     /**
      * A cursor take place at the right of the {@link InlineComponent}.
      */
-    public Cursor(@NonNull CursorComponent cursorComponent, int width,
+    public Cursor(@NonNull InlineComponent inlineComponent, int width,
                   @FloatRange(from = 0.0f, to = 1.0f) float startValue,
                   Consumer<Float> consumer, int color) {
-        super(cursorComponent.getContext());
-        this.cursorComponent = cursorComponent;
+        super(inlineComponent.getContext());
+        this.inlineComponent = inlineComponent;
         this.value = startValue;
         int halfDiameter = CURSOR_DIAMETER / 2;
         int cursorLineWidth = width - CURSOR_DIAMETER;
-        int leftMargin = cursorComponent.getLayoutParams().width - width;
+        int leftMargin = inlineComponent.getLayoutParams().width - width;
         int cursorLineLeftMargin = leftMargin + halfDiameter;
-        int cursorLineTopMargin = (cursorComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
+        int cursorLineTopMargin = (inlineComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
 
-        cursorLine = getCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
+        cursorLine = createCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
         addView(cursorLine);
 
-        cursor = getCursor(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin, consumer, color);
+        cursor = createCursor(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin, consumer, color);
         addView(cursor);
     }
 
     @NonNull
-    private View getCursorLine(int cursorLineWidth, int cursorLineLeftMargin, int cursorLingTopMargin) {
+    private View createCursorLine(int cursorLineWidth, int cursorLineLeftMargin, int cursorLingTopMargin) {
         View cursorLine = new View(getContext());
         cursorLine.setBackgroundColor(CURSOR_LINE_COLOR);
 
-        ConstraintLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
+        layoutParamsLine = new LayoutParamsDeBase_pourFrameLayout(
                 cursorLineWidth, CURSOR_LINE_HEIGHT, cursorLineLeftMargin, cursorLingTopMargin);
-        cursorLine.setLayoutParams(layoutParams);
+        cursorLine.setLayoutParams(layoutParamsLine);
 
         return cursorLine;
     }
 
     @NonNull
-    private View getCursor(int cursorLineWidth, int cursorLineLeftMargin, int cursorLineTopMargin, Consumer<Float> consumer, int color) {
+    private View createCursor(int cursorLineWidth, int cursorLineLeftMargin, int cursorLineTopMargin, Consumer<Float> consumer, int color) {
         View cursor = new View(getContext());
 
         GradientDrawable drawable = new GradientDrawable();
@@ -78,15 +87,15 @@ public class Cursor extends FrameLayout {
         cursor.setBackground(drawable);
 
         int halfDiameter = CURSOR_DIAMETER / 2;
-        int startXpos = (int) (cursorLineLeftMargin + cursorLineWidth * value - halfDiameter);
         int cursor_min_leftMargin = cursorLineLeftMargin - halfDiameter;
         int cursor_max_leftMargin = cursorLineLeftMargin + cursorLineWidth - halfDiameter;
 
         int yCursorLineCenter = cursorLineTopMargin + CURSOR_LINE_HEIGHT / 2;
         int topMargin = yCursorLineCenter - halfDiameter;
-        ConstraintLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
+        layoutParamsCursor = new LayoutParamsDeBase_pourFrameLayout(
                 CURSOR_DIAMETER, CURSOR_DIAMETER, 0, topMargin);
-        cursor.setLayoutParams(layoutParams);
+        cursor.setLayoutParams(layoutParamsCursor);
+        int startXpos = (int) (cursorLineLeftMargin + cursorLineWidth * value - halfDiameter);
         cursor.setTranslationX(startXpos);
 
         setOnTouchListener(new OnTouchListener() {
@@ -122,24 +131,39 @@ public class Cursor extends FrameLayout {
         return cursor;
     }
 
-    public void refreshHeight() {
-        int cursorLineTopMargin = (cursorComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
+    public float getValue() {
+        return value;
+    }
 
-        ViewGroup.LayoutParams layoutParamsLine = cursorLine.getLayoutParams();
-        if(layoutParamsLine instanceof ConstraintLayout.LayoutParams) {
-            ((ConstraintLayout.LayoutParams) layoutParamsLine).topMargin = cursorLineTopMargin;
-        } else if(layoutParamsLine instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) layoutParamsLine).topMargin = cursorLineTopMargin;
+    public View getCursor() {
+        return cursor;
+    }
+
+    public FrameLayout.LayoutParams getLayoutParamsLine() {
+        return layoutParamsLine;
+    }
+
+    public FrameLayout.LayoutParams getLayoutParamsCursor() {
+        return layoutParamsCursor;
+    }
+
+    public InlineComponent getInlineComponent() {
+        return inlineComponent;
+    }
+
+    @Override
+    public void refreshHeight() {
+        int cursorLineTopMargin = (inlineComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
+
+        if(layoutParamsLine != null) {
+            layoutParamsLine.topMargin = cursorLineTopMargin;
         }
 
         int halfDiameter = CURSOR_DIAMETER / 2;
         int yCursorLineCenter = cursorLineTopMargin + CURSOR_LINE_HEIGHT / 2;
         int cursorTopMargin = yCursorLineCenter - halfDiameter;
-        ViewGroup.LayoutParams layoutParamsCursor = cursor.getLayoutParams();
-        if(layoutParamsCursor instanceof ConstraintLayout.LayoutParams) {
-            ((ConstraintLayout.LayoutParams) layoutParamsCursor).topMargin = cursorTopMargin;
-        } else if(layoutParamsCursor instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) layoutParamsCursor).topMargin = cursorTopMargin;
+        if(layoutParamsCursor != null) {
+            layoutParamsCursor.topMargin = cursorTopMargin;
         }
     }
 }

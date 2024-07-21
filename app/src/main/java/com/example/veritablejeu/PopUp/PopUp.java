@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -86,6 +87,9 @@ public class PopUp extends FrameLayout implements IPopUp {
         return instance;
     }
 
+    /**
+     * For tests.
+     */
     public static PopUp getInstance(@NonNull Context context) {
         if(instance == null) {
             instance = new PopUp(context);
@@ -228,7 +232,7 @@ public class PopUp extends FrameLayout implements IPopUp {
     }
 
     public void showMessage(String title, String text) {
-        SimpleText affirmation = new SimpleText(this, text);
+        SimpleText affirmation = new SimpleText(this, text, Gravity.CENTER);
         setContent(title, affirmation);
     }
 
@@ -238,7 +242,7 @@ public class PopUp extends FrameLayout implements IPopUp {
     }
 
     public void showManual2() {
-        Manual2.show(this);
+        Manual2.getInstance(this).show();
     }
 
 }

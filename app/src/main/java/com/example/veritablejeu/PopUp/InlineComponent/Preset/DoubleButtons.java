@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
-import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Button;
+import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Button.Button;
 
 @SuppressLint("ViewConstructor")
 public class DoubleButtons extends InlineComponent {

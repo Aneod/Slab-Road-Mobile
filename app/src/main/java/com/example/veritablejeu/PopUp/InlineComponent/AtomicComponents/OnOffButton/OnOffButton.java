@@ -1,13 +1,14 @@
-package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents;
+package com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.OnOffButton;
 
 import android.annotation.SuppressLint;
 
 import androidx.annotation.Nullable;
 
+import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Button.Button;
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 
 @SuppressLint("ViewConstructor")
-public class OnOffButton extends Button {
+public class OnOffButton extends Button implements IOnOffButton {
 
     private final String activeText;
     private final Runnable activation;
@@ -26,11 +27,13 @@ public class OnOffButton extends Button {
         setAppearance(active);
     }
 
+    @Override
     public void setAppearance(boolean active) {
         if(active) takeWhiteAppearance();
         else takeBlackAppearance();
     }
 
+    @Override
     public void activation() {
         if(activation != null) {
             activation.run();
@@ -38,6 +41,7 @@ public class OnOffButton extends Button {
         takeWhiteAppearance();
     }
 
+    @Override
     public void disactivation() {
         if(disactivation != null) {
             disactivation.run();
@@ -45,11 +49,13 @@ public class OnOffButton extends Button {
         takeBlackAppearance();
     }
 
+    @Override
     public void takeWhiteAppearance() {
         takeWhiteAppearance(activeText);
         setRunnable(this::disactivation);
     }
 
+    @Override
     public void takeBlackAppearance() {
         takeBlackAppearance(disactiveText);
         setRunnable(this::activation);

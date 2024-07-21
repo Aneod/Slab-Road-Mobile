@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.Text;
-import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.OnOffButton;
+import com.example.veritablejeu.PopUp.InlineComponent.AtomicComponents.OnOffButton.OnOffButton;
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.PopUp;
 
@@ -48,7 +48,7 @@ public class OnOffComponent extends InlineComponent {
         setLayoutParams(layoutParams);
         popUp.refreshHeight();
         if(bouton != null) {
-            bouton.refreshHeight();
+            bouton.refreshLayoutParams();
         }
     }
 }

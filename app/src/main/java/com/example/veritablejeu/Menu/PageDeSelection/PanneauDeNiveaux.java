@@ -12,7 +12,7 @@ import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Tools.ScreenUtils;
-import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
+import com.example.veritablejeu.Menu.PageDeSelection.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.R;
 
 import java.util.List;

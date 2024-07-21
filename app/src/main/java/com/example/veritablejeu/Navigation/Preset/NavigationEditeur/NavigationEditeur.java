@@ -56,6 +56,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
         propositions.add(new WindowProposal("Background bubbles", this::test, true));
         propositions.add(new WindowProposal("Manual", this::showManual, true));
+        propositions.add(new WindowProposal("Manual2", this::showManual2, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));
         littleWindow.set(propositions);
@@ -65,15 +66,21 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
-        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null, Color.BLACK);
+        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null);
+        OnOffComponent onOffComponent = new OnOffComponent(popUp, "TITRE", false, "YES", null, "NO", null);
         SimpleImage simpleImage = new SimpleImage(popUp, R.drawable.img6);
         SimpleImage simpleImage2 = new SimpleImage(popUp, R.drawable.pixel_art_menu2);
-        popUp.setContent("TEST", cursorComponent, simpleImage, simpleImage2);
+        popUp.setContent("TEST", cursorComponent, onOffComponent, simpleImage, simpleImage2);
     }
 
     private void showManual() {
         PopUp popUp = PopUp.getInstance(editeur);
         popUp.showManual();
+    }
+
+    private void showManual2() {
+        PopUp popUp = PopUp.getInstance(editeur);
+        popUp.showManual2();
     }
 
     private void activerDesactiverGrille(){

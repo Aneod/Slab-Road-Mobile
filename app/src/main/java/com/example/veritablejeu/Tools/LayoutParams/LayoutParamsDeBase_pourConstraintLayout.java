@@ -19,12 +19,4 @@ public class LayoutParamsDeBase_pourConstraintLayout extends ConstraintLayout.La
         this.leftMargin = leftMargin;
         this.topMargin = topMargin;
     }
-
-    public LayoutParamsDeBase_pourConstraintLayout(@NonNull ConstraintParams constraintParams) {
-        super(constraintParams.getWidth(), constraintParams.getHeight());
-        this.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        this.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        this.leftMargin = constraintParams.getLeftMargin();
-        this.topMargin = constraintParams.getTopMargin();
-    }
 }

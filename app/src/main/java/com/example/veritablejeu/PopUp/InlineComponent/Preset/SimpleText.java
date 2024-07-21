@@ -16,7 +16,13 @@ public class SimpleText extends InlineComponent {
 
     public SimpleText(@NonNull PopUp popUp, String text) {
         super(popUp);
-        textView = new Text(this, text, getLayoutParams().width, 0, Gravity.CENTER);
+        textView = new Text(this, text, getLayoutParams().width, 0, Gravity.NO_GRAVITY);
+        addView(textView);
+    }
+
+    public SimpleText(@NonNull PopUp popUp, String text, int gravity) {
+        super(popUp);
+        textView = new Text(this, text, getLayoutParams().width, 0, gravity);
         addView(textView);
     }
 
