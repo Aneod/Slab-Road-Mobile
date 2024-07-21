@@ -13,6 +13,10 @@ public class DoubleButtons extends InlineComponent {
 
     private static final float TOTAL_BUTTONS_WIDTH_OCCUPATION_PERCENTAGE = .7f;
 
+    public static float getTotalButtonsWidthOccupationPercentage() {
+        return TOTAL_BUTTONS_WIDTH_OCCUPATION_PERCENTAGE;
+    }
+
     private final Button boutonA;
     private final Button boutonB;
 
@@ -37,6 +41,14 @@ public class DoubleButtons extends InlineComponent {
         boutonB.takeBlackAppearance(textB);
         boutonB.setRunnable(runB);
         this.addView(boutonB);
+    }
+
+    public Button getBoutonA() {
+        return boutonA;
+    }
+
+    public Button getBoutonB() {
+        return boutonB;
     }
 
     public void setRunnableA(Runnable runnable) {

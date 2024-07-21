@@ -100,4 +100,39 @@ public class CursorTest {
         );
         assertNotEquals(topMargin1, topMargin2);
     }
+
+    @Test
+    public void getCorrectValue_outOfLowerBound() {
+        float value = -Float.MAX_VALUE;
+        float actual = cursor.getCorrectValue(value);
+        assertEquals(0.0f, actual, 0);
+    }
+
+    @Test
+    public void getCorrectValue_lowerBound() {
+        float value = 0.0f;
+        float actual = cursor.getCorrectValue(value);
+        assertEquals(0.0f, actual, 0);
+    }
+
+    @Test
+    public void getCorrectValue_normal() {
+        float value = .7f;
+        float actual = cursor.getCorrectValue(value);
+        assertEquals(.7f, actual, 0);
+    }
+
+    @Test
+    public void getCorrectValue_higherBound() {
+        float value = 1.0f;
+        float actual = cursor.getCorrectValue(value);
+        assertEquals(1.0f, actual, 0);
+    }
+
+    @Test
+    public void getCorrectValue_outOfHigherBound() {
+        float value = Float.MAX_VALUE;
+        float actual = cursor.getCorrectValue(value);
+        assertEquals(1.0f, actual, 0);
+    }
 }
