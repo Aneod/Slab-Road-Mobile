@@ -16,6 +16,10 @@ public class OnOffComponent extends InlineComponent {
 
     private static final float WIDTH_TITLED_DISTRIBUTION = .6f;
 
+    public static float getWidthTitledDistribution() {
+        return WIDTH_TITLED_DISTRIBUTION;
+    }
+
     private final OnOffButton bouton;
 
     public OnOffButton getBouton() {

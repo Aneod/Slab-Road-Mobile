@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
-import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 public class Image extends AppCompatImageView {
