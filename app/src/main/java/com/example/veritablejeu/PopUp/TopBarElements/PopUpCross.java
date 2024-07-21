@@ -46,7 +46,7 @@ public class PopUpCross extends FrameLayout {
     public PopUpCross(@NonNull PopUp popUp) {
         super(popUp.getContext());
 
-        int size = popUp.getInitialHeight();
+        int size = PopUp.getInitialHeight();
         FrameLayout.LayoutParams layoutparamsCroixContainer = new FrameLayout.LayoutParams(size, size);
         this.setLayoutParams(layoutparamsCroixContainer);
 

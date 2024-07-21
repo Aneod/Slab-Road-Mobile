@@ -36,7 +36,7 @@ public class PopUpTitleTest {
     @Test
     public void testTextHeight() {
         PopUpTitle popUpTitle = popUp.getTitle();
-        int popUpTopBarHeight = popUp.getInitialHeight();
+        int popUpTopBarHeight = PopUp.getInitialHeight();
         int titleHeight = popUpTitle.getLayoutParams().height;
         assertEquals(popUpTopBarHeight, titleHeight);
     }

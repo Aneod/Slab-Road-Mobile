@@ -24,7 +24,7 @@ public class InlineComponentTest {
     public void testWidth() {
         int actual = inlineComponent.getLayoutParams().width;
         int sideMargins = InlineComponent.getSideMargins();
-        int extected = popUp.getLayoutParams().width - 2 * popUp.getBORDER_WIDTH() - 2 * sideMargins;
+        int extected = popUp.getLayoutParams().width - 2 * PopUp.getBORDER_WIDTH() - 2 * sideMargins;
         assertEquals(extected, actual);
     }
 

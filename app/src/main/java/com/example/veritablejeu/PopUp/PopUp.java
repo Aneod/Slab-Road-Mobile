@@ -17,6 +17,7 @@ import com.example.veritablejeu.PopUp.ComposedComponents.Manual;
 import com.example.veritablejeu.PopUp.ComposedComponents.Question;
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
+import com.example.veritablejeu.PopUp.PopUpContainer.PopUpContainer;
 import com.example.veritablejeu.PopUp.TopBarElements.PopUpCross;
 import com.example.veritablejeu.PopUp.TopBarElements.PopUpTitle;
 import com.example.veritablejeu.Tools.Elevation;
@@ -26,7 +27,6 @@ import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.Tools.SimpleBackground;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
@@ -34,23 +34,25 @@ public class PopUp extends FrameLayout implements IPopUp {
 
     private static final int HORIZONTAL_MARGINS = 50;
     private static final int VERTICAL_MARGINS = 175;
-    private static final int MAX_HEIGHT = ScreenUtils.getScreenHeight() - 2 * VERTICAL_MARGINS;
     private static final int INITIAL_HEIGHT = 90;
-    private static final int HEIGHT_BETWEEN_COMPONENTS = 30;
     private static final int BORDER_WIDTH = 5;
 
-    public int getInitialHeight() {
-        return INITIAL_HEIGHT;
+    public static int getBORDER_WIDTH() {
+        return BORDER_WIDTH;
     }
 
-    public int getBORDER_WIDTH() {
-        return BORDER_WIDTH;
+    public static int getVerticalMargins() {
+        return VERTICAL_MARGINS;
+    }
+
+    public static int getInitialHeight() {
+        return INITIAL_HEIGHT;
     }
 
 
     private static PopUp instance;
     private final PopUpTitle title;
-    private final List<InlineComponent> contents = new ArrayList<>();
+    private final PopUpContainer popUpContainer;
 
     private void setLayoutParams() {
         int largeur = ScreenUtils.getScreenWidth() - 2 * HORIZONTAL_MARGINS;
@@ -76,6 +78,9 @@ public class PopUp extends FrameLayout implements IPopUp {
 
         PopUpCross cross = new PopUpCross(this);
         addView(cross);
+
+        popUpContainer = new PopUpContainer(this);
+        this.addView(popUpContainer);
     }
 
     private PopUp(@NonNull AppCompatActivity activity) {
@@ -129,60 +134,15 @@ public class PopUp extends FrameLayout implements IPopUp {
     @Override
     public void setContent(String title, @NonNull InlineComponent... contents) {
         setTitle(title);
-        clearContents();
-        Arrays.stream(contents)
-                .sequential()
-                .forEach(this::addContent);
+        popUpContainer.setContent(contents);
         show();
     }
-
-    @Override
-    public void addContent(InlineComponent popUpContent) {
-        if(popUpContent == null || popUpContent.getParent() != null) return;
-        LayoutParams layoutParams = popUpContent.getLayoutParams();
-        if(layoutParams != null) {
-            layoutParams.topMargin = getLayoutParams().height;
-        }
-        popUpContent.setLayoutParams(popUpContent.getLayoutParams());
-        addView(popUpContent);
-        contents.add(popUpContent);
-        addHeight(popUpContent.getLayoutParams().height);
-    }
-
-    @Override
-    public void clearContents() {
-        contents.forEach(this::removeView);
-        contents.clear();
-        resetHeight();
-    }
-
 
     /// HEIGHT MANAGER
     @Override
     public void refreshHeight() {
-        resetHeight();
-        for(InlineComponent inlineComponent : contents) {
-            LayoutParams layoutParams = inlineComponent.getLayoutParams();
-            if(layoutParams != null) {
-                layoutParams.topMargin = getLayoutParams().height;
-            }
-            addHeight(inlineComponent.getLayoutParams().height);
-        }
+        popUpContainer.refreshHeight();
     }
-
-    private void setHeight(int height) {
-        getLayoutParams().height = Math.max(0, height);
-    }
-
-    private void addHeight(int height) {
-        int newHeight = getLayoutParams().height + height + HEIGHT_BETWEEN_COMPONENTS;
-        setHeight(Math.min(newHeight, MAX_HEIGHT));
-    }
-
-    private void resetHeight() {
-        setHeight(INITIAL_HEIGHT);
-    }
-
 
     /// PRESET
     @Override

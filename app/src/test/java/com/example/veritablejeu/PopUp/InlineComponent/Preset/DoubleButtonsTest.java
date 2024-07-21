@@ -91,7 +91,7 @@ public class DoubleButtonsTest {
         int disponibleWidth = doubleButtons.getLayoutParams().width;
         float buttonsWidth = disponibleWidth * DoubleButtons.getTotalButtonsWidthOccupationPercentage();
         float side_margins = (disponibleWidth - buttonsWidth) / 4;
-        int leftMarginFirst = (int) side_margins + popUp.getBORDER_WIDTH();
+        int leftMarginFirst = (int) side_margins + PopUp.getBORDER_WIDTH();
         ViewGroup.LayoutParams layoutParams = button1.getLayoutParams();
         if(layoutParams instanceof FrameLayout.LayoutParams) {
             int actual = ((FrameLayout.LayoutParams) layoutParams).leftMargin;
@@ -112,7 +112,7 @@ public class DoubleButtonsTest {
         float buttonWidth = buttonsWidth / 2;
         float side_margins = (disponibleWidth - buttonsWidth) / 4;
         float buttonsGap = 2 * side_margins;
-        int leftMarginSecond = (int) (side_margins + buttonWidth + buttonsGap + popUp.getBORDER_WIDTH());
+        int leftMarginSecond = (int) (side_margins + buttonWidth + buttonsGap + PopUp.getBORDER_WIDTH());
         ViewGroup.LayoutParams layoutParams = button2.getLayoutParams();
         if(layoutParams instanceof FrameLayout.LayoutParams) {
             int actual = ((FrameLayout.LayoutParams) layoutParams).leftMargin;

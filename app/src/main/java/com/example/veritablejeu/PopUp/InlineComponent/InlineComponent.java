@@ -27,7 +27,7 @@ public class InlineComponent extends FrameLayout {
 
     @NonNull
     private FrameLayout.LayoutParams get_layoutParams() {
-        int popUpWidth = popUp.getLayoutParams().width - 2 * popUp.getBORDER_WIDTH();
+        int popUpWidth = popUp.getLayoutParams().width - 2 * PopUp.getBORDER_WIDTH();
         int width = popUpWidth - 2 * SIDE_MARGINS;
         return new LayoutParamsDeBase_pourFrameLayout(
                 width, 0, SIDE_MARGINS, 0

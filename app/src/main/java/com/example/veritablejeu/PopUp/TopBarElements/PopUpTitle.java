@@ -51,7 +51,7 @@ public class PopUpTitle extends androidx.appcompat.widget.AppCompatTextView {
                         float dy = event.getRawY() - startY;
 
                         if(popUp.getTranslationY() + dy < 0 && dy < 0) dy = 0;
-                        else if (popUp.getTranslationY() + dy > ScreenUtils.getScreenHeight() - 4 * popUp.getInitialHeight() && dy > 0) dy = 0;
+                        else if (popUp.getTranslationY() + dy > ScreenUtils.getScreenHeight() - 4 * PopUp.getInitialHeight() && dy > 0) dy = 0;
 
                         if(popUp.getTranslationX() + dx < (float) -ScreenUtils.getScreenWidth() / 2 && dx < 0) dx = 0;
                         else if(popUp.getTranslationX() + dx > (float) ScreenUtils.getScreenWidth() / 2 && dx > 0) dx = 0;
@@ -74,7 +74,7 @@ public class PopUpTitle extends androidx.appcompat.widget.AppCompatTextView {
         setTextSize(SIZE);
         setGravity(GRAVITY);
         ConstraintLayout.LayoutParams layoutParamsDeTitre = new LayoutParamsDeBase_pourConstraintLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT, popUp.getInitialHeight(), 0, 0);
+                ViewGroup.LayoutParams.MATCH_PARENT, PopUp.getInitialHeight(), 0, 0);
         setLayoutParams(layoutParamsDeTitre);
         enableParentTranslationOnSwipe(popUp);
     }

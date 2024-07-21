@@ -30,13 +30,13 @@ public class DoubleButtons extends InlineComponent {
         float side_margins = (disponibleWidth - buttonsWidth) / 4;
         float buttonsGap = 2 * side_margins;
 
-        int leftMarginFirst = (int) side_margins + popUp.getBORDER_WIDTH();
+        int leftMarginFirst = (int) side_margins + PopUp.getBORDER_WIDTH();
         boutonA = new Button(this, (int) buttonWidth, leftMarginFirst);
         boutonA.takeWhiteAppearance(textA);
         boutonA.setRunnable(runA);
         this.addView(boutonA);
 
-        int leftMarginSecond = (int) (side_margins + buttonWidth + buttonsGap + popUp.getBORDER_WIDTH());
+        int leftMarginSecond = (int) (side_margins + buttonWidth + buttonsGap + PopUp.getBORDER_WIDTH());
         boutonB = new Button(this, (int) buttonWidth, leftMarginSecond);
         boutonB.takeBlackAppearance(textB);
         boutonB.setRunnable(runB);

@@ -32,7 +32,7 @@ public class PopUpCrossTest {
     @Test
     public void crossSize() {
         int actual = cross.getLayoutParams().width;
-        int expected = popUp.getInitialHeight();
+        int expected = PopUp.getInitialHeight();
         assertEquals(expected, actual);
     }
 
@@ -47,7 +47,7 @@ public class PopUpCrossTest {
     @Test
     public void crossImageSize() {
         View onlyView = cross.getChildAt(0);
-        int topBarHeight = popUp.getInitialHeight();
+        int topBarHeight = PopUp.getInitialHeight();
         int actual = onlyView.getLayoutParams().width;
         int expected = (int) (topBarHeight * PopUpCross.getCrossHeightPercentage());
         assertEquals(expected, actual);
