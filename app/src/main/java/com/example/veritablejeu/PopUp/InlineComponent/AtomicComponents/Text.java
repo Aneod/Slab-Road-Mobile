@@ -17,8 +17,15 @@ public class Text extends AppCompatTextView {
 
     private static final int TEXT_COLOR = Color.BLACK;
 
+    public static int getTextColor() {
+        return TEXT_COLOR;
+    }
+
+    private final FrameLayout.LayoutParams layoutParams;
+
     public Text(@NonNull Context context) {
         super(context);
+        layoutParams = new LayoutParamsDeBase_pourFrameLayout(0, 0, 0, 0);
     }
 
     /**
@@ -46,7 +53,7 @@ public class Text extends AppCompatTextView {
 
         inlineComponent.setHeight(Integer.MAX_VALUE);
 
-        FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
+        layoutParams = new LayoutParamsDeBase_pourFrameLayout(
                 width, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0);
         setLayoutParams(layoutParams);
 
@@ -55,12 +62,16 @@ public class Text extends AppCompatTextView {
             public void onGlobalLayout() {
                 getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 int height = getMeasuredHeight();
-                Log.e("", "" + height);
                 int newHeight = Math.max(minHeight, height);
                 inlineComponent.setHeight(newHeight);
                 layoutParams.height = newHeight;
                 setLayoutParams(layoutParams);
             }
         });
+    }
+
+    @Override
+    public FrameLayout.LayoutParams getLayoutParams() {
+        return layoutParams;
     }
 }
