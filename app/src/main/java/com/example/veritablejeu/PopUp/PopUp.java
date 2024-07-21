@@ -49,11 +49,11 @@ public class PopUp extends FrameLayout implements IPopUp {
 
 
     private static PopUp instance;
-    private final List<InlineComponent> contents = new ArrayList<>();
     private final PopUpTitle title;
-    private final int largeur = ScreenUtils.getScreenWidth() - 2 * HORIZONTAL_MARGINS;
+    private final List<InlineComponent> contents = new ArrayList<>();
 
     private void setLayoutParams() {
+        int largeur = ScreenUtils.getScreenWidth() - 2 * HORIZONTAL_MARGINS;
         LayoutParamsDeBase_pourConstraintLayout layoutParams =
                 new LayoutParamsDeBase_pourConstraintLayout(largeur, INITIAL_HEIGHT, HORIZONTAL_MARGINS, VERTICAL_MARGINS);
         this.setLayoutParams(layoutParams);
