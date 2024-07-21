@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp;
+package com.example.veritablejeu.PopUp.TopBarElements;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 import com.example.veritablejeu.R;
 
@@ -18,6 +19,10 @@ public class PopUpCross extends FrameLayout {
     private static final int CROSS_IMAGE = R.drawable.croix;
     private static final int CROSS_COLOR = Color.BLACK;
     private static final float CROSS_HEIGHT_PERCENTAGE = .45f;
+
+    public static float getCrossHeightPercentage() {
+        return CROSS_HEIGHT_PERCENTAGE;
+    }
 
     @NonNull
     @Contract("_ -> new")

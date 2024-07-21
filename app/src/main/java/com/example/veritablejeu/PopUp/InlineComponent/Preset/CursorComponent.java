@@ -38,6 +38,10 @@ public class CursorComponent extends InlineComponent {
         addView(cursor);
     }
 
+    public Cursor getCursor() {
+        return cursor;
+    }
+
     @Override
     public void setHeight(int height) {
         layoutParams.height = height;

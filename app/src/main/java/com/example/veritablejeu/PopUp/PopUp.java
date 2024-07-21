@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
@@ -23,6 +22,8 @@ import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.Manuel;
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.ComposedComponents.Question;
 import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
+import com.example.veritablejeu.PopUp.TopBarElements.PopUpCross;
+import com.example.veritablejeu.PopUp.TopBarElements.PopUpTitle;
 import com.example.veritablejeu.Tools.Elevation;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
@@ -87,9 +88,6 @@ public class PopUp extends FrameLayout implements IPopUp {
         return instance;
     }
 
-    /**
-     * For tests.
-     */
     public static PopUp getInstance(@NonNull Context context) {
         if(instance == null) {
             instance = new PopUp(context);
@@ -107,7 +105,7 @@ public class PopUp extends FrameLayout implements IPopUp {
         constraintLayout.addView(this);
     }
 
-    @Override
+    // Va disparaître.
     public int get_width() {
         return largeur;
     }
@@ -172,9 +170,9 @@ public class PopUp extends FrameLayout implements IPopUp {
 
     public void addContent(InlineComponent popUpContent) {
         if(popUpContent == null || popUpContent.getParent() != null) return;
-        ViewGroup.LayoutParams layoutParams = popUpContent.getLayoutParams();
-        if(layoutParams instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) layoutParams).topMargin = get_Height();
+        LayoutParams layoutParams = popUpContent.getLayoutParams();
+        if(layoutParams != null) {
+            layoutParams.topMargin = get_Height();
         }
         popUpContent.setLayoutParams(popUpContent.getLayoutParams());
         addView(popUpContent);
@@ -190,6 +188,10 @@ public class PopUp extends FrameLayout implements IPopUp {
 
 
     /// TITLE MANAGER
+    public PopUpTitle getTitle() {
+        return title;
+    }
+
     public void setTitle(String nouveauTitre) {
         title.setTexte(nouveauTitre);
     }
@@ -203,9 +205,9 @@ public class PopUp extends FrameLayout implements IPopUp {
     public void refreshHeight() {
         resetHeight();
         for(InlineComponent inlineComponent : contents) {
-            ViewGroup.LayoutParams layoutParams = inlineComponent.getLayoutParams();
-            if(layoutParams instanceof FrameLayout.LayoutParams) {
-                ((FrameLayout.LayoutParams) layoutParams).topMargin = get_Height();
+            LayoutParams layoutParams = inlineComponent.getLayoutParams();
+            if(layoutParams != null) {
+                layoutParams.topMargin = get_Height();
             }
             addHeight(inlineComponent.getLayoutParams().height);
         }

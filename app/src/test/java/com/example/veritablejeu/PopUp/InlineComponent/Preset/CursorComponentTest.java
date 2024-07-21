@@ -62,6 +62,16 @@ public class CursorComponentTest {
     }
 
     @Test
+    public void getCursor_corresponding() {
+        Cursor expected = cursorComponent.getCursor();
+        View cursor = cursorComponent.getChildAt(1);
+        if(!(cursor instanceof Cursor)) {
+            fail();
+        }
+        assertEquals(expected, cursor);
+    }
+
+    @Test
     public void setHeight() {
         cursorComponent.setHeight(1500);
         int actual = cursorComponent.getLayoutParams().height;

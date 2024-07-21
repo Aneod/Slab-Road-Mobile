@@ -1,4 +1,4 @@
-package com.example.veritablejeu.PopUp;
+package com.example.veritablejeu.PopUp.TopBarElements;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -6,22 +6,35 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.ScreenUtils;
 
 @SuppressLint("ViewConstructor")
 public class PopUpTitle extends androidx.appcompat.widget.AppCompatTextView {
 
-    private static final int TEXT_COLOR = Color.BLACK;
-    private static final int TEXT_SIZE = 18;
+    private static final int COLOR = Color.BLACK;
+    private static final int SIZE = 18;
+    private static final int GRAVITY = Gravity.CENTER;
+
+    public static int getCOLOR() {
+        return COLOR;
+    }
+
+    public static int getSIZE() {
+        return SIZE;
+    }
+
+    public static int getGRAVITY() {
+        return GRAVITY;
+    }
 
     @SuppressLint("ClickableViewAccessibility")
-    public void enableParentTranslationOnSwipe(PopUp popUp) {
+    private void enableParentTranslationOnSwipe(PopUp popUp) {
         this.setOnTouchListener(new View.OnTouchListener() {
             private float startX;
             private float startY;
@@ -57,12 +70,12 @@ public class PopUpTitle extends androidx.appcompat.widget.AppCompatTextView {
 
     public PopUpTitle(@NonNull PopUp popUp) {
         super(popUp.getContext());
-        setTextColor(TEXT_COLOR);
-        setTextSize(TEXT_SIZE);
+        setTextColor(COLOR);
+        setTextSize(SIZE);
+        setGravity(GRAVITY);
         ConstraintLayout.LayoutParams layoutParamsDeTitre = new LayoutParamsDeBase_pourConstraintLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT, popUp.getInitialHeight(), 0, 0);
         setLayoutParams(layoutParamsDeTitre);
-        setGravity(Gravity.CENTER);
         enableParentTranslationOnSwipe(popUp);
     }
 

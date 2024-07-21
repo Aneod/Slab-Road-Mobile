@@ -8,6 +8,12 @@ import com.example.veritablejeu.R;
 
 public class Manual2 {
 
+    private static final String POPUP_TITLE = "HOW TO PLAY";
+
+    public static String getPopupTitle() {
+        return POPUP_TITLE;
+    }
+
     private static Manual2 instance;
     private final PopUp popUp;
     private final InlineComponent[] components;
@@ -106,9 +112,13 @@ public class Manual2 {
         };
     }
 
+    public InlineComponent[] getComponents() {
+        return components;
+    }
+
     public void show() {
         if(popUp == null || components == null) return;
-        popUp.setContent("HOW TO PLAY", components);
+        popUp.setContent(POPUP_TITLE, components);
     }
 
 }

@@ -11,13 +11,12 @@ import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
 import com.example.veritablejeu.PopUp.PopUp;
 
 @SuppressLint("ViewConstructor")
-public class Question extends FrameLayout {
+public class Question {
 
     private final SimpleText simpleText;
     private final DoubleButtons buttons;
 
     public Question(@NonNull PopUp popUp, String text, String textA, Runnable runA, String textB, Runnable runB) {
-        super(popUp.getContext());
         simpleText = new SimpleText(popUp, text, Gravity.CENTER);
         buttons = new DoubleButtons(popUp, textA, runA, textB, runB);
     }
