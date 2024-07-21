@@ -9,12 +9,12 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
 import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
-import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
+
+import kotlin.annotation.MustBeDocumented;
 
 @SuppressLint("ViewConstructor")
 public class Cursor extends FrameLayout implements ICursor {
@@ -38,7 +38,6 @@ public class Cursor extends FrameLayout implements ICursor {
 
     private float value;
     private final InlineComponent inlineComponent;
-    private final View cursorLine;
     private final View cursor;
     private FrameLayout.LayoutParams layoutParamsLine;
     private FrameLayout.LayoutParams layoutParamsCursor;
@@ -47,22 +46,26 @@ public class Cursor extends FrameLayout implements ICursor {
      * A cursor take place at the right of the {@link InlineComponent}.
      */
     public Cursor(@NonNull InlineComponent inlineComponent, int width,
-                  @FloatRange(from = 0.0f, to = 1.0f) float startValue,
-                  Consumer<Float> consumer, int color) {
+                  float startValue, Consumer<Float> consumer, int color) {
         super(inlineComponent.getContext());
         this.inlineComponent = inlineComponent;
-        this.value = startValue;
+        this.value = getCorrectValue(startValue);
         int halfDiameter = CURSOR_DIAMETER / 2;
         int cursorLineWidth = width - CURSOR_DIAMETER;
         int leftMargin = inlineComponent.getLayoutParams().width - width;
         int cursorLineLeftMargin = leftMargin + halfDiameter;
         int cursorLineTopMargin = (inlineComponent.getLayoutParams().height - CURSOR_LINE_HEIGHT) / 2;
 
-        cursorLine = createCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
+        View cursorLine = createCursorLine(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin);
         addView(cursorLine);
 
         cursor = createCursor(cursorLineWidth, cursorLineLeftMargin, cursorLineTopMargin, consumer, color);
         addView(cursor);
+    }
+
+    @FloatRange(from = 0.0f, to = 1.0f)
+    public float getCorrectValue(float startValue) {
+        return (float) Math.min(Math.max(0.0, startValue), 1.0);
     }
 
     @NonNull
