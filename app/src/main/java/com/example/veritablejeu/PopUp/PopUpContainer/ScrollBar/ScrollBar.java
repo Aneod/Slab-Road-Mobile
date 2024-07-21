@@ -32,12 +32,16 @@ public class ScrollBar extends View {
         setElevation(1);
     }
 
-    public void show() {
+    private void show() {
         setVisibility(VISIBLE);
     }
 
-    public void hide() {
+    private void hide() {
         setVisibility(GONE);
+    }
+
+    private void setHeight(int height) {
+        layoutParams.height = height;
     }
 
     public void refreshHeight() {
@@ -53,10 +57,6 @@ public class ScrollBar extends View {
             setHeight(newHeight);
         }
         refreshTopMargin();
-    }
-
-    private void setHeight(int height) {
-        layoutParams.height = height;
     }
 
     public void refreshTopMargin() {
