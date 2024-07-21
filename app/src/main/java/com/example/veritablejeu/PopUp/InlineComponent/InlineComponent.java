@@ -14,6 +14,10 @@ public class InlineComponent extends FrameLayout {
     private static final int SIDE_MARGINS = 30;
     protected static final int TEXT_SIZE = 18;
 
+    public static int getSideMargins() {
+        return SIDE_MARGINS;
+    }
+
     public static int getTextSize() {
         return TEXT_SIZE;
     }
@@ -37,9 +41,13 @@ public class InlineComponent extends FrameLayout {
         setLayoutParams(layoutParams);
     }
 
+    @Override
+    public LayoutParams getLayoutParams() {
+        return layoutParams;
+    }
+
     public void setHeight(int height) {
         layoutParams.height = height;
-        setLayoutParams(layoutParams);
         popUp.refreshHeight();
     }
 }
