@@ -45,9 +45,8 @@ public class ScrollBar extends View {
     }
 
     public void refreshHeight() {
-        int heightParent = popUpContainer.getCurrentHeight() - PopUpContainer.getMaxVisualHeight();
         int maxHeightParent = PopUpContainer.getMaxVisualHeight();
-        float howManyPageHeight = (float) heightParent / maxHeightParent;
+        float howManyPageHeight = (float) popUpContainer.getCurrentHeight() / maxHeightParent;
 
         if(howManyPageHeight <= 1) {
             hide();

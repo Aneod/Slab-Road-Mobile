@@ -77,12 +77,27 @@ public class BulleDeSavon extends View implements IBulleDeSavon {
 
     @Override
     public void setDesign(int forme, int couleur) {
+        setShape(forme);
+        setColor(couleur);
+    }
+
+    @Override
+    public void setShape(int shape) {
+        checkIfGradientDrawable_exist();
+        gradientDrawable.setShape(shape);
+    }
+
+    @Override
+    public void setColor(int color) {
+        checkIfGradientDrawable_exist();
+        gradientDrawable.setColor(color);
+    }
+
+    private void checkIfGradientDrawable_exist() {
         if(gradientDrawable == null) {
             gradientDrawable = new GradientDrawable();
             setBackground(gradientDrawable);
         }
-        gradientDrawable.setShape(forme);
-        gradientDrawable.setColor(couleur);
     }
 
     @Override

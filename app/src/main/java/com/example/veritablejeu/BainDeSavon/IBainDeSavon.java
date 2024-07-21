@@ -22,7 +22,7 @@ public interface IBainDeSavon {
     public HashSet<BulleDeSavon> getToutesLesBulles();
 
     /**
-     * Reset le design pour celui par défaut.
+     * Applique le design par défaut.
      */
     void setDesignDeBase();
 
@@ -41,6 +41,30 @@ public interface IBainDeSavon {
             @Nullable Integer formeUne, @Nullable Integer couleur1,
             @Nullable Integer formeDeux, @Nullable Integer couleur2
     );
+
+    /**
+     * Change the A type bubbles shape.
+     * @param circle true for circle shape. False for rectangle.
+     */
+    void setATypeAsCircle(boolean circle);
+
+    /**
+     * Change the B type bubbles shape.
+     * @param circle true for circle shape. False for rectangle.
+     */
+    void setBTypeAsCircle(boolean circle);
+
+    /**
+     * Change the A type bubbles color.
+     * @param color the new color.
+     */
+    void setATypeColor(int color);
+
+    /**
+     * Change the B type bubbles color.
+     * @param color the new color.
+     */
+    void setBTypeColor(int color);
 
     /**
      * Manages the particles shapes and colors by a code.

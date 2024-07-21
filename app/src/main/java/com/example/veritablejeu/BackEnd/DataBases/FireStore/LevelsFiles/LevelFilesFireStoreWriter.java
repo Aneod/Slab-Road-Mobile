@@ -9,7 +9,6 @@ public class LevelFilesFireStoreWriter {
 
     private static final String COLLECTION_PATH = DataBaseFireStore.getLevelsfilesCollectionPath();
 
-
     /**
      * Try to add a {@link LevelFile} in the FireStore database.
      * Then the {@link LevelFilesFireStoreWriter.BooleanCallback} return <i>true</i> if is a success, <i>false</i> otherwise.

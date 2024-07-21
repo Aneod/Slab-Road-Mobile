@@ -27,6 +27,10 @@ public interface IBulleDeSavon {
      */
     void setDesign(int forme, int couleur);
 
+    void setShape(int shape);
+
+    void setColor(int color);
+
     /**
      * Résume l'animation.
      */

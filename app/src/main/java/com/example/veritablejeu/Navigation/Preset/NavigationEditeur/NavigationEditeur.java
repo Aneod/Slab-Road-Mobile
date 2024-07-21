@@ -5,6 +5,7 @@ import android.graphics.Point;
 
 import androidx.annotation.NonNull;
 
+import com.example.veritablejeu.BainDeSavon.BubblesSettings;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
@@ -54,7 +55,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         LittleWindow littleWindow = editeur.getLittleWindow();
         List<WindowProposal> propositions = new ArrayList<>();
         propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
-        propositions.add(new WindowProposal("Background bubbles", this::test, true));
+        propositions.add(new WindowProposal("Background bubbles", this::openBubblesSettings, true));
         propositions.add(new WindowProposal("Manual", this::showManual, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));
@@ -63,13 +64,8 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         popUp.hide();
     }
 
-    private void test() {
-        PopUp popUp = PopUp.getInstance(editeur);
-        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null, Color.BLACK);
-        OnOffComponent onOffComponent = new OnOffComponent(popUp, "TITRE", false, "YES", null, "NO", null);
-        SimpleImage simpleImage = new SimpleImage(popUp, R.drawable.img6);
-        SimpleImage simpleImage2 = new SimpleImage(popUp, R.drawable.pixel_art_menu2);
-        popUp.setContent("TEST", cursorComponent, onOffComponent, simpleImage, simpleImage2);
+    private void openBubblesSettings() {
+        BubblesSettings.showPanel(editeur);
     }
 
     private void showManual() {

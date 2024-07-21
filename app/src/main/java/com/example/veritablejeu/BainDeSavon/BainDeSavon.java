@@ -1,6 +1,5 @@
 package com.example.veritablejeu.BainDeSavon;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
@@ -20,6 +19,26 @@ public class BainDeSavon implements IBainDeSavon {
     private static BainDeSavon instance;
     private final HashSet<BulleDeSavon> toutesLesBulles;
     private boolean visible = true;
+    private boolean ATypeIsCircle = true;
+    private boolean BTypeIsCircle = true;
+    private int ATypeColor = Color.BLACK;
+    private int BTypeColor = Color.WHITE;
+
+    public boolean isATypeIsCircle() {
+        return ATypeIsCircle;
+    }
+
+    public boolean isBTypeIsCircle() {
+        return BTypeIsCircle;
+    }
+
+    public int getATypeColor() {
+        return ATypeColor;
+    }
+
+    public int getBTypeColor() {
+        return BTypeColor;
+    }
 
     @NonNull
     private HashSet<BulleDeSavon> creerBullesDeSavon(@NonNull AppCompatActivity activity) {
@@ -57,12 +76,7 @@ public class BainDeSavon implements IBainDeSavon {
 
     @Override
     public void setDesignDeBase() {
-        for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
-            int selection = bulleDeSavon.getGroupe();
-            int couleur = selection == 0 ? Color.BLACK : Color.WHITE;
-            int forme = GradientDrawable.OVAL;
-            bulleDeSavon.setDesign(forme, couleur);
-        }
+        setDesigns(0, Color.BLACK, 0, Color.WHITE);
     }
 
     @Override
@@ -81,6 +95,60 @@ public class BainDeSavon implements IBainDeSavon {
             int formeTraduite = forme == 1 ? GradientDrawable.RECTANGLE : GradientDrawable.OVAL;
             bulleDeSavon.setDesign(formeTraduite, couleur);
         }
+        ATypeIsCircle = formeUne != 1;
+        BTypeIsCircle = formeDeux != 1;
+        ATypeColor = couleur1;
+        BTypeColor = couleur2;
+    }
+
+    @Override
+    public void setATypeAsCircle(boolean circle) {
+        int shape = circle ? 0 : 1;
+        for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
+            int selection = bulleDeSavon.getGroupe();
+            boolean isAGroup = selection == 0;
+            if(isAGroup) {
+                bulleDeSavon.setShape(shape);
+            }
+        }
+        ATypeIsCircle = circle;
+    }
+
+    @Override
+    public void setBTypeAsCircle(boolean circle) {
+        int shape = circle ? 0 : 1;
+        for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
+            int selection = bulleDeSavon.getGroupe();
+            boolean isBGroup = selection == 1;
+            if(isBGroup) {
+                bulleDeSavon.setShape(shape);
+            }
+        }
+        BTypeIsCircle = circle;
+    }
+
+    @Override
+    public void setATypeColor(int color) {
+        for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
+            int selection = bulleDeSavon.getGroupe();
+            boolean isAGroup = selection == 0;
+            if(isAGroup) {
+                bulleDeSavon.setColor(color);
+            }
+        }
+        ATypeColor = color;
+    }
+
+    @Override
+    public void setBTypeColor(int color) {
+        for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
+            int selection = bulleDeSavon.getGroupe();
+            boolean isBGroup = selection == 1;
+            if(isBGroup) {
+                bulleDeSavon.setColor(color);
+            }
+        }
+        BTypeColor = color;
     }
 
     @Override
