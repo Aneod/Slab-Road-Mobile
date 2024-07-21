@@ -66,7 +66,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void test() {
         PopUp popUp = PopUp.getInstance(editeur);
-        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null);
+        CursorComponent cursorComponent = new CursorComponent(popUp, "Ceci un un curseur qui fait rien.", .5f, null, Color.BLACK);
         OnOffComponent onOffComponent = new OnOffComponent(popUp, "TITRE", false, "YES", null, "NO", null);
         SimpleImage simpleImage = new SimpleImage(popUp, R.drawable.img6);
         SimpleImage simpleImage2 = new SimpleImage(popUp, R.drawable.pixel_art_menu2);

@@ -31,7 +31,7 @@ public class GameSettings {
         };
         float currentVolume = mediaPlayerInstance.getVolume();
         return new CursorComponent(
-                popUp, "Music volume", currentVolume, consumerVolume);
+                popUp, "Music volume", currentVolume, consumerVolume, Color.BLACK);
     }
 
     @Contract("_ -> new")
@@ -47,7 +47,7 @@ public class GameSettings {
         };
         float currentSpeed = 1.0f - (float) ModularBlob.getMovesDuration() / 1000;
         return new CursorComponent(
-                popUp, "Move speed", currentSpeed, speedConsumer);
+                popUp, "Move speed", currentSpeed, speedConsumer, Color.BLACK);
     }
 
     @Contract("_ -> new")

@@ -25,7 +25,7 @@ public class TransparencySettings {
         PopUp popUp = board.getGame().getPopUp();
         float currentTransparency = board.getBoardTransparency().getTransparency();
         return new CursorComponent(
-                popUp, "Transparency", currentTransparency, consumer);
+                popUp, "Transparency", currentTransparency, consumer, Color.BLACK);
     }
 
     public static void showGameSettingsPopUp(ModularSquare square) {

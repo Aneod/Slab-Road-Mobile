@@ -49,7 +49,6 @@ public class OnOffComponent extends InlineComponent {
     @Override
     public void setHeight(int height) {
         layoutParams.height = height;
-        setLayoutParams(layoutParams);
         popUp.refreshHeight();
         if(bouton != null) {
             bouton.refreshLayoutParams();
