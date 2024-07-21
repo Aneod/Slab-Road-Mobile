@@ -6,7 +6,7 @@ import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.R;
 
-public class Manual2 {
+public class Manual {
 
     private static final String POPUP_TITLE = "HOW TO PLAY";
 
@@ -14,18 +14,18 @@ public class Manual2 {
         return POPUP_TITLE;
     }
 
-    private static Manual2 instance;
+    private static Manual instance;
     private final PopUp popUp;
     private final InlineComponent[] components;
 
-    private Manual2(PopUp popUp) {
+    private Manual(PopUp popUp) {
         this.popUp = popUp;
         components = getComponents(popUp);
     }
 
-    public static Manual2 getInstance(PopUp popUp) {
+    public static Manual getInstance(PopUp popUp) {
         if(instance == null) {
-            instance = new Manual2(popUp);
+            instance = new Manual(popUp);
         }
         return instance;
     }

@@ -14,28 +14,28 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 @RunWith(RobolectricTestRunner.class)
-public class Manual2Test {
+public class ManualTest {
 
     private final PopUp popUp = PopUp.getInstance((Context) ApplicationProvider.getApplicationContext());
-    private final Manual2 manual2 = Manual2.getInstance(popUp);
+    private final Manual manual = Manual.getInstance(popUp);
 
     @Test
     public void getInstance() {
-        Manual2 instance = Manual2.getInstance(popUp);
-        assertEquals(manual2, instance);
+        Manual instance = Manual.getInstance(popUp);
+        assertEquals(manual, instance);
     }
 
     @Test
     public void getComonents_notNull() {
-        assertNotNull(manual2.getComponents());
+        assertNotNull(manual.getComponents());
     }
 
     @Test
     public void show() {
-        manual2.show();
+        manual.show();
         PopUpTitle popUpTitle = popUp.getTitle();
         CharSequence title = popUpTitle.getText();
-        String expected = Manual2.getPopupTitle();
+        String expected = Manual.getPopupTitle();
         assertEquals(expected, title);
     }
 }
