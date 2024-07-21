@@ -1,14 +1,10 @@
 package com.example.veritablejeu.PopUp;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewParent;
 import android.widget.FrameLayout;
 
@@ -17,10 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.PopUp.ComposedComponents.Manual2;
-import com.example.veritablejeu.PopUp.ComposedComponents.Manuel.Manuel;
-import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
+import com.example.veritablejeu.PopUp.ComposedComponents.Manual;
 import com.example.veritablejeu.PopUp.ComposedComponents.Question;
+import com.example.veritablejeu.PopUp.InlineComponent.InlineComponent;
 import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleText;
 import com.example.veritablejeu.PopUp.TopBarElements.PopUpCross;
 import com.example.veritablejeu.PopUp.TopBarElements.PopUpTitle;
@@ -43,8 +38,15 @@ public class PopUp extends FrameLayout implements IPopUp {
     private static final int INITIAL_HEIGHT = 90;
     private static final int HEIGHT_BETWEEN_COMPONENTS = 30;
     private static final int BORDER_WIDTH = 5;
-    private static final int SHOW_ANIMATION_DURATION = 400;
-    private static final int HIDE_ANIMATION_DURATION = 300;
+
+    public int getInitialHeight() {
+        return INITIAL_HEIGHT;
+    }
+
+    public int getBORDER_WIDTH() {
+        return BORDER_WIDTH;
+    }
+
 
     private static PopUp instance;
     private final List<InlineComponent> contents = new ArrayList<>();
@@ -105,60 +107,26 @@ public class PopUp extends FrameLayout implements IPopUp {
         constraintLayout.addView(this);
     }
 
-    // Va disparaître.
-    public int get_width() {
-        return largeur;
+    public PopUpTitle getTitle() {
+        return title;
     }
 
-    @Override
-    public int getInitialHeight() { return INITIAL_HEIGHT; }
-
-    @Override
-    public int getBORDER_WIDTH() {
-        return BORDER_WIDTH;
+    public void setTitle(String nouveauTitre) {
+        title.setTexte(nouveauTitre);
     }
 
-
-    /// APPEARATION MANAGER
     @Override
     public void show() {
-        setVisibility(VISIBLE);
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
-                this,
-                PropertyValuesHolder.ofFloat(View.ALPHA, 0.0f, 1.0f)
-        );
-        objectAnimator.setDuration(SHOW_ANIMATION_DURATION);
-        objectAnimator.start();
+        PopUpAnimations.show(this);
     }
 
     @Override
     public void hide() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
-                this,
-                PropertyValuesHolder.ofFloat(View.ALPHA, 1.0f, 0.0f)
-        );
-        objectAnimator.setDuration(HIDE_ANIMATION_DURATION);
-        objectAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(@NonNull Animator animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(@NonNull Animator animation) {
-                setVisibility(GONE);
-            }
-
-            @Override
-            public void onAnimationCancel(@NonNull Animator animation) {}
-
-            @Override
-            public void onAnimationRepeat(@NonNull Animator animation) {}
-        });
-        objectAnimator.start();
+        PopUpAnimations.hide(this);
     }
 
-
     /// CONTENT MANAGER
+    @Override
     public void setContent(String title, @NonNull InlineComponent... contents) {
         setTitle(title);
         clearContents();
@@ -168,11 +136,12 @@ public class PopUp extends FrameLayout implements IPopUp {
         show();
     }
 
+    @Override
     public void addContent(InlineComponent popUpContent) {
         if(popUpContent == null || popUpContent.getParent() != null) return;
         LayoutParams layoutParams = popUpContent.getLayoutParams();
         if(layoutParams != null) {
-            layoutParams.topMargin = get_Height();
+            layoutParams.topMargin = getLayoutParams().height;
         }
         popUpContent.setLayoutParams(popUpContent.getLayoutParams());
         addView(popUpContent);
@@ -180,6 +149,7 @@ public class PopUp extends FrameLayout implements IPopUp {
         addHeight(popUpContent.getLayoutParams().height);
     }
 
+    @Override
     public void clearContents() {
         contents.forEach(this::removeView);
         contents.clear();
@@ -187,27 +157,14 @@ public class PopUp extends FrameLayout implements IPopUp {
     }
 
 
-    /// TITLE MANAGER
-    public PopUpTitle getTitle() {
-        return title;
-    }
-
-    public void setTitle(String nouveauTitre) {
-        title.setTexte(nouveauTitre);
-    }
-
-
     /// HEIGHT MANAGER
-    public int get_Height() {
-        return getLayoutParams().height;
-    }
-
+    @Override
     public void refreshHeight() {
         resetHeight();
         for(InlineComponent inlineComponent : contents) {
             LayoutParams layoutParams = inlineComponent.getLayoutParams();
             if(layoutParams != null) {
-                layoutParams.topMargin = get_Height();
+                layoutParams.topMargin = getLayoutParams().height;
             }
             addHeight(inlineComponent.getLayoutParams().height);
         }
@@ -218,7 +175,7 @@ public class PopUp extends FrameLayout implements IPopUp {
     }
 
     private void addHeight(int height) {
-        int newHeight = get_Height() + height + HEIGHT_BETWEEN_COMPONENTS;
+        int newHeight = getLayoutParams().height + height + HEIGHT_BETWEEN_COMPONENTS;
         setHeight(Math.min(newHeight, MAX_HEIGHT));
     }
 
@@ -228,11 +185,13 @@ public class PopUp extends FrameLayout implements IPopUp {
 
 
     /// PRESET
+    @Override
     public void showQuestion(String title, String text, String reponseA, @Nullable Runnable runnableA, String reponseB, @Nullable Runnable runnableB) {
         Question question = new Question(this, text, reponseA, runnableA, reponseB, runnableB);
         setContent(title, question.getSimpleText(), question.getButtons());
     }
 
+    @Override
     public void showMessage(String title, String text) {
         SimpleText affirmation = new SimpleText(this, text, Gravity.CENTER);
         setContent(title, affirmation);
@@ -240,11 +199,7 @@ public class PopUp extends FrameLayout implements IPopUp {
 
     @Override
     public void showManual() {
-        setContent("HOW TO PLAY", Manuel.getInstance(this));
-    }
-
-    public void showManual2() {
-        Manual2.getInstance(this).show();
+        Manual.getInstance(this).show();
     }
 
 }
