@@ -8,6 +8,8 @@ import com.example.veritablejeu.BackEnd.DataBases.NormalLevelFiles.NormalLevelFi
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanel.LevelsPanel;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,11 +19,13 @@ public class NormalStorage implements ILevelFileStorage {
     private static final int DEFAULT_PAGES_SIZE = 12;
 
     private static NormalStorage instance;
+    private final LevelsPanel levelsPanel;
     private final List<LevelFile> levelsList;
     private final int pagesSize;
     private int currentNumberPage;
 
     private NormalStorage() {
+        this.levelsPanel = LevelsPanel.getInstance();
         this.levelsList = getLevelsList();
         this.pagesSize = getPagesSize();
         this.currentNumberPage = 0;
@@ -55,9 +59,47 @@ public class NormalStorage implements ILevelFileStorage {
     @Override
     public void getStart() {
         resetCurrentNumberPage();
-        // Affiche la première page.
-        // Affiche le nombre total de page et la page actuelle.
-        // Modifie les previous/next listeners du panneau.
+        setPanel();
+    }
+
+    private void setPanel() {
+        showTheFirstPage();
+        showTheNumberOfPages();
+        setPanelListeners();
+        levelsPanel.show();
+    }
+
+    private void showTheFirstPage() {
+        List<LevelFile> firstLevels = getLevelsOfCurrentPage();
+        levelsPanel.getScroller().showLevels(firstLevels);
+    }
+
+    private void showTheNumberOfPages() {
+        int numberOfPages = getNumberOfPages();
+        levelsPanel.getBottomBar().setNumberOfPages(numberOfPages);
+    }
+
+    private void setPanelListeners() {
+        levelsPanel.getBottomBar().setPreviousPageRunnable(previousRunnable());
+        levelsPanel.getBottomBar().setNextPageRunnable(nextRunnable());
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private Runnable previousRunnable() {
+        return () -> {
+            List<LevelFile> previousPage = getPrevious();
+            levelsPanel.getScroller().showLevels(previousPage);
+        };
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private Runnable nextRunnable() {
+        return () -> {
+            List<LevelFile> nextPage = getNext();
+            levelsPanel.getScroller().showLevels(nextPage);
+        };
     }
 
     @Override

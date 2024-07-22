@@ -8,6 +8,8 @@ import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFil
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanel.LevelsPanel;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,14 @@ public class GlobalStorage implements ILevelFileStorage {
     private static final int DEFAULT_PAGES_SIZE = 12;
 
     private static GlobalStorage instance;
+    private final LevelsPanel levelsPanel;
     private final LevelFilesFireStoreReader levelFilesFireStoreReader;
     private int numberOfPages;
     private final int pagesSize;
     private int currentNumberPage;
 
     private GlobalStorage() {
+        this.levelsPanel = LevelsPanel.getInstance();
         this.levelFilesFireStoreReader = LevelFilesFireStoreReader.getInstance();
         this.pagesSize = getPagesSize();
         this.currentNumberPage = 0;
@@ -46,10 +50,16 @@ public class GlobalStorage implements ILevelFileStorage {
 
     @Override
     public void getStart() {
-        // Affiche le panneau vide et lance le loading icon.
+        setLoadingPanel();
         // Recherche le nombre total de niveau (unsynchronized). (ou disconnectedMessage si problème).
         // Seulement alors, recherche la première page.
         setNumberOfPages();
+    }
+
+    private void setLoadingPanel() {
+        levelsPanel.getScroller().showLoadindIcon();
+        levelsPanel.getBottomBar().showLoadingIcon();
+        levelsPanel.show();
     }
 
     private void setNumberOfPages() {
@@ -61,9 +71,9 @@ public class GlobalStorage implements ILevelFileStorage {
                 GlobalStorage.this.numberOfPages = Math.max(min, numberOfPages);
                 resetCurrentNumberPage();
                 // Recherche/Affiche la première page. (ou disconnectedMessage si problème).
-                getLevelsOfCurrentPage();
                 // Affiche le nombre total de page et la page actuelle.
                 // Modifie les previous/next listeners du panneau.
+                setPanel();
             }
 
             @Override
@@ -71,8 +81,41 @@ public class GlobalStorage implements ILevelFileStorage {
                 GlobalStorage.this.numberOfPages = min;
                 resetCurrentNumberPage();
                 // DisconnectedMessage
+                levelsPanel.getScroller().showDisconnectedMessage();
             }
         })).start();
+    }
+
+    private void setPanel() {
+        showTheFirstPage();
+        showTheNumberOfPages();
+        setPanelListeners();
+    }
+
+    private void showTheFirstPage() {
+        getLevelsOfCurrentPage();
+    }
+
+    private void showTheNumberOfPages() {
+        int numberOfPages = getNumberOfPages();
+        levelsPanel.getBottomBar().setNumberOfPages(numberOfPages);
+    }
+
+    private void setPanelListeners() {
+        levelsPanel.getBottomBar().setPreviousPageRunnable(previousRunnable());
+        levelsPanel.getBottomBar().setNextPageRunnable(nextRunnable());
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private Runnable previousRunnable() {
+        return this::getPrevious;
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private Runnable nextRunnable() {
+        return this::getNext;
     }
 
     /**
@@ -106,11 +149,13 @@ public class GlobalStorage implements ILevelFileStorage {
             @Override
             public void onCallback(List<LevelFile> levelFileList) {
                 // Affiche dans le panneau la liste obtenue.
+                levelsPanel.getScroller().showLevels(levelFileList);
             }
 
             @Override
             public void onFailure() {
                 // DisconnectedMessage
+                levelsPanel.getScroller().showDisconnectedMessage();
             }
         });
         return new ArrayList<>();
