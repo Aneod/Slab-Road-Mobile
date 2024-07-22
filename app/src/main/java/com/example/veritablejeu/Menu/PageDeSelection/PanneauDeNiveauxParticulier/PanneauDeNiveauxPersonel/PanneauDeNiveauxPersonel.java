@@ -38,7 +38,6 @@ public class PanneauDeNiveauxPersonel extends PanneauDeNiveaux {
                     loadLookingPersonalFilesPage();
                 });
             });
-
         }).start();
 
         getBoutonPagePrecedente().setOnClickListener(v -> {
