@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreReader;
+import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.GlobalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.IndicationPourPanneauDeNiveaux;
@@ -43,7 +43,7 @@ public class PanneauDeNiveauxMondial extends PanneauDeNiveaux implements IPannea
     public void refresh() {
         getNombreDePagesDansFireStore();
         viderListeDeNiveaux();
-        LevelFilesFireStoreReader.getInstance().clearLevelsList();
+        GlobalLevelsReader.getInstance().clearLevelsList();
         setNumeroDePage(1);
         loadLookingPage();
     }

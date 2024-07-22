@@ -41,15 +41,14 @@ public class ContainerDeFleche extends FrameLayout {
      * @param topMargin la marge supérieure de la classe.
      * @param image l'image mise dans le container.
      */
-    public ContainerDeFleche(@NonNull PartieInferieureAPageNumerotee parent, int leftMargin, int topMargin, int image) {
+    public ContainerDeFleche(@NonNull FrameLayout parent, int height, int leftMargin, int topMargin, int image) {
         super(parent.getContext());
 
-        int hauteur = parent.getHauteur();
-        FrameLayout.LayoutParams layoutParamsContainer = new LayoutParamsDeBase_pourFrameLayout(hauteur, hauteur, leftMargin, topMargin);
+        FrameLayout.LayoutParams layoutParamsContainer = new LayoutParamsDeBase_pourFrameLayout(height, height, leftMargin, topMargin);
         this.setLayoutParams(layoutParamsContainer);
 
         int MARGE = 20;
-        int hauteurDeImage = hauteur - 2 * MARGE;
+        int hauteurDeImage = height - 2 * MARGE;
         this.image = getImageView(hauteurDeImage, MARGE, image);
         this.addView(this.image);
     }

@@ -18,20 +18,20 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelFilesFireStoreReader extends LevelFilesStorage {
+public class GlobalLevelsReader extends LevelFilesStorage {
 
     private static final String TAG = "LevelFilesFireStoreReader";
     private static final String COLLECTION_PATH = DataBaseFireStore.getLevelsfilesCollectionPath();
 
-    private static LevelFilesFireStoreReader instance;
+    private static GlobalLevelsReader instance;
     private final List<LevelFile> levelFileList = new ArrayList<>();
     private DocumentSnapshot lastVisible;
 
-    private LevelFilesFireStoreReader(){}
+    private GlobalLevelsReader(){}
 
-    public static LevelFilesFireStoreReader getInstance() {
+    public static GlobalLevelsReader getInstance() {
         if(instance == null) {
-            instance = new LevelFilesFireStoreReader();
+            instance = new GlobalLevelsReader();
         }
         return instance;
     }

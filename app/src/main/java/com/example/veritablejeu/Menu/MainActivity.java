@@ -22,6 +22,7 @@ import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
+import com.example.veritablejeu.LevelsPanel.Controller;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.BoutonNouveauNiveau;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxMondial.PanneauDeNiveauxMondial;
@@ -156,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
     private void goMenu() {
         container.addView(imageTitre);
         container.removeView(boutonRefresh);
+        Controller.getInstance(this).hide();
         container.removeView(panneauDeNiveauxNormaux);
         container.removeView(panneauDeNiveauxMondial);
         container.removeView(panneauDeNiveauxPersonel);
@@ -178,10 +180,12 @@ public class MainActivity extends AppCompatActivity {
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherAccomplissementCampagne();
 
+        Controller.getInstance(this).showNormalLevels(container);
+
         if(panneauDeNiveauxNormaux == null) {
             this.panneauDeNiveauxNormaux = new PanneauDeNiveauxNormaux(this);
         }
-        container.addView(panneauDeNiveauxNormaux);
+        //container.addView(panneauDeNiveauxNormaux);
     }
 
     private void goMondial() {
@@ -191,14 +195,16 @@ public class MainActivity extends AppCompatActivity {
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherPseudoUtilisateur();
 
+        Controller.getInstance(this).showGlobalLevels(container);
+
         if(panneauDeNiveauxMondial == null) {
             this.panneauDeNiveauxMondial = new PanneauDeNiveauxMondial(this);
         }
-        container.addView(panneauDeNiveauxMondial);
+        //container.addView(panneauDeNiveauxMondial);
 
         if(boutonRefresh == null) {
             boutonRefresh = new BoutonRefresh(this);
-            boutonRefresh.setOnClickListener(v -> panneauDeNiveauxMondial.refresh());
+            //boutonRefresh.setOnClickListener(v -> panneauDeNiveauxMondial.refresh());
             boutonRefresh.setElevation(1);
         }
         container.addView(boutonRefresh);
@@ -222,8 +228,11 @@ public class MainActivity extends AppCompatActivity {
             int topMarginPanneau = margesH + 2 * ecartEntre_BoutonNouveau_Panneau + heightBoutonNouveauNiveau;
             this.panneauDeNiveauxPersonel = new PanneauDeNiveauxPersonel(this, topMarginPanneau);
         }
+
+        Controller.getInstance(this).showPersonalLevels(container);
+
         container.addView(boutonNouveauNiveau);
-        container.addView(panneauDeNiveauxPersonel);
+        //container.addView(panneauDeNiveauxPersonel);
     }
 
     private void goAPropos() {

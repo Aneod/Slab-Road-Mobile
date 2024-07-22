@@ -3,6 +3,11 @@ package com.example.veritablejeu.LevelsPanel.BottomBar;
 public interface IBottomBar {
 
     /**
+     * Hide all elements in the bar.
+     */
+    void clear();
+
+    /**
      * Hide the buttons and the number page, and show a loading icon.
      */
     void showLoadingIcon();

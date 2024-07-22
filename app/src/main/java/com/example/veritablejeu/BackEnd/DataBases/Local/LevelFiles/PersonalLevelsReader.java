@@ -10,18 +10,18 @@ import com.example.veritablejeu.Tools.SafeSubList;
 
 import java.util.List;
 
-public class PersonalFilesReader extends LevelFilesStorage {
+public class PersonalLevelsReader extends LevelFilesStorage {
 
-    private static PersonalFilesReader instance;
+    private static PersonalLevelsReader instance;
     private final PersonalFilesDao personalFilesDao;
     private List<LevelFile> levelsList;
 
-    private PersonalFilesReader(Context context) {
+    private PersonalLevelsReader(Context context) {
         personalFilesDao = PersonalFilesDatabase.getInstance(context).personalFilesDao();}
 
-    public static PersonalFilesReader getInstance(Context context) {
+    public static PersonalLevelsReader getInstance(Context context) {
         if(instance == null) {
-            instance = new PersonalFilesReader(context);
+            instance = new PersonalLevelsReader(context);
         }
         return instance;
     }
@@ -29,27 +29,14 @@ public class PersonalFilesReader extends LevelFilesStorage {
     @Override
     public void get(int from, int to, final LevelListCallback callback) {
         if(levelsList == null) {
-            getAll(new LevelListCallback() {
-                @Override
-                public void onCallback(List<LevelFile> list) {
-                    levelsList = list;
-                }
-
-                @Override
-                public void onFailure() {
-                    callback.onFailure();
-                }
-            });
+            new Thread(() -> {
+                levelsList = personalFilesDao.getAll();
+                List<LevelFile> onReturn = SafeSubList.get(levelsList, from, to);
+                callback.onCallback(onReturn);
+            }).start();
         }
         List<LevelFile> onReturn = SafeSubList.get(levelsList, from, to);
         callback.onCallback(onReturn);
-    }
-
-    private void getAll(final LevelListCallback callback) {
-        new Thread(() -> {
-            List<LevelFile> levelFileList = personalFilesDao.getAll();
-            callback.onCallback(levelFileList);
-        }).start();
     }
 
     @Override

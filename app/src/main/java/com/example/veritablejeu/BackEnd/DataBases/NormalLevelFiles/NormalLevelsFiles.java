@@ -9,9 +9,20 @@ import com.example.veritablejeu.Tools.SafeSubList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NormalLevelFiles extends LevelFilesStorage {
+public class NormalLevelsFiles extends LevelFilesStorage {
 
     private static final List<LevelFile> LEVELS = new ArrayList<>();
+
+    private static NormalLevelsFiles instance;
+
+    private NormalLevelsFiles() {}
+
+    public static NormalLevelsFiles getInstance() {
+        if(instance == null) {
+            instance = new NormalLevelsFiles();
+        }
+        return instance;
+    }
 
     public static List<LevelFile> get() {
         return LEVELS;

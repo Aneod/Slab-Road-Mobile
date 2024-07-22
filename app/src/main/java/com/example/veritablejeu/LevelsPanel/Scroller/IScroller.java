@@ -21,7 +21,7 @@ public interface IScroller {
     /**
      * Show a loading icon.
      */
-    void showLoadindIcon();
+    void showLoadingIcon();
 
     /**
      * Show a message to indicate that there are no files.

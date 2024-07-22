@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
-import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFilesReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveaux;

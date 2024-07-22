@@ -17,7 +17,7 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 @SuppressLint("ViewConstructor")
 public class IndicationPourPanneauDeNiveaux extends FrameLayout {
 
-    public IndicationPourPanneauDeNiveaux(@NonNull Context context, PanneauDeNiveaux panneauDeNiveaux, String texte, int img) {
+    public IndicationPourPanneauDeNiveaux(@NonNull Context context, FrameLayout panneauDeNiveaux, String texte, int img) {
         super(context);
 
         int decalageVersLeHaut = 100;

@@ -23,6 +23,7 @@ import java.util.List;
 
 @SuppressLint("ViewConstructor")
 public class ListeDefilanteDeNiveaux extends FrameLayout {
+
     private final PanneauDeNiveaux parent;
     private final ArrayList<BoutonRedirectionNiveau> listeDesBoutons = new ArrayList<>();
     private float currentTranslationY;
@@ -72,24 +73,6 @@ public class ListeDefilanteDeNiveaux extends FrameLayout {
         boolean estUnNiveauNormal = levelFile.levelCategory == LevelCategory.Normaux;
         boolean estUnNiveauPerso = levelFile.levelCategory == LevelCategory.Perso;
         boolean niveauAutorise = !(estUnNiveauNormal && estBloque);
-
-        BoutonRedirectionNiveau boutonRedirection;
-        if(!niveauAutorise) {
-            boutonRedirection = new BoutonRedirectionNiveauBloque(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
-        }
-        else if(estUnNiveauNormal) {
-            boutonRedirection = new BoutonRedirectionNiveauNormal(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
-        } else if(estUnNiveauPerso) {
-            boutonRedirection = new BoutonRedirectionNiveauPerso(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
-        } else {
-            boutonRedirection = new BoutonRedirectionNiveauMondial(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
-        }
-        this.addView(boutonRedirection);
-        listeDesBoutons.add(boutonRedirection);
     }
 
     public void changerLesNiveauxAffiches(List<LevelFile> nouveauxNumerosNiveauDeLaPage) {

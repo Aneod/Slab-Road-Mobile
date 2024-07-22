@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
+import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
@@ -27,7 +28,7 @@ import java.util.Locale;
 @SuppressLint("ViewConstructor")
 public class BoutonRedirectionNiveau extends BoutonRedirection implements IBoutonRedirectionNiveau {
 
-    protected final ListeDefilanteDeNiveaux parent;
+    protected final Scroller parent;
     protected LevelFile levelFileAOuvrir;
     private AppCompatTextView textePrimaire;
     private AppCompatTextView texteSecondaire;
@@ -97,7 +98,7 @@ public class BoutonRedirectionNiveau extends BoutonRedirection implements IBouto
      * @param topMargin la marge supérieure.
      * @param levelFile l'id du niveeau vers lequel ce bouton redirige.
      */
-    public BoutonRedirectionNiveau(@NonNull Context context, ListeDefilanteDeNiveaux parent, int width, int height, int leftMargin, int topMargin, LevelFile levelFile) {
+    public BoutonRedirectionNiveau(@NonNull Context context, Scroller parent, int width, int height, int leftMargin, int topMargin, LevelFile levelFile) {
         super(context, levelFile.name, width, height, leftMargin, topMargin);
         this.parent = parent;
         creeLesTroisLignes();
