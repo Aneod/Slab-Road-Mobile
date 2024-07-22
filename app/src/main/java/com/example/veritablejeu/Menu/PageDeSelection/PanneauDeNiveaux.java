@@ -14,6 +14,7 @@ import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.Menu.PageDeSelection.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
 import com.example.veritablejeu.R;
+import com.example.veritablejeu.Tools.SimpleBackground;
 
 import java.util.List;
 
@@ -47,9 +48,8 @@ public class PanneauDeNiveaux extends FrameLayout implements IPanneauDeNiveaux {
         this.setLayoutParams(layoutParams);
 
         int largeurBordure = 5;
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(Color.LTGRAY);
-        background.setStroke(largeurBordure, Color.BLACK);
+        GradientDrawable background = SimpleBackground.create(
+                Color.LTGRAY, Color.BLACK, largeurBordure);
         setBackground(background);
 
         int hauteurPartieInferieureDuPanneau = 100;

@@ -7,6 +7,12 @@ import java.util.List;
 public interface IScroller {
 
     /**
+     * Modify the level category of the scroller. That modify the content of the level selectors.
+     * @param category the new category.
+     */
+    void setLevelCategory(Scroller.LevelCategory category);
+
+    /**
      * Print the given list of level files.
      * @param levelFiles all levels files to print.
      */

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanel.LevelsPanel;
+import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
 
 import org.jetbrains.annotations.Contract;
 
@@ -69,6 +70,7 @@ public class PersonalStorage implements ILevelFileStorage {
         showTheFirstPage();
         showTheNumberOfPages();
         setPanelListeners();
+        setLevelScrollerCategory();
     }
 
     private void showTheFirstPage() {
@@ -102,6 +104,10 @@ public class PersonalStorage implements ILevelFileStorage {
             List<LevelFile> nextPage = getNext();
             levelsPanel.getScroller().showLevels(nextPage);
         };
+    }
+
+    private void setLevelScrollerCategory() {
+        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Personal);
     }
 
     private void setLevelsList(List<LevelFile> levelsList) {
