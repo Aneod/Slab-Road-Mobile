@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreReader;
+import com.example.veritablejeu.BackEnd.DataBases.LevelFilesStorage;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanel.LevelsPanel;
 import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
@@ -65,7 +66,7 @@ public class GlobalStorage implements ILevelFileStorage {
 
     private void setNumberOfPages() {
         int min = 1;
-        new Thread(() -> levelFilesFireStoreReader.getSize(new LevelFilesFireStoreReader.CountCallback() {
+        new Thread(() -> levelFilesFireStoreReader.getSize(new LevelFilesStorage.CountCallback() {
             @Override
             public void onCallback(int count) {
                 int numberOfPages = (int) Math.ceil((double) count / pagesSize);
@@ -151,7 +152,7 @@ public class GlobalStorage implements ILevelFileStorage {
         int MAX_INDEX = numberOfPages * pagesSize;
         int firstIndex = Math.min(Math.max(0, currentNumberPage * pagesSize), MAX_INDEX);
         int lastIndex = Math.min(Math.max(0, firstIndex + pagesSize), MAX_INDEX);
-        levelFilesFireStoreReader.get(firstIndex, lastIndex, new LevelFilesFireStoreReader.LevelsListCallback() {
+        levelFilesFireStoreReader.get(firstIndex, lastIndex, new LevelFilesStorage.LevelListCallback() {
             @Override
             public void onCallback(List<LevelFile> levelFileList) {
                 // Affiche dans le panneau la liste obtenue.

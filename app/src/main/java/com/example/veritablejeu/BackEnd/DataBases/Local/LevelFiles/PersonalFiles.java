@@ -68,16 +68,4 @@ public class PersonalFiles implements IPersonalFiles {
     public interface MultipleCallback {
         void onDataLoaded(List<LevelFile> levelFileList);
     }
-
-    @Override
-    public void getSize(CountCallback countCallback) {
-        new Thread(() -> {
-            int size = personalFilesDao.getSize();
-            countCallback.onCallBack(size);
-        }).start();
-    }
-
-    public interface CountCallback {
-        void onCallBack(int count);
-    }
 }

@@ -34,14 +34,8 @@ public class TexteAccomplissement extends androidx.appcompat.widget.AppCompatTex
     }
 
     public void afficherNombreDeFichiersPerso() {
-        Context context = getContext();
-        new Thread(() -> {
-            PersonalFiles personalFiles = PersonalFiles.getInstance(context);
-            personalFiles.getSize(count -> ((MainActivity) context).runOnUiThread(() -> {
-                String texte = count + " fichiers";
-                setText(texte);
-            }));
-        }).start();
+        String text = "HS";
+        setText(text);
     }
 
     public TexteAccomplissement(@NonNull Context context, String versionTexte) {

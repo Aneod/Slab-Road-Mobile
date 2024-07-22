@@ -32,10 +32,4 @@ public interface IPersonalFiles {
      */
     void getAll(final PersonalFiles.MultipleCallback multipleCallback);
 
-    /**
-     * Returns the number of levels in the database.
-     * @param countCallback this object returns the number of levels.
-     */
-    void getSize(final PersonalFiles.CountCallback countCallback);
-
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFilesReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveaux;
@@ -69,13 +70,6 @@ public class PanneauDeNiveauxPersonel extends PanneauDeNiveaux {
     }
 
     private void getNombreDePagesDansPersonalFiles() {
-        Context context = getContext();
-        new Thread(() -> {
-            PersonalFiles personalFiles = PersonalFiles.getInstance(context);
-            personalFiles.getSize(count -> {
-                int nombreTotalDePages = (int) Math.ceil((double) count / PAGE_SIZE);
-                ((MainActivity) context).runOnUiThread(() -> setNombreTotalDePage(nombreTotalDePages));
-            });
-        }).start();
+        setNombreTotalDePage(1);
     }
 }

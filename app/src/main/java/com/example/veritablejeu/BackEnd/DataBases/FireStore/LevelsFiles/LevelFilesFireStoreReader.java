@@ -3,8 +3,10 @@ package com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles;
 import android.util.Log;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.DataBaseFireStore;
+import com.example.veritablejeu.BackEnd.DataBases.LevelFilesStorage;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Tools.MathematicTools;
+import com.example.veritablejeu.Tools.SafeSubList;
 import com.google.firebase.firestore.AggregateQuery;
 import com.google.firebase.firestore.AggregateQuerySnapshot;
 import com.google.firebase.firestore.AggregateSource;
@@ -16,7 +18,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelFilesFireStoreReader implements ILevelFilesFireStoreReader {
+public class LevelFilesFireStoreReader extends LevelFilesStorage {
 
     private static final String TAG = "LevelFilesFireStoreReader";
     private static final String COLLECTION_PATH = DataBaseFireStore.getLevelsfilesCollectionPath();
@@ -34,8 +36,13 @@ public class LevelFilesFireStoreReader implements ILevelFilesFireStoreReader {
         return instance;
     }
 
+    public void clearLevelsList() {
+        levelFileList.clear();
+        lastVisible = null;
+    }
+
     @Override
-    public void getSize(final CountCallback countCallback) {
+    public void getSize(final LevelFilesStorage.CountCallback callback) {
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
         AggregateQuery countQuery = firebaseFirestore.collection(COLLECTION_PATH).count();
         countQuery.get(AggregateSource.SERVER).addOnCompleteListener(task -> {
@@ -43,28 +50,39 @@ public class LevelFilesFireStoreReader implements ILevelFilesFireStoreReader {
                 AggregateQuerySnapshot snapshot = task.getResult();
                 long count = snapshot.getCount();
                 int count_int = MathematicTools.long_to_int(count);
-                countCallback.onCallback(count_int);
+                callback.onCallback(count_int);
             } else {
                 Exception exception = task.getException();
                 Log.e(TAG, "Error fetching document count", exception);
-                countCallback.onFailure();
+                callback.onFailure();
             }
         });
     }
 
-    public interface CountCallback {
-        void onCallback(int count);
-        void onFailure();
+    @Override
+    public void get(int from, int to, final LevelListCallback callback) {
+        int lastKnownIndex = levelFileList.size();
+        boolean lastIndexIsKnown = lastKnownIndex >= to;
+
+        if(!lastIndexIsKnown) {
+            int howManyLevelsToResearch = to - lastKnownIndex;
+            loadNextLevels(howManyLevelsToResearch, new BooleanCallback() {
+                @Override
+                public void onSuccess() {
+
+                }
+
+                @Override
+                public void onFailure() {
+                    callback.onFailure();
+                }
+            });
+        }
+        List<LevelFile> list = SafeSubList.get(levelFileList, from, to);
+        callback.onCallback(list);
     }
 
-    @Override
-    public void clearLevelsList() {
-        levelFileList.clear();
-        lastVisible = null;
-    }
-
-    @Override
-    public void loadNextLevels(int howManyLevelsToLoad, final BooleanCallback booleanCallback) {
+    private void loadNextLevels(int howManyLevelsToLoad, final BooleanCallback booleanCallback) {
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
         Query query;
         if (lastVisible == null) {
@@ -101,43 +119,6 @@ public class LevelFilesFireStoreReader implements ILevelFilesFireStoreReader {
 
     public interface BooleanCallback {
         void onSuccess();
-        void onFailure();
-    }
-
-    @Override
-    public void get(int firstIndex, int lastIndex, final LevelsListCallback callback) {
-        if(firstIndex < 0 || firstIndex > lastIndex) {
-            callback.onFailure();
-            return;
-        }
-
-        int lastKnownIndex = levelFileList.size();
-        boolean lastIndexIsKnown = lastKnownIndex >= lastIndex;
-
-        if(!lastIndexIsKnown) {
-            int howManyLevelsToResearch = lastIndex - lastKnownIndex;
-            loadNextLevels(howManyLevelsToResearch, new BooleanCallback() {
-                @Override
-                public void onSuccess() {
-                    int lastKnownIndex = levelFileList.size();
-                    boolean lastIndexIsKnown = lastKnownIndex >= lastIndex;
-                    if(!lastIndexIsKnown) {
-                        callback.onFailure();
-                    }
-                }
-
-                @Override
-                public void onFailure() {
-                    callback.onFailure();
-                }
-            });
-        }
-        List<LevelFile> list = levelFileList.subList(firstIndex, lastIndex);
-        callback.onCallback(list);
-    }
-
-    public interface LevelsListCallback {
-        void onCallback(List<LevelFile> levelFileList);
         void onFailure();
     }
 }
