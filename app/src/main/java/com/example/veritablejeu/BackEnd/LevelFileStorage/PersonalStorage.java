@@ -51,7 +51,7 @@ public class PersonalStorage implements ILevelFileStorage {
         new Thread(() -> personalFiles.getAll(levelList -> {
             setLevelsList(levelList);
             resetCurrentNumberPage();
-            // Affiche la première page.
+            // Affiche la première page. (ou le notFilesMessage si vide).
             // Affiche le nombre total de page et la page actuelle.
             // Modifie les previous/next listeners du panneau.
         })).start();
@@ -68,19 +68,19 @@ public class PersonalStorage implements ILevelFileStorage {
     @Override
     public List<LevelFile> getPrevious() {
         decrementCurrentNumberPage();
-        return getLevelsOfPage(currentNumberPage);
+        return getLevelsOfCurrentPage();
     }
 
     @Override
     public List<LevelFile> getNext() {
         incrementCurrentNumberPage();
-        return getLevelsOfPage(currentNumberPage);
+        return getLevelsOfCurrentPage();
     }
 
     @NonNull
-    private List<LevelFile> getLevelsOfPage(int numberPage) {
+    private List<LevelFile> getLevelsOfCurrentPage() {
         int MAX_INDEX = levelsList.size();
-        int firstIndex = Math.min(Math.max(0, numberPage * pagesSize), MAX_INDEX);
+        int firstIndex = Math.min(Math.max(0, currentNumberPage * pagesSize), MAX_INDEX);
         int lastIndex = Math.min(Math.max(0, firstIndex + pagesSize), MAX_INDEX);
         return levelsList.subList(firstIndex, lastIndex);
     }

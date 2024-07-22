@@ -10,7 +10,7 @@ public interface ILevelFilesFireStoreReader {
      * Returns how many there are levels in the FireStore database.
      * @param countCallback this object give the number of levels in the FireStore database.
      */
-    void getNumberOfLevels_inDataBase(final LevelFilesFireStoreReader.CountCallback countCallback);
+    void getSize(final LevelFilesFireStoreReader.CountCallback countCallback);
 
     /**
      * Clear the loaded {@link LevelFile} list of the FireStore database.
@@ -18,11 +18,11 @@ public interface ILevelFilesFireStoreReader {
     void clearLevelsList();
 
     /**
-     * Load the X next {@link LevelFile} in the FireStore database, after the last
+     * Load "how many" next {@link LevelFile} in the FireStore database, after the last
      * loaded {@link LevelFile}.
-     * @param numberOfLevelsToLoad how many {@link LevelFile} will be loaded.
+     * @param howManyLevelsToLoad how many {@link LevelFile} must be loaded.
      */
-    void loadNextLevels(int numberOfLevelsToLoad);
+    void loadNextLevels(int howManyLevelsToLoad, final LevelFilesFireStoreReader.BooleanCallback booleanCallback);
 
     /**
      * Returns all levels between <i>firstIndex</i> (included) and the <i>lastIndex</i> (excluded).
@@ -35,8 +35,7 @@ public interface ILevelFilesFireStoreReader {
      *                   Can't be lower than 0.
      * @param lastIndex the index of the last {@link LevelFile} in the Firestore database list (excluded).
      *                  Can't be lower than <i>firstIndex</i>.
-     * @return a {@link List} of all {@link LevelFile} between the <i>firstIndex</i> and the <i>lastIndex</i>.
      */
-    List<LevelFile> get(int firstIndex, int lastIndex);
+    void get(int firstIndex, int lastIndex, final LevelFilesFireStoreReader.LevelsListCallback callback);
 
 }

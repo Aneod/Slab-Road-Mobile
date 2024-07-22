@@ -49,22 +49,7 @@ public class PanneauDeNiveauxMondial extends PanneauDeNiveaux implements IPannea
     }
 
     private void loadLookingPage() {
-        int numeroDePage = getNumeroDePage();
-        int premierIndexVoulu = PAGE_SIZE * (numeroDePage - 1);
-        int dernierIndexVoulu = premierIndexVoulu + PAGE_SIZE;
-
-        LevelFilesFireStoreReader reader = LevelFilesFireStoreReader.getInstance();
-        List<LevelFile> levelFileList = reader.get(premierIndexVoulu, dernierIndexVoulu);
-
-        if(levelFileList.isEmpty()) {
-            // Pour le moment, on affiche un prblm de connexion si la page renvoyée est vide.
-            // Et non pas lors d'un véritable problème de connexion. Même si la conséquence d'un
-            // problème de connexion est le renvoi d'une liste vide.
-            afficherProblemeConnexion();
-        } else {
-            Context context = getContext();
-            ((MainActivity) context).runOnUiThread(() -> updateUI(levelFileList));
-        }
+        afficherProblemeConnexion();
     }
 
     private void updateUI(List<LevelFile> levelFiles) {
@@ -73,11 +58,7 @@ public class PanneauDeNiveauxMondial extends PanneauDeNiveaux implements IPannea
 
     private void getNombreDePagesDansFireStore() {
         Context context = getContext();
-        LevelFilesFireStoreReader levelFilesFireStoreReader = LevelFilesFireStoreReader.getInstance();
-        levelFilesFireStoreReader.getNumberOfLevels_inDataBase((nombreFinal) -> {
-            int nombreTotalDePages = (int) Math.ceil((double) nombreFinal / PAGE_SIZE);
-            ((MainActivity) context).runOnUiThread(() -> setNombreTotalDePage(nombreTotalDePages));
-        });
+        ((MainActivity) context).runOnUiThread(() -> setNombreTotalDePage(1));
     }
 
     @Override
