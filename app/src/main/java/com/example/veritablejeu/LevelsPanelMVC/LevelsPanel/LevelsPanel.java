@@ -1,20 +1,16 @@
-package com.example.veritablejeu.LevelsPanel;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanel.BottomBar.BottomBar;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
-import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
-import com.example.veritablejeu.Menu.PageDeSelection.PartieInferieureAPageNumerotee.PartieInferieureAPageNumerotee;
-import com.example.veritablejeu.Menu.PageDeSelection.SymboleDeChargement;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.Tools.SimpleBackground;
@@ -22,12 +18,6 @@ import com.example.veritablejeu.Tools.SimpleBackground;
 import java.util.List;
 
 public class LevelsPanel extends FrameLayout implements ILevelsPanel {
-
-    private static final int PAGES_SIZE = 12;
-
-    public static int getPagesSize() {
-        return PAGES_SIZE;
-    }
 
     private static LevelsPanel instance;
     private final Scroller scroller;
@@ -56,7 +46,7 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
         int hauteurPartieInferieureDuPanneau = 100;
         int topMarginPartieInferieure = heightPositif - hauteurPartieInferieureDuPanneau;
         this.bottomBar = new BottomBar(
-                this, widthPositif, hauteurPartieInferieureDuPanneau, topMarginPartieInferieure, largeurBordure, null, null);
+                this, widthPositif, hauteurPartieInferieureDuPanneau, topMarginPartieInferieure, largeurBordure);
         this.addView(bottomBar);
 
         int widthListeDefilante = widthPositif - 2 * largeurBordure;
@@ -88,10 +78,7 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
 
     @Override
     public void setLevelsListSize(int size) {
-        int min = 1;
-        int numberOfPages = (int) Math.ceil((double) size / PAGES_SIZE);
-        int reducedNumberOfPages = Math.max(min, numberOfPages);
-        bottomBar.setNumberOfPages(reducedNumberOfPages);
+        bottomBar.setNumberOfPages(size);
     }
 
     @Override

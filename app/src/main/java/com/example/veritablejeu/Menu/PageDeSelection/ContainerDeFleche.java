@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.PageDeSelection.PartieInferieureAPageNumerotee;
+package com.example.veritablejeu.Menu.PageDeSelection;
 
 import android.annotation.SuppressLint;
 import android.widget.FrameLayout;

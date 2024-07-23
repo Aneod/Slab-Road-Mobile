@@ -9,12 +9,9 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
 import com.example.veritablejeu.Menu.MainActivity;
-import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveaux;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.PanneauDeNiveauxPersonel;
 import com.example.veritablejeu.R;
 
 @SuppressLint("ViewConstructor")
@@ -34,13 +31,6 @@ public class BoutonRedirectionNiveauPerso extends BoutonRedirectionNiveau {
         view.setOnClickListener(v -> new Thread(() -> {
             PersonalFiles personalFiles = PersonalFiles.getInstance(context);
             personalFiles.remove(levelFileOriginal);
-
-            FrameLayout panneauDeNiveaux = parent.getPanneauDeNiveauxParent();
-            if(panneauDeNiveaux instanceof PanneauDeNiveauxPersonel) {
-                ((PanneauDeNiveauxPersonel) panneauDeNiveaux).getLevelFilesPersonalFilesList().remove(levelFileOriginal);
-                ((PanneauDeNiveauxPersonel) panneauDeNiveaux).loadLookingPersonalFilesPage();
-            }
-
             ((MainActivity) context).getTexteMenuHD().afficherNombreDeFichiersPerso();
         }).start());
     }

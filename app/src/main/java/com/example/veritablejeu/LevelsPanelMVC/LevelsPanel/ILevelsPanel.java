@@ -1,10 +1,10 @@
-package com.example.veritablejeu.LevelsPanel;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanel.BottomBar.BottomBar;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 
 import java.util.List;
 

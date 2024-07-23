@@ -1,10 +1,9 @@
-package com.example.veritablejeu.LevelsPanel;
-
-import android.content.Context;
+package com.example.veritablejeu.LevelsPanelMVC;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
 
 public interface IController {
 

@@ -14,11 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;
-import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux.EtoilesNiveauxNormaux;
 import com.example.veritablejeu.Tools.LongToReadableTime;
 
 import java.text.SimpleDateFormat;

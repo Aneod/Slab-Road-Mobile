@@ -18,16 +18,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.PersonalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
-import com.example.veritablejeu.LevelsPanel.Controller;
+import com.example.veritablejeu.LevelsPanelMVC.Controller;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.BoutonNouveauNiveau;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxMondial.PanneauDeNiveauxMondial;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux.PanneauDeNiveauxNormaux;
-import com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel.PanneauDeNiveauxPersonel;
+import com.example.veritablejeu.Menu.PageDeSelection.BoutonNouveauNiveau;
 import com.example.veritablejeu.Menu.PagePrincipale.PanneauDeBoutonsRedirection;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
@@ -45,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private BoutonRefresh boutonRefresh;
     private ImageView imageTitre;
     private TexteAccomplissement texteMenuHD;
-    private PanneauDeNiveauxNormaux panneauDeNiveauxNormaux;
-    private PanneauDeNiveauxMondial panneauDeNiveauxMondial;
-    private PanneauDeNiveauxPersonel panneauDeNiveauxPersonel;
     private BoutonNouveauNiveau boutonNouveauNiveau;
     private ContenuAPropos contenuAPropos;
 
@@ -95,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         creationPageAccueil();
+
+        // On commence dès maintenant a charger les données personnelles pour les avoir a disposition
+        // quand nécessaire.
+        PersonalLevelsReader.getInstance(this);
     }
 
     private void demanderUnUserName() {
@@ -158,9 +157,6 @@ public class MainActivity extends AppCompatActivity {
         container.addView(imageTitre);
         container.removeView(boutonRefresh);
         Controller.getInstance(this).hide();
-        container.removeView(panneauDeNiveauxNormaux);
-        container.removeView(panneauDeNiveauxMondial);
-        container.removeView(panneauDeNiveauxPersonel);
         container.removeView(boutonNouveauNiveau);
         container.removeView(contenuAPropos);
         texteMenuHD.afficherNumeroDeVersion();
@@ -179,13 +175,7 @@ public class MainActivity extends AppCompatActivity {
         colorierBackground(panneau.getBoutonJouer().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherAccomplissementCampagne();
-
         Controller.getInstance(this).showNormalLevels(container);
-
-        if(panneauDeNiveauxNormaux == null) {
-            this.panneauDeNiveauxNormaux = new PanneauDeNiveauxNormaux(this);
-        }
-        //container.addView(panneauDeNiveauxNormaux);
     }
 
     private void goMondial() {
@@ -194,18 +184,12 @@ public class MainActivity extends AppCompatActivity {
         colorierBackground(panneau.getBoutonMondial().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherPseudoUtilisateur();
-
         Controller.getInstance(this).showGlobalLevels(container);
-
-        if(panneauDeNiveauxMondial == null) {
-            this.panneauDeNiveauxMondial = new PanneauDeNiveauxMondial(this);
-        }
-        //container.addView(panneauDeNiveauxMondial);
 
         if(boutonRefresh == null) {
             boutonRefresh = new BoutonRefresh(this);
-            //boutonRefresh.setOnClickListener(v -> panneauDeNiveauxMondial.refresh());
             boutonRefresh.setElevation(1);
+            // No Effect
         }
         container.addView(boutonRefresh);
     }
@@ -216,23 +200,16 @@ public class MainActivity extends AppCompatActivity {
         colorierBackground(panneau.getBoutonMesNiveaux().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherNombreDeFichiersPerso();
+        Controller.getInstance(this).showPersonalLevels(container);
 
-        if(panneauDeNiveauxPersonel == null || boutonNouveauNiveau == null) {
+        if(boutonNouveauNiveau == null) {
             int margesH = 130;
             int margesGDB = 50;
             int width = ScreenUtils.getScreenWidth() - 2 * margesGDB;
             int heightBoutonNouveauNiveau = 100;
             boutonNouveauNiveau = new BoutonNouveauNiveau(this, width, heightBoutonNouveauNiveau, margesGDB, margesH);
-
-            int ecartEntre_BoutonNouveau_Panneau = 15;
-            int topMarginPanneau = margesH + 2 * ecartEntre_BoutonNouveau_Panneau + heightBoutonNouveauNiveau;
-            this.panneauDeNiveauxPersonel = new PanneauDeNiveauxPersonel(this, topMarginPanneau);
         }
-
-        Controller.getInstance(this).showPersonalLevels(container);
-
         container.addView(boutonNouveauNiveau);
-        //container.addView(panneauDeNiveauxPersonel);
     }
 
     private void goAPropos() {

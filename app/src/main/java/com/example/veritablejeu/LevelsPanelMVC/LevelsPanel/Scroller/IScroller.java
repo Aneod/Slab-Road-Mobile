@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanel.Scroller;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 

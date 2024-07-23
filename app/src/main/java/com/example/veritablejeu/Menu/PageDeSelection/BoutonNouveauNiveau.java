@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxPersonel;
+package com.example.veritablejeu.Menu.PageDeSelection;
 
 import android.content.Context;
 import android.widget.FrameLayout;

@@ -1,10 +1,14 @@
 package com.example.veritablejeu.BackEnd.LevelFile;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.Converters;
+import com.example.veritablejeu.Menu.PageDeSelection.BoutonNouveauNiveau;
+
+import org.jetbrains.annotations.Contract;
 
 import java.util.Date;
 
@@ -56,5 +60,18 @@ public class LevelFile {
         this.time = time;
         this.movesNumber = movesNumber;
         this.sequentialCode = code;
+    }
+
+    @NonNull
+    @Contract(" -> new")
+    public static LevelFile getFake() {
+        return new LevelFile(
+                LevelCategory.Normaux,
+                "Name",
+                "Autor",
+                1_000_000_000_000L,
+                5,
+                BoutonNouveauNiveau.codeBidon
+        );
     }
 }

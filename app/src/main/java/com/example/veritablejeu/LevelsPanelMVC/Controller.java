@@ -1,16 +1,18 @@
-package com.example.veritablejeu.LevelsPanel;
+package com.example.veritablejeu.LevelsPanelMVC;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.GlobalLevelsReader;
-import com.example.veritablejeu.BackEnd.DataBases.LevelFilesStorage;
-import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalLevelsReader;
-import com.example.veritablejeu.BackEnd.DataBases.NormalLevelFiles.NormalLevelsFiles;
+import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.GlobalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.LevelFilesStorage;
+import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.PersonalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.NormalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class Controller implements IController {
 
     @Override
     public void showNormalLevels(ConstraintLayout container) {
-        levelFilesStorage = NormalLevelsFiles.getInstance();
+        levelFilesStorage = NormalLevelsReader.getInstance();
         levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Normal);
         prepareLevelsPanel(container);
     }
@@ -79,13 +81,16 @@ public class Controller implements IController {
 
             @Override
             public void onFailure() {
+                // ATTENTION : Deux usages ici, l'un pour un prblm de co, mais l'autre
+                // pour un problème d'accès aux données locales !
+                // Il faut étendre la gestion des exceptions.
                 levelsPanel.getScroller().showDisconnectedMessage();
             }
         });
     }
 
     private void getFirstPage() {
-        int pagesSize = LevelsPanel.getPagesSize();
+        int pagesSize = BottomBar.getPagesSize();
         getLevels(0, pagesSize);
     }
 
@@ -102,7 +107,13 @@ public class Controller implements IController {
 
             @Override
             public void onFailure() {
+                // ATTENTION : Deux usages ici, l'un pour un prblm de co, mais l'autre
+                // pour un problème d'accès aux données locales !
+                // Il faut etendre la gestion des exceptions.
                 levelsPanel.getScroller().showDisconnectedMessage();
+                // Aussi, il y a deux message différent, un que l'on affiche en grand si dès la
+                // première page aucun niveaux n'est trouvé, l'autre en petit pour garder ceux déjà
+                // trouvés.
             }
         });
     }

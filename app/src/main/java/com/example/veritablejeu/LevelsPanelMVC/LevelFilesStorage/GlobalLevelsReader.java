@@ -1,9 +1,8 @@
-package com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles;
+package com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage;
 
 import android.util.Log;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.DataBaseFireStore;
-import com.example.veritablejeu.BackEnd.DataBases.LevelFilesStorage;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Tools.MathematicTools;
 import com.example.veritablejeu.Tools.SafeSubList;

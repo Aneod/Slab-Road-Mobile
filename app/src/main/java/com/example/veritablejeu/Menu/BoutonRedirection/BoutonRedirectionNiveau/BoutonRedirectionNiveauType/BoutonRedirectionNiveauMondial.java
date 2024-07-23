@@ -6,9 +6,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
-import com.example.veritablejeu.Menu.PageDeSelection.ListeDefilanteDeNiveaux;
 
 @SuppressLint("ViewConstructor")
 public class BoutonRedirectionNiveauMondial extends BoutonRedirectionNiveau {

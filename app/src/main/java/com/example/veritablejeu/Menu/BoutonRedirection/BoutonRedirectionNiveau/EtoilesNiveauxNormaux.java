@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.PageDeSelection.PanneauDeNiveauxParticulier.PanneauDeNiveauxNormaux;
+package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

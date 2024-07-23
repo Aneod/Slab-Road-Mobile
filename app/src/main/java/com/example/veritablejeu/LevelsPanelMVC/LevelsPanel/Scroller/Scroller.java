@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanel.Scroller;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller;
 
 import android.content.Context;
 import android.graphics.Color;

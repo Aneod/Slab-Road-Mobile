@@ -71,9 +71,7 @@ public class SilhouettePlateau extends FrameLayout {
         this.setLayoutParams(layoutParamsSilhouette);
 
         int nbCasesLargeur = 36;
-        int[][] codePlateau = gsonToIntArray(levelFile.sequentialCode);
-
-        if(nbCasesLargeur == 0 || codePlateau.length == 0) return;
+        //int[][] codePlateau = gsonToIntArray(levelFile.sequentialCode);
 
         int nbCasesHauteur = 36;
         int largeurMaxDesCasesSurSilhouette = largeurSilhouette / nbCasesLargeur;
@@ -86,6 +84,7 @@ public class SilhouettePlateau extends FrameLayout {
             layoutParamsSilhouette.leftMargin += (largeurSilhouette - nbCasesLargeur * largeurCaseDefinitive) / 2;
         }
 
+        /*
         for(int rangLigne = 0; rangLigne < nbCasesHauteur; rangLigne++) {
             for(int rangColonne = 0; rangColonne < nbCasesLargeur; rangColonne++) {
                 int[] codeDeLaCase = codePlateau[rangLigne * nbCasesLargeur + rangColonne];
@@ -94,10 +93,6 @@ public class SilhouettePlateau extends FrameLayout {
                 }
             }
         }
-    }
-
-    public static int[][] gsonToIntArray(String json) {
-        Gson gson = new Gson();
-        return gson.fromJson(json, int[][].class);
+         */
     }
 }

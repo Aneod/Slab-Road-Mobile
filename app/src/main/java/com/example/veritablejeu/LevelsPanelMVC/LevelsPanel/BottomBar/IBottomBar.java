@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanel.BottomBar;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar;
 
 public interface IBottomBar {
 
@@ -23,17 +23,5 @@ public interface IBottomBar {
      * @param numberOfPages the number of pages.
      */
     void setNumberOfPages(int numberOfPages);
-
-    /**
-     * Modify the runnable of the previous page button.
-     * @param runnable the new runnable.
-     */
-    void setPreviousPageRunnable(Runnable runnable);
-
-    /**
-     * Modify the runnable of the next page button.
-     * @param runnable the new runnable.
-     */
-    void setNextPageRunnable(Runnable runnable);
 
 }
