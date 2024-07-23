@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsReader;
 
 import android.util.Log;
 
@@ -17,13 +17,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GlobalLevelsReader extends LevelFilesStorage {
+public class GlobalLevelsReader extends LevelsReader {
 
     private static final String TAG = "LevelFilesFireStoreReader";
     private static final String COLLECTION_PATH = DataBaseFireStore.getLevelsfilesCollectionPath();
 
     private static GlobalLevelsReader instance;
-    private final List<LevelFile> levelFileList = new ArrayList<>();
+    private final List<LevelFile> levelFilesList = new ArrayList<>();
     private DocumentSnapshot lastVisible;
 
     private GlobalLevelsReader(){}
@@ -36,52 +36,39 @@ public class GlobalLevelsReader extends LevelFilesStorage {
     }
 
     public void clearLevelsList() {
-        levelFileList.clear();
+        levelFilesList.clear();
         lastVisible = null;
     }
 
     @Override
-    public void getSize(final LevelFilesStorage.CountCallback callback) {
-        FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
-        AggregateQuery countQuery = firebaseFirestore.collection(COLLECTION_PATH).count();
-        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                AggregateQuerySnapshot snapshot = task.getResult();
-                long count = snapshot.getCount();
-                int count_int = MathematicTools.long_to_int(count);
-                callback.onCallback(count_int);
-            } else {
-                Exception exception = task.getException();
-                Log.e(TAG, "Error fetching document count", exception);
-                callback.onFailure();
-            }
-        });
-    }
-
-    @Override
     public void get(int from, int to, final LevelListCallback callback) {
-        int lastKnownIndex = levelFileList.size();
+        int lastKnownIndex = levelFilesList.size();
         boolean lastIndexIsKnown = lastKnownIndex >= to;
-
         if(!lastIndexIsKnown) {
             int howManyLevelsToResearch = to - lastKnownIndex;
-            loadNextLevels(howManyLevelsToResearch, new BooleanCallback() {
+            loadNextLevels(howManyLevelsToResearch, new LevelListCallback() {
                 @Override
-                public void onSuccess() {
-
+                public void onCallback(List<LevelFile> allFoundLevels) {
+                    List<LevelFile> list = SafeSubList.get(levelFilesList, from, to);
+                    callback.onCallback(list);
                 }
 
                 @Override
-                public void onFailure() {
-                    callback.onFailure();
+                public void diconnected() {
+                    callback.diconnected();
+                }
+
+                @Override
+                public void localDataNotFound() {
                 }
             });
+        } else {
+            List<LevelFile> list = SafeSubList.get(levelFilesList, from, to);
+            callback.onCallback(list);
         }
-        List<LevelFile> list = SafeSubList.get(levelFileList, from, to);
-        callback.onCallback(list);
     }
 
-    private void loadNextLevels(int howManyLevelsToLoad, final BooleanCallback booleanCallback) {
+    private void loadNextLevels(int howManyLevelsToLoad, final LevelListCallback callback) {
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
         Query query;
         if (lastVisible == null) {
@@ -105,19 +92,32 @@ public class GlobalLevelsReader extends LevelFilesStorage {
                         levelFiles.add(levelFile);
                     }
                     lastVisible = querySnapshot.getDocuments().get(querySnapshot.size() - 1);
-                    levelFileList.addAll(levelFiles);
-                    booleanCallback.onSuccess();
+                    levelFilesList.addAll(levelFiles);
+                    callback.onCallback(levelFiles);
                 } else {
-                    booleanCallback.onFailure();
+                    callback.diconnected();
                 }
             } else {
-                booleanCallback.onFailure();
+                callback.diconnected();
             }
         });
     }
 
-    public interface BooleanCallback {
-        void onSuccess();
-        void onFailure();
+    @Override
+    public void getSize(final LevelsReader.CountCallback callback) {
+        FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
+        AggregateQuery countQuery = firebaseFirestore.collection(COLLECTION_PATH).count();
+        countQuery.get(AggregateSource.SERVER).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                AggregateQuerySnapshot snapshot = task.getResult();
+                long count = snapshot.getCount();
+                int count_int = MathematicTools.long_to_int(count);
+                callback.onCallback(count_int);
+            } else {
+                Exception exception = task.getException();
+                Log.e(TAG, "Error fetching document count", exception);
+                callback.diconnected();
+            }
+        });
     }
 }

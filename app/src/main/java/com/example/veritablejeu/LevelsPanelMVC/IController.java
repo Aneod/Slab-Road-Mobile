@@ -8,6 +8,11 @@ import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
 public interface IController {
 
     /**
+     * Hide the {@link LevelsPanel} of the screen.
+     */
+    void hide();
+
+    /**
      * Setup the {@link LevelsPanel} for the normal files.
      */
     void showNormalLevels(ConstraintLayout container);
@@ -20,12 +25,7 @@ public interface IController {
     /**
      * Setup the {@link LevelsPanel} for the global files.
      */
-    void showGlobalLevels(ConstraintLayout container);
-
-    /**
-     * Hide the {@link LevelsPanel} of the screen.
-     */
-    void hide();
+    void showGlobalLevels();
 
     /**
      * Load and set the showing levels in the panel.

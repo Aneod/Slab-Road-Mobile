@@ -1,71 +1,80 @@
 package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.ScreenUtils;
 import com.example.veritablejeu.Tools.SimpleBackground;
 
 import java.util.List;
 
+@SuppressLint("ViewConstructor")
 public class LevelsPanel extends FrameLayout implements ILevelsPanel {
 
+    private static final int TOPMARGIN = 130;
+    private static final int OTHERS_MARGINS = 50;
+    private static final int BORDER_WIDTH = 5;
+
+    public static int getBorderWidth() {
+        return BORDER_WIDTH;
+    }
+
     private static LevelsPanel instance;
+    private final AppCompatActivity activity;
     private final Scroller scroller;
     private final BottomBar bottomBar;
 
-    private LevelsPanel(@NonNull Context context){
-        super(context);
-
-        int margeSuperieure = 130;
-        int margesGDB = 50;
-        int width = ScreenUtils.getScreenWidth() - 2 * margesGDB;
-        int height = ScreenUtils.getScreenHeight() - (margeSuperieure + margesGDB);
+    @NonNull
+    private ConstraintLayout.LayoutParams get_layoutParams() {
+        int width = ScreenUtils.getScreenWidth() - 2 * OTHERS_MARGINS;
+        int height = ScreenUtils.getScreenHeight() - (TOPMARGIN + OTHERS_MARGINS);
         int widthPositif = Math.abs(width);
         int heightPositif = Math.abs(height);
-
-        ConstraintLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
-                widthPositif, heightPositif, margesGDB, margeSuperieure
+        return new LayoutParamsDeBase_pourConstraintLayout(
+                widthPositif, heightPositif, OTHERS_MARGINS, TOPMARGIN
         );
+    }
+
+    private LevelsPanel(@NonNull AppCompatActivity activity){
+        super(activity);
+        this.activity = activity;
+
+        ConstraintLayout.LayoutParams layoutParams = get_layoutParams();
         this.setLayoutParams(layoutParams);
 
-        int largeurBordure = 5;
         GradientDrawable background = SimpleBackground.create(
-                Color.LTGRAY, Color.BLACK, largeurBordure);
+                Color.LTGRAY, Color.BLACK, BORDER_WIDTH);
         setBackground(background);
 
-        int hauteurPartieInferieureDuPanneau = 100;
-        int topMarginPartieInferieure = heightPositif - hauteurPartieInferieureDuPanneau;
-        this.bottomBar = new BottomBar(
-                this, widthPositif, hauteurPartieInferieureDuPanneau, topMarginPartieInferieure, largeurBordure);
+        this.bottomBar = new BottomBar(this);
         this.addView(bottomBar);
 
-        int widthListeDefilante = widthPositif - 2 * largeurBordure;
-        int heightListeDefilante = heightPositif - 2 * largeurBordure - (hauteurPartieInferieureDuPanneau - largeurBordure);
-        this.scroller = new Scroller(
-                context, this, widthListeDefilante, heightListeDefilante, largeurBordure, largeurBordure);
+        this.scroller = new Scroller(this);
         this.addView(scroller);
     }
 
-    public static LevelsPanel getInstance(@NonNull Context context) {
+    public static LevelsPanel getInstance(@NonNull AppCompatActivity activity) {
         if(instance == null) {
-            instance = new LevelsPanel(context);
+            instance = new LevelsPanel(activity);
         }
         return instance;
     }
 
     @Override
-    public void show(ConstraintLayout container) {
+    public void show() {
         if(getParent() == null) {
+            ConstraintLayout container = activity.findViewById(R.id.main);
             container.addView(this);
         }
     }

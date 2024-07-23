@@ -18,7 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.PersonalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Editeur.Editeur;
@@ -36,6 +36,7 @@ import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
     private ConstraintLayout container;
     private PanneauDeBoutonsRedirection panneau;
     private DemanderUnUserName demanderUnUserName;
@@ -184,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         colorierBackground(panneau.getBoutonMondial().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherPseudoUtilisateur();
-        Controller.getInstance(this).showGlobalLevels(container);
+        Controller.getInstance(this).showGlobalLevels();
 
         if(boutonRefresh == null) {
             boutonRefresh = new BoutonRefresh(this);

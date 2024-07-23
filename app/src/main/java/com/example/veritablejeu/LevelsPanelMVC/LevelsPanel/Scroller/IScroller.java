@@ -29,6 +29,11 @@ public interface IScroller {
     void showNotFilesMessage();
 
     /**
+     * Show a message to indicate that there is a local data problem.
+     */
+    void showLocalDataNotFoundMessage();
+
+    /**
      * Show a message to indicate that there is a connection problem.
      */
     void showDisconnectedMessage();

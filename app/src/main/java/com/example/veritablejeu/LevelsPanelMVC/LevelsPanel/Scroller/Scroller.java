@@ -1,6 +1,6 @@
 package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.widget.FrameLayout;
 
@@ -8,39 +8,32 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.Indicator;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauBloque;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauMondial;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauNormal;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauPerso;
 import com.example.veritablejeu.Menu.MainActivity;
-import com.example.veritablejeu.Menu.PageDeSelection.IndicationPourPanneauDeNiveaux;
-import com.example.veritablejeu.Menu.PageDeSelection.SymboleDeChargement;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressLint("ViewConstructor")
 public class Scroller extends FrameLayout implements IScroller {
 
-    private LevelCategory levelCategory = LevelCategory.Normal;
-
-    private final FrameLayout parent;
     private final ArrayList<BoutonRedirectionNiveau> listeDesBoutons = new ArrayList<>();
     private float currentTranslationY;
     private int hauteurTotalDeLaListe;
-    private final int height;
-    private final int width;
-    protected IndicationPourPanneauDeNiveaux indication;
-    private final SymboleDeChargement symboleDeChargement;
-
-    public FrameLayout getPanneauDeNiveauxParent() {
-        return parent;
-    }
+    private final Indicator indicator;
+    private LevelCategory levelCategory = LevelCategory.Normal;
 
     public int getTranslationYmax() {
-        return height - hauteurTotalDeLaListe;
+        return getLayoutParams().height - hauteurTotalDeLaListe;
     }
 
     /**
@@ -78,12 +71,12 @@ public class Scroller extends FrameLayout implements IScroller {
         boolean estUnNiveauPerso = levelCategory == LevelCategory.Personal;
         boolean niveauAutorise = !(estUnNiveauNormal && estBloque);
 
+        int width = getLayoutParams().width;
         BoutonRedirectionNiveau boutonRedirection;
         if(!niveauAutorise) {
             boutonRedirection = new BoutonRedirectionNiveauBloque(
                     getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
-        }
-        else if(estUnNiveauNormal) {
+        } else if(estUnNiveauNormal) {
             boutonRedirection = new BoutonRedirectionNiveauNormal(
                     getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
         } else if(estUnNiveauPerso) {
@@ -116,24 +109,24 @@ public class Scroller extends FrameLayout implements IScroller {
         });
     }
 
-    public Scroller(@NonNull Context context, FrameLayout parent, int width, int height, int leftMargin, int topMargin) {
-        super(context);
-        this.setBackgroundColor(Color.LTGRAY);
-        this.parent = parent;
-        this.width = width;
-        this.height = height;
-        FrameLayout.LayoutParams layoutParamsSilhouette = new LayoutParamsDeBase_pourFrameLayout(
-                width, height, leftMargin, topMargin);
-        this.setLayoutParams(layoutParamsSilhouette);
-
-        int largeurSymboleDeChargement = 30;
-        int leftMarginSymbole = (width - largeurSymboleDeChargement) / 2;
-        int topMarginSymbole = (height - largeurSymboleDeChargement) / 2;
-        this.symboleDeChargement = new SymboleDeChargement(
-                context, largeurSymboleDeChargement, leftMarginSymbole, topMarginSymbole
+    @NonNull
+    private FrameLayout.LayoutParams get_layoutParams(@NonNull LevelsPanel levelsPanel) {
+        int border = LevelsPanel.getBorderWidth();
+        int width = levelsPanel.getLayoutParams().width - 2 * border;
+        int height = levelsPanel.getLayoutParams().height - 2 * border - (BottomBar.getHEIGHT() - border);
+        return new LayoutParamsDeBase_pourFrameLayout(
+                width, height, border, border
         );
-        symboleDeChargement.setElevation(1);
-        addView(symboleDeChargement);
+    }
+
+    public Scroller(@NonNull LevelsPanel levelsPanel) {
+        super(levelsPanel.getContext());
+        this.setBackgroundColor(Color.LTGRAY);
+
+        FrameLayout.LayoutParams layoutParams = get_layoutParams(levelsPanel);
+        this.setLayoutParams(layoutParams);
+
+        indicator = new Indicator(this);
     }
 
     @Override
@@ -143,8 +136,7 @@ public class Scroller extends FrameLayout implements IScroller {
 
     @Override
     public void showLevels(List<LevelFile> levelFiles) {
-        symboleDeChargement.effacer();
-        //removeView(indication);
+        indicator.hide();
         if(levelFiles == null || levelFiles.isEmpty()) {
             showNotFilesMessage();
         }
@@ -153,37 +145,30 @@ public class Scroller extends FrameLayout implements IScroller {
 
     @Override
     public void showLoadingIcon() {
-
+        indicator.setImage_andShow(
+                R.drawable.effets_scintillant
+        );
     }
 
     @Override
     public void showNotFilesMessage() {
-        Context context = getContext();
-        String text = "Aucun niveau dans vos fichiers. Vous pouvez en créer depuis l'éditeur.";
-        int img = R.drawable.aucun_fichier;
-        if(indication != null) {
-            indication.removeAllViews();
-        }
-        indication = new IndicationPourPanneauDeNiveaux(
-                context, this, text, img
+        indicator.setImage_andShow(
+                R.drawable.aucun_fichier
         );
-        symboleDeChargement.effacer();
-        //addView(indication);
+    }
+
+    @Override
+    public void showLocalDataNotFoundMessage() {
+        indicator.setImage_andShow(
+                R.drawable.symbole_parametres
+        );
     }
 
     @Override
     public void showDisconnectedMessage() {
-        Context context = getContext();
-        String text = "Il semblerait que vous ayez un problème de connexion.";
-        int img = R.drawable.pas_de_connexion;
-        if(indication != null) {
-            indication.removeAllViews();
-        }
-        indication = new IndicationPourPanneauDeNiveaux(
-                context, this, text, img
+        indicator.setImage_andShow(
+                R.drawable.pas_de_connexion
         );
-        symboleDeChargement.effacer();
-        //addView(indication);
     }
 
 

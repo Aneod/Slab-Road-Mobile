@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsReader;
 
 import android.content.Context;
 
@@ -9,14 +9,14 @@ import com.example.veritablejeu.Tools.SafeSubList;
 
 import java.util.List;
 
-public class PersonalLevelsReader extends LevelFilesStorage {
+public class PersonalLevelsReader extends LevelsReader {
 
     private static PersonalLevelsReader instance;
-    private final PersonalFilesDao personalFilesDao;
     private List<LevelFile> levelsList;
 
     private PersonalLevelsReader(Context context) {
-        personalFilesDao = PersonalFilesDatabase.getInstance(context).personalFilesDao();
+        PersonalFilesDao personalFilesDao = PersonalFilesDatabase.getInstance(context)
+                .personalFilesDao();
         new Thread(() ->
                 levelsList = personalFilesDao.getAll()
         ).start();
@@ -32,16 +32,17 @@ public class PersonalLevelsReader extends LevelFilesStorage {
     @Override
     public void get(int from, int to, final LevelListCallback callback) {
         if(levelsList == null) {
-            callback.onFailure();
+            callback.localDataNotFound();
+        } else {
+            List<LevelFile> onReturn = SafeSubList.get(levelsList, from, to);
+            callback.onCallback(onReturn);
         }
-        List<LevelFile> onReturn = SafeSubList.get(levelsList, from, to);
-        callback.onCallback(onReturn);
     }
 
     @Override
     public void getSize(final CountCallback callback) {
         if(levelsList == null) {
-            callback.onFailure();
+            callback.localDataNotFound();
         } else {
             callback.onCallback(levelsList.size());
         }

@@ -1,14 +1,16 @@
 package com.example.veritablejeu.LevelsPanelMVC;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.GlobalLevelsReader;
-import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.LevelFilesStorage;
-import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.PersonalLevelsReader;
-import com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage.NormalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.GlobalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.LevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.NormalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
@@ -19,39 +21,18 @@ import java.util.List;
 public class Controller implements IController {
 
     private static Controller instance;
-    private LevelFilesStorage levelFilesStorage;
+    private LevelsReader levelsReader;
     private final LevelsPanel levelsPanel;
 
-    private Controller(@NonNull Context context) {
-        this.levelsPanel = LevelsPanel.getInstance(context);
+    private Controller(@NonNull AppCompatActivity activity) {
+        this.levelsPanel = LevelsPanel.getInstance(activity);
     }
 
-    public static Controller getInstance(@NonNull Context context) {
+    public static Controller getInstance(@NonNull AppCompatActivity activity) {
         if(instance == null) {
-            instance = new Controller(context);
+            instance = new Controller(activity);
         }
         return instance;
-    }
-
-    @Override
-    public void showNormalLevels(ConstraintLayout container) {
-        levelFilesStorage = NormalLevelsReader.getInstance();
-        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Normal);
-        prepareLevelsPanel(container);
-    }
-
-    @Override
-    public void showPersonalLevels(@NonNull ConstraintLayout container) {
-        levelFilesStorage = PersonalLevelsReader.getInstance(container.getContext());
-        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Personal);
-        prepareLevelsPanel(container);
-    }
-
-    @Override
-    public void showGlobalLevels(ConstraintLayout container) {
-        levelFilesStorage = GlobalLevelsReader.getInstance();
-        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Global);
-        prepareLevelsPanel(container);
     }
 
     @Override
@@ -59,10 +40,31 @@ public class Controller implements IController {
         levelsPanel.hide();
     }
 
-    private void prepareLevelsPanel(ConstraintLayout container) {
+    @Override
+    public void showNormalLevels(ConstraintLayout container) {
+        levelsReader = NormalLevelsReader.getInstance();
+        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Normal);
+        prepareLevelsPanel();
+    }
+
+    @Override
+    public void showPersonalLevels(@NonNull ConstraintLayout container) {
+        levelsReader = PersonalLevelsReader.getInstance(container.getContext());
+        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Personal);
+        prepareLevelsPanel();
+    }
+
+    @Override
+    public void showGlobalLevels() {
+        levelsReader = GlobalLevelsReader.getInstance();
+        levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Global);
+        prepareLevelsPanel();
+    }
+
+    private void prepareLevelsPanel() {
         levelsPanel.getScroller().showLoadingIcon();
         levelsPanel.getBottomBar().clear();
-        levelsPanel.show(container);
+        levelsPanel.show();
         getListSize();
     }
 
@@ -72,7 +74,7 @@ public class Controller implements IController {
      * load the first levels.
      */
     private void getListSize() {
-        levelFilesStorage.getSize(new LevelFilesStorage.CountCallback() {
+        levelsReader.getSize(new LevelsReader.CountCallback() {
             @Override
             public void onCallback(int count) {
                 levelsPanel.setLevelsListSize(count);
@@ -80,25 +82,40 @@ public class Controller implements IController {
             }
 
             @Override
-            public void onFailure() {
-                // ATTENTION : Deux usages ici, l'un pour un prblm de co, mais l'autre
-                // pour un problème d'accès aux données locales !
-                // Il faut étendre la gestion des exceptions.
+            public void diconnected() {
                 levelsPanel.getScroller().showDisconnectedMessage();
+            }
+
+            @Override
+            public void localDataNotFound() {
+                levelsPanel.getScroller().showLocalDataNotFoundMessage();
             }
         });
     }
 
     private void getFirstPage() {
         int pagesSize = BottomBar.getPagesSize();
-        getLevels(0, pagesSize);
+        levelsReader.get(0, pagesSize, new LevelsReader.LevelListCallback() {
+            @Override
+            public void onCallback(List<LevelFile> list) {
+                levelsPanel.setLevels(list);
+            }
+
+            @Override
+            public void diconnected() {
+                levelsPanel.getScroller().showDisconnectedMessage();
+            }
+
+            @Override
+            public void localDataNotFound() {
+                levelsPanel.getScroller().showLocalDataNotFoundMessage();
+            }
+        });
     }
 
     @Override
     public void getLevels(int from, int to) {
-        levelsPanel.getBottomBar().showLoadingIcon();
-
-        levelFilesStorage.get(from, to, new LevelFilesStorage.LevelListCallback() {
+        levelsReader.get(from, to, new LevelsReader.LevelListCallback() {
             @Override
             public void onCallback(List<LevelFile> list) {
                 levelsPanel.setLevels(list);
@@ -106,14 +123,17 @@ public class Controller implements IController {
             }
 
             @Override
-            public void onFailure() {
-                // ATTENTION : Deux usages ici, l'un pour un prblm de co, mais l'autre
-                // pour un problème d'accès aux données locales !
-                // Il faut etendre la gestion des exceptions.
-                levelsPanel.getScroller().showDisconnectedMessage();
-                // Aussi, il y a deux message différent, un que l'on affiche en grand si dès la
-                // première page aucun niveaux n'est trouvé, l'autre en petit pour garder ceux déjà
-                // trouvés.
+            public void diconnected() {
+                Context context = levelsPanel.getContext();
+                String text = "Unstable network. Please, retry later.";
+                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void localDataNotFound() {
+                Context context = levelsPanel.getContext();
+                String text = "Personal files not found. Please, retry later.";
+                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
             }
         });
     }

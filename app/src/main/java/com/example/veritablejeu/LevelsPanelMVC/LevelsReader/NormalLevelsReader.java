@@ -1,4 +1,4 @@
-package com.example.veritablejeu.LevelsPanelMVC.LevelFilesStorage;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsReader;
 
 import androidx.annotation.NonNull;
 
@@ -8,7 +8,7 @@ import com.example.veritablejeu.Tools.SafeSubList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NormalLevelsReader extends LevelFilesStorage {
+public class NormalLevelsReader extends LevelsReader {
 
     private static final List<LevelFile> LEVELS = Arrays.asList(
             LevelFile.getFake(),
@@ -41,10 +41,6 @@ public class NormalLevelsReader extends LevelFilesStorage {
             instance = new NormalLevelsReader();
         }
         return instance;
-    }
-
-    public static List<LevelFile> get() {
-        return LEVELS;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
@@ -13,7 +11,7 @@ public interface ILevelsPanel {
     /**
      * Show the panel of the screen.
      */
-    void show(ConstraintLayout container);
+    void show();
 
     /**
      * Hide the panel of the screen.
