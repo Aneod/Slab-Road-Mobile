@@ -30,6 +30,7 @@ public class BottomBar extends FrameLayout implements IBottomBar {
         return PAGES_SIZE;
     }
 
+    private final LevelsPanel levelsPanel;
     private final ImageContainer leftArrow;
     private final ImageContainer rightArrow;
     private final PageNumberIndicator pageNumberIndicator;
@@ -66,6 +67,7 @@ public class BottomBar extends FrameLayout implements IBottomBar {
 
     public BottomBar(@NonNull LevelsPanel levelsPanel) {
         super(levelsPanel.getContext());
+        this.levelsPanel = levelsPanel;
 
         GradientDrawable background = get_background();
         setBackground(background);
@@ -135,8 +137,7 @@ public class BottomBar extends FrameLayout implements IBottomBar {
         int pageNumberBy0 = pageNumber - 1;
         int firstIndex = pageNumberBy0 * PAGES_SIZE;
         int lastIndex = firstIndex + PAGES_SIZE;
-        //Controller controller = Controller.getInstance(getContext());
-        //controller.getLevels(firstIndex, lastIndex);
+        levelsPanel.get(firstIndex, lastIndex);
     }
 
 }

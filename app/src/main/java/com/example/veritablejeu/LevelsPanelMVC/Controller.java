@@ -25,7 +25,7 @@ public class Controller implements IController {
     private final LevelsPanel levelsPanel;
 
     private Controller(@NonNull AppCompatActivity activity) {
-        this.levelsPanel = LevelsPanel.getInstance(activity);
+        this.levelsPanel = LevelsPanel.getInstance(activity, this);
     }
 
     public static Controller getInstance(@NonNull AppCompatActivity activity) {

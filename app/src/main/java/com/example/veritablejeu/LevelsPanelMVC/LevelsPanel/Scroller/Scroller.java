@@ -128,6 +128,7 @@ public class Scroller extends FrameLayout implements IScroller {
 
     @Override
     public void showLevels(List<LevelFile> levelFiles) {
+        effacerLaListe();
         if(levelFiles == null || levelFiles.isEmpty()) {
             showNotFilesMessage();
             return;

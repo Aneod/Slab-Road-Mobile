@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.example.veritablejeu.LevelsPanelMVC.Controller;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.R;
@@ -32,6 +33,7 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
 
     private static LevelsPanel instance;
     private final AppCompatActivity activity;
+    private final Controller controller;
     private final Scroller scroller;
     private final BottomBar bottomBar;
 
@@ -46,9 +48,10 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
         );
     }
 
-    private LevelsPanel(@NonNull AppCompatActivity activity){
+    private LevelsPanel(@NonNull AppCompatActivity activity, @NonNull Controller controller){
         super(activity);
         this.activity = activity;
+        this.controller = controller;
 
         ConstraintLayout.LayoutParams layoutParams = get_layoutParams();
         this.setLayoutParams(layoutParams);
@@ -64,9 +67,9 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
         this.addView(scroller);
     }
 
-    public static LevelsPanel getInstance(@NonNull AppCompatActivity activity) {
+    public static LevelsPanel getInstance(@NonNull AppCompatActivity activity, @NonNull Controller controller) {
         if(instance == null) {
-            instance = new LevelsPanel(activity);
+            instance = new LevelsPanel(activity, controller);
         }
         return instance;
     }
@@ -103,5 +106,9 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
     @Override
     public BottomBar getBottomBar() {
         return bottomBar;
+    }
+
+    public void get(int from, int to) {
+        controller.getLevels(from, to);
     }
 }
