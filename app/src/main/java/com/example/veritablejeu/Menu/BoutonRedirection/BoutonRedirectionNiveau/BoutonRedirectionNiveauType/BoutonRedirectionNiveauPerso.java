@@ -3,7 +3,6 @@ package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
@@ -50,15 +49,11 @@ public class BoutonRedirectionNiveauPerso extends BoutonRedirectionNiveau {
     /**
      * Création d'un bouton de redirection pour choisir un niveau.
      *
-     * @param parent     la frameLayout parent.
-     * @param width      la largeur du bouton.
-     * @param height     la hauteur du bouton.
-     * @param leftMargin la marge gauche.
      * @param topMargin  la marge supérieure.
      * @param levelFile l'id du niveeau vers lequel ce bouton redirige.
      */
-    public BoutonRedirectionNiveauPerso(@NonNull Context context, Scroller parent, int width, int height, int leftMargin, int topMargin, LevelFile levelFile) {
-        super(context, parent, width, height, leftMargin, topMargin, levelFile);
+    public BoutonRedirectionNiveauPerso(@NonNull Scroller scroller, int topMargin, LevelFile levelFile) {
+        super(scroller, topMargin, levelFile);
         levelFileAOuvrir = levelFile;
         levelFileOriginal = levelFile;
         creeSilouhettePlateau();

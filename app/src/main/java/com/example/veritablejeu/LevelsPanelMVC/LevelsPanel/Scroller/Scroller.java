@@ -16,7 +16,6 @@ import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.B
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauMondial;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauNormal;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauPerso;
-import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -57,12 +56,13 @@ public class Scroller extends FrameLayout implements IScroller {
     }
 
     public void effacerLaListe() {
-        removeAllViews();
+        listeDesBoutons.forEach(this::removeView);
         listeDesBoutons.clear();
     }
 
-    private void afficherBoutonRedirectionNiveau(int hauteurBouton, int hauteur, LevelFile levelFile) {
-        int leftMargin = 0;
+    private void afficherBoutonRedirectionNiveau(int hauteur, LevelFile levelFile) {
+        if(levelFile == null) return;
+
         int idLevel = levelFile.id;
         int scoreActuel = UserData.getUserScore(getContext().getApplicationContext());
         int dernierNiveauAutorise = scoreActuel + 1;
@@ -71,42 +71,34 @@ public class Scroller extends FrameLayout implements IScroller {
         boolean estUnNiveauPerso = levelCategory == LevelCategory.Personal;
         boolean niveauAutorise = !(estUnNiveauNormal && estBloque);
 
-        int width = getLayoutParams().width;
         BoutonRedirectionNiveau boutonRedirection;
         if(!niveauAutorise) {
-            boutonRedirection = new BoutonRedirectionNiveauBloque(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
+            boutonRedirection = new BoutonRedirectionNiveauBloque(this, hauteur, levelFile);
         } else if(estUnNiveauNormal) {
-            boutonRedirection = new BoutonRedirectionNiveauNormal(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
+            boutonRedirection = new BoutonRedirectionNiveauNormal(this, hauteur, levelFile);
         } else if(estUnNiveauPerso) {
-            boutonRedirection = new BoutonRedirectionNiveauPerso(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
+            boutonRedirection = new BoutonRedirectionNiveauPerso(this, hauteur, levelFile);
         } else {
-            boutonRedirection = new BoutonRedirectionNiveauMondial(
-                    getContext(), this, width, hauteurBouton, leftMargin, hauteur, levelFile);
+            boutonRedirection = new BoutonRedirectionNiveauMondial(this, hauteur, levelFile);
         }
         this.addView(boutonRedirection);
         listeDesBoutons.add(boutonRedirection);
     }
 
     public void changerLesNiveauxAffiches(List<LevelFile> nouveauxNumerosNiveauDeLaPage) {
-        ((MainActivity) getContext()).runOnUiThread(() -> {
-            effacerLaListe();
-            this.currentTranslationY = 0;
-            int hauteurBouton = 150;
-            int ecartYEntreBoutons = 1;
-            int ecartTotalEntreBoutons = hauteurBouton + ecartYEntreBoutons;
+        this.currentTranslationY = 0;
+        int hauteurBouton = BoutonRedirectionNiveau.getHEIGHT();
+        int ecartYEntreBoutons = 1;
+        int ecartTotalEntreBoutons = hauteurBouton + ecartYEntreBoutons;
 
-            int hauteur = 0;
-            for (LevelFile levelFile : nouveauxNumerosNiveauDeLaPage) {
-                afficherBoutonRedirectionNiveau(hauteurBouton, hauteur, levelFile);
-                hauteur += ecartTotalEntreBoutons;
-            }
+        int hauteur = 0;
+        for (LevelFile levelFile : nouveauxNumerosNiveauDeLaPage) {
+            afficherBoutonRedirectionNiveau(hauteur, levelFile);
+            hauteur += ecartTotalEntreBoutons;
+        }
 
-            int nbElements = listeDesBoutons.size();
-            hauteurTotalDeLaListe = nbElements * ecartTotalEntreBoutons - ecartYEntreBoutons;
-        });
+        int nbElements = listeDesBoutons.size();
+        hauteurTotalDeLaListe = nbElements * ecartTotalEntreBoutons - ecartYEntreBoutons;
     }
 
     @NonNull
@@ -136,10 +128,11 @@ public class Scroller extends FrameLayout implements IScroller {
 
     @Override
     public void showLevels(List<LevelFile> levelFiles) {
-        indicator.hide();
         if(levelFiles == null || levelFiles.isEmpty()) {
             showNotFilesMessage();
+            return;
         }
+        indicator.hide();
         changerLesNiveauxAffiches(levelFiles);
     }
 

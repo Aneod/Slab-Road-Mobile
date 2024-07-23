@@ -26,6 +26,12 @@ import java.util.Locale;
 @SuppressLint("ViewConstructor")
 public class BoutonRedirectionNiveau extends BoutonRedirection implements IBoutonRedirectionNiveau {
 
+    private static final int HEIGHT = 150;
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
     protected final Scroller parent;
     protected LevelFile levelFileAOuvrir;
     private AppCompatTextView textePrimaire;
@@ -89,16 +95,15 @@ public class BoutonRedirectionNiveau extends BoutonRedirection implements IBouto
 
     /**
      * Création d'un bouton de redirection pour choisir un niveau.
-     * @param parent la frameLayout parent.
-     * @param width la largeur du bouton.
-     * @param height la hauteur du bouton.
-     * @param leftMargin la marge gauche.
+     * @param scroller la frameLayout parent.
      * @param topMargin la marge supérieure.
      * @param levelFile l'id du niveeau vers lequel ce bouton redirige.
      */
-    public BoutonRedirectionNiveau(@NonNull Context context, Scroller parent, int width, int height, int leftMargin, int topMargin, LevelFile levelFile) {
-        super(context, levelFile.name, width, height, leftMargin, topMargin);
-        this.parent = parent;
+    public BoutonRedirectionNiveau(@NonNull Scroller scroller, int topMargin, LevelFile levelFile) {
+        super(scroller.getContext(), levelFile.name,
+                scroller.getLayoutParams().width, HEIGHT, 0, topMargin
+        );
+        this.parent = scroller;
         creeLesTroisLignes();
         setOnTouchListener();
         setBackgroundColor(Color.WHITE);

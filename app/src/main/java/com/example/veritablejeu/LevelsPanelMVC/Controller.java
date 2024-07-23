@@ -63,6 +63,7 @@ public class Controller implements IController {
 
     private void prepareLevelsPanel() {
         levelsPanel.getScroller().showLoadingIcon();
+        levelsPanel.getScroller().effacerLaListe();
         levelsPanel.getBottomBar().clear();
         levelsPanel.show();
         getListSize();

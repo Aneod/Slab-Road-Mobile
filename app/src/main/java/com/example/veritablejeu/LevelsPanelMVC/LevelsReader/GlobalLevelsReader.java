@@ -15,6 +15,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GlobalLevelsReader extends LevelsReader {
@@ -85,7 +86,11 @@ public class GlobalLevelsReader extends LevelsReader {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot querySnapshot = task.getResult();
-                if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                if (querySnapshot != null) {
+                    if(querySnapshot.isEmpty()) {
+                        callback.onCallback(Collections.emptyList());
+                        return;
+                    }
                     List<LevelFile> levelFiles = new ArrayList<>();
                     for (DocumentSnapshot document : querySnapshot.getDocuments()) {
                         LevelFile levelFile = document.toObject(LevelFile.class);
