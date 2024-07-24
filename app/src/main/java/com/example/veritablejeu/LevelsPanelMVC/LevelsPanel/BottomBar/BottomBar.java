@@ -52,7 +52,16 @@ public class BottomBar extends FrameLayout implements IBottomBar {
     private ImageContainer getLeftArrow() {
         ImageContainer leftArrow = new ImageContainer(
                 this, getLayoutParams().height, 0, 0, R.drawable.fleche_gauche);
-        leftArrow.setOnClickListener(v -> getPrevious());
+        //leftArrow.setOnClickListener(v -> getPrevious());
+        leftArrow.setOnClickListener(v -> {
+            if(rightArrow != null) {
+                if(rightArrow.isClickable()) {
+                    rightArrow.enableLoadingAnimation();
+                } else {
+                    rightArrow.disableLoadingAnimation();
+                }
+            }
+        });
         return leftArrow;
     }
 

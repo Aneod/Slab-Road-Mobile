@@ -140,7 +140,7 @@ public class Scroller extends FrameLayout implements IScroller {
     @Override
     public void showLoadingIcon() {
         indicator.setImage_andShow(
-                R.drawable.effets_scintillant
+                R.drawable.three_points
         );
     }
 
