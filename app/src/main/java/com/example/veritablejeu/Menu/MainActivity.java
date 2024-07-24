@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageTitre;
     private TexteAccomplissement texteMenuHD;
     private BoutonNouveauNiveau boutonNouveauNiveau;
-    private ContenuAPropos contenuAPropos;
 
     public TexteAccomplissement getTexteMenuHD() {
         return texteMenuHD;
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         panneau.getBoutonJouer().setOnClickListener(view -> goSelectionNiveau());
         panneau.getBoutonMondial().setOnClickListener(view -> goMondial());
         panneau.getBoutonMesNiveaux().setOnClickListener(v -> goSelectionDeMesNiveaux());
-        panneau.getBoutonAPropos().setOnClickListener(v -> goAPropos());
 
         imageTitre = new ImageView(this);
         imageTitre.setImageResource(R.drawable.pixel_art_menu2);
@@ -160,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(boutonRefresh);
         Controller.getInstance(this).hide();
         container.removeView(boutonNouveauNiveau);
-        container.removeView(contenuAPropos);
         texteMenuHD.afficherNumeroDeVersion();
 
         colorierBackground(Color.WHITE);
@@ -176,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(panneau);
         colorierBackground(panneau.getBoutonJouer().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
-        texteMenuHD.afficherAccomplissementCampagne();
         Controller.getInstance(this).showNormalLevels(container);
     }
 
@@ -204,7 +200,6 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(panneau);
         colorierBackground(panneau.getBoutonMesNiveaux().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
-        texteMenuHD.afficherNombreDeFichiersPerso();
         Controller.getInstance(this).showPersonalLevels(container);
 
         if(boutonNouveauNiveau == null) {
@@ -215,19 +210,6 @@ public class MainActivity extends AppCompatActivity {
             boutonNouveauNiveau = new BoutonNouveauNiveau(this, width, heightBoutonNouveauNiveau, margesGDB, margesH);
         }
         container.addView(boutonNouveauNiveau);
-    }
-
-    private void goAPropos() {
-        container.removeView(imageTitre);
-        container.removeView(panneau);
-        int couleurBouton = panneau.getBoutonAPropos().getColor();
-        BackgroundColoration.colorierBackground(container, couleurBouton, couleurBouton);
-        boutonExit.setOnClickListener(view -> goMenu());
-
-        if(contenuAPropos == null) {
-            contenuAPropos = new ContenuAPropos(this);
-        }
-        container.addView(contenuAPropos);
     }
 
     public void goEditeur(@Nullable LevelFile levelFile) {

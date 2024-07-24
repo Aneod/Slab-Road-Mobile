@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface IScroller {
 
+    Scroller.LevelCategory getLevelCategory();
+
     /**
      * Modify the level category of the scroller. That modify the content of the level selectors.
      * @param category the new category.

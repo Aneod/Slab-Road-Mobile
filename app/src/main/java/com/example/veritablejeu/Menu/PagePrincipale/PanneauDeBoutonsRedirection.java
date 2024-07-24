@@ -7,7 +7,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuJusteLogo;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuLeger;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.R;
@@ -26,27 +25,16 @@ public class PanneauDeBoutonsRedirection extends FrameLayout {
     public BoutonRedirectionMenuLeger getBoutonMesNiveaux() {
         return boutonMesNiveaux;
     }
-    public BoutonRedirectionMenuJusteLogo getBoutonAPropos() {
-        return boutonAPropos;
-    }
 
     private final BoutonRedirectionMenuLeger boutonJouer;
     private final BoutonRedirectionMenuLeger boutonMondial;
     private final BoutonRedirectionMenuLeger boutonMesNiveaux;
-    private final BoutonRedirectionMenuJusteLogo boutonAPropos;
 
     public PanneauDeBoutonsRedirection(@NonNull Context context) {
         super(context);
 
         int margesCotes = 50;
-
-        this.boutonAPropos = new BoutonRedirectionMenuJusteLogo(context, 100, margesCotes + 500 + 20, hauteurGenerale + 250 + 150 + 2 * 20, CouleurDuJeu.Rouge.Int());
-        ImageView logoAPropos = new ImageView(getContext());
-        logoAPropos.setImageResource(R.drawable.point_interrogation);
-        boutonAPropos.setImage(logoAPropos, null);
-        this.addView(boutonAPropos);
-
-        this.boutonMesNiveaux = new BoutonRedirectionMenuLeger(context, "Fichiers", 500, 100, margesCotes, hauteurGenerale + 250 + 150 + 2 * 20, CouleurDuJeu.Orange.Int());
+        this.boutonMesNiveaux = new BoutonRedirectionMenuLeger(context, "Fichiers", 620, 100, margesCotes, hauteurGenerale + 250 + 150 + 2 * 20, CouleurDuJeu.Orange.Int());
         ImageView logoMesNiveaux = new ImageView(getContext());
         logoMesNiveaux.setImageResource(R.drawable.dossier);
         boutonMesNiveaux.setImage(logoMesNiveaux, null);

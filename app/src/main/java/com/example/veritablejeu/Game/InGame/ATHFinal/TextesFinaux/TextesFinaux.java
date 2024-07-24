@@ -32,7 +32,7 @@ public class TextesFinaux extends FrameLayout implements ITextesFinaux {
     private void refreshTemps() {
         Chronometre chronometre = new Chronometre();
         long elapsedTime = chronometre.getElapsedTime();
-        String stringTemps = LongToReadableTime.getElapsedTimeFormatted(elapsedTime);
+        String stringTemps = LongToReadableTime.getReadable(elapsedTime);
         temps.setText(stringTemps);
     }
 

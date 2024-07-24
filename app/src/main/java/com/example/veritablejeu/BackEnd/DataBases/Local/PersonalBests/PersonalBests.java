@@ -24,11 +24,11 @@ public class PersonalBests implements IPersonalBests {
     }
 
 
-    public void add(Association_id_record levelData) {
+    private void add(Association_id_record levelData) {
         new Thread(() -> associationidrecordDao.insert(levelData)).start();
     }
 
-    public void update(Association_id_record levelData) {
+    private void update(Association_id_record levelData) {
         new Thread(() -> associationidrecordDao.update(levelData)).start();
     }
 
@@ -55,6 +55,7 @@ public class PersonalBests implements IPersonalBests {
     public void get(String levelId, final Callback callback) {
         if(levelId == null) {
             callback.onDataLoaded(null);
+            return;
         }
         new Thread(() -> {
             Association_id_record levelData = associationidrecordDao.get(levelId);

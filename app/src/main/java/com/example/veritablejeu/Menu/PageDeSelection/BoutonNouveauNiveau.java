@@ -6,7 +6,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuLeger;
 import com.example.veritablejeu.Menu.MainActivity;
@@ -41,7 +40,6 @@ public class BoutonNouveauNiveau extends FrameLayout {
 
     public static final LevelFile levelFileBidonPourSimulerUnFichier = new LevelFile(
             0,
-            LevelCategory.Perso,
             "TestName",
             "TestAutor",
             1000000000L,

@@ -25,11 +25,4 @@ public interface IPersonalFiles {
      */
     void get(int id, final PersonalFiles.Callback callback);
 
-    /**
-     * Returns the entire list of the personal levels. This list isn't suppose to be
-     * too long to be quickly loaded.
-     * @param multipleCallback this object returns the list of levelfile.
-     */
-    void getAll(final PersonalFiles.MultipleCallback multipleCallback);
-
 }

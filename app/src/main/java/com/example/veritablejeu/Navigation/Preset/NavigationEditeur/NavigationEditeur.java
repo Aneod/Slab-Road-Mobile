@@ -1,19 +1,11 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
-import android.graphics.Color;
 import android.graphics.Point;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
-import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
-import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
-import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BainDeSavon.BubblesSettings;
 import com.example.veritablejeu.Game.Editeur.Editeur;
-import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.NormalLevelsReader;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
@@ -21,9 +13,6 @@ import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.BackgroundColors;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Settings.MusicSettings;
-import com.example.veritablejeu.PopUp.InlineComponent.Preset.CursorComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.Preset.OnOffComponent;
-import com.example.veritablejeu.PopUp.InlineComponent.Preset.SimpleImage;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Navigation.Navigation;
 import com.example.veritablejeu.R;
@@ -63,7 +52,6 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         List<WindowProposal> propositions = new ArrayList<>();
         propositions.add(new WindowProposal("Background colors", () -> BackgroundColors.showPanel(editeur), true));
         propositions.add(new WindowProposal("Background bubbles", this::openBubblesSettings, true));
-        propositions.add(new WindowProposal("Manual", this::showManual, true));
         propositions.add(new WindowProposal("Music", () -> MusicSettings.showMusicSettings(editeur), true));
         littleWindow.setPosition(new Point(leftMargin, topMargin));
         littleWindow.set(propositions);
@@ -75,36 +63,22 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         BubblesSettings.showPanel(editeur);
     }
 
-    private void showManual() {
-        PopUp popUp = PopUp.getInstance(editeur);
-        popUp.showManual();
-    }
-
     private void activerDesactiverGrille(){
         editeur.showHideFences();
     }
 
-    private void propositionSauvegarde() {
+    private void deletionProposal() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = this::envoyerLeNiveauDansLeMondial;
+        Runnable runnableA = popUp::hide; // Supprimer des fichiers locaux.
         Runnable runnableB = popUp::hide;
-        popUp.showQuestion("SAUVEGARDE", "Sauvegarder votre niveau ?", "OUI", runnableA, "NON", runnableB);
+        popUp.showQuestion("DELETE", "Delete this level from your personal files ? As long as you are in the editor you can save it again.", "DELETE", runnableA, "NO", runnableB);
     }
 
-    public void envoyerLeNiveauDansLeMondial() {
-        LevelFile levelFile = LevelFile.getFake();
-        new Thread(() -> LevelFilesFireStoreWriter.addLevel(levelFile, isSuccess -> {
-            String textToPrint = isSuccess ? "Votre niveau est en ligne" : "Echec de la mise en ligne";
-            Toast.makeText(editeur.getApplicationContext(), textToPrint, Toast.LENGTH_LONG)
-                    .show();
-        })).start();
-    }
-
-    private void propositionEssaiRapide() {
+    private void saveProposal() {
         PopUp popUp = editeur.getPopUp();
         Runnable runnableA = popUp::hide; // Il manque sauvegarderPuisLancer.
         Runnable runnableB = popUp::hide;
-        popUp.showQuestion("ESSAI RAPIDE", "Sauvegarder et commencer l'essai ?", "OUI", runnableA, "NON", runnableB);
+        popUp.showQuestion("SAVE & PLAY", "Save this version of this level and try to solve it ?", "YES", runnableA, "NO", runnableB);
     }
 
     @NonNull
@@ -121,10 +95,10 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
                 R.drawable.grille, this::activerDesactiverGrille)
         );
         associations.add(new Association_Symbole_Fonction(
-                R.drawable.disquette, this::propositionSauvegarde)
+                R.drawable.poubelle, this::deletionProposal)
         );
         associations.add(new Association_Symbole_Fonction(
-                R.drawable.double_fleche_droite, this::propositionEssaiRapide)
+                R.drawable.disquette, this::saveProposal)
         );
 
         return associations;

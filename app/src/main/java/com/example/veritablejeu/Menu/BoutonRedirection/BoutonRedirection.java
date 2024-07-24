@@ -14,6 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
+import org.jetbrains.annotations.Contract;
+
 public class BoutonRedirection extends FrameLayout implements IBoutonRedirection {
 
     protected final int width;
@@ -41,6 +43,7 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
      * @param titre le string du titre.
      * @return un textView.
      */
+    @NonNull
     private AppCompatTextView creationTitreDuBouton(String titre) {
         AppCompatTextView textViewTitre = new AppCompatTextView(getContext());
         textViewTitre.setText(titre);
@@ -81,7 +84,9 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
         this.addView(imageView);
     }
 
-    private View creationLogo(int width, int height, int leftMargin, int topMargin, View logo) {
+    @NonNull
+    @Contract("_, _, _, _, _ -> param5")
+    private View creationLogo(int width, int height, int leftMargin, int topMargin, @NonNull View logo) {
         int margeLogo = 20;
         int largeurLogo = width - 2 * margeLogo;
         int hauteurLogo = height - 2 * margeLogo;

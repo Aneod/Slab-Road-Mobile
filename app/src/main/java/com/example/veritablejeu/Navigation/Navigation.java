@@ -33,9 +33,8 @@ public class Navigation implements INavigation {
 
     private void creationDesBoutons(List<Association_Symbole_Fonction> associations) {
         if(container == null) return;
-        int largeurEcran_max1000 = Math.min(ScreenUtils.getScreenWidth(), 1000);
-        int largeurAutorisee = (int) (largeurEcran_max1000 * PROPORTION_AUTORISE_DE_ECRAN);
-        this.margesHGD = (largeurEcran_max1000 - largeurAutorisee) / 2;
+        int largeurAutorisee = (int) (ScreenUtils.getScreenWidth() * PROPORTION_AUTORISE_DE_ECRAN);
+        this.margesHGD = (ScreenUtils.getScreenWidth() - largeurAutorisee) / 2;
         int largeurBoutons_enPixel = largeurAutorisee / 6;
         int largeurBoutonPrincipal_enPixel = (int) (largeurBoutons_enPixel * COEF_LARGEUR_BOUTON_PRINCIPAL);
         int largeurBoutonsSecondaire_enPixel = (int) (largeurBoutons_enPixel * COEF_LARGEUR_BOUTONS_SECONDAIRES);

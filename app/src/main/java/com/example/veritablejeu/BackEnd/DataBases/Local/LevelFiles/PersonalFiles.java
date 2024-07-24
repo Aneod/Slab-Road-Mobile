@@ -6,8 +6,6 @@ import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalF
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDatabase;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 
-import java.util.List;
-
 public class PersonalFiles implements IPersonalFiles {
 
     private static PersonalFiles instance;
@@ -57,15 +55,4 @@ public class PersonalFiles implements IPersonalFiles {
         void onDataLoaded(LevelFile levelFile);
     }
 
-    @Override
-    public void getAll(final MultipleCallback multipleCallback) {
-        new Thread(() -> {
-            List<LevelFile> levelFileList = personalFilesDao.getAll();
-            multipleCallback.onDataLoaded(levelFileList);
-        }).start();
-    }
-
-    public interface MultipleCallback {
-        void onDataLoaded(List<LevelFile> levelFileList);
-    }
 }

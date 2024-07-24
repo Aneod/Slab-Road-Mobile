@@ -17,7 +17,7 @@ public class LongToReadableTime {
      */
     @NonNull
     @SuppressLint("DefaultLocale")
-    public static String getElapsedTimeFormatted(long elapsedTime) {
+    public static String getReadable(long elapsedTime) {
 
         long hours = elapsedTime / 3_600_000_000_000L;
         long minutes = (elapsedTime % 3_600_000_000_000L) / 60_000_000_000L;

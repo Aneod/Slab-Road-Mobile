@@ -77,6 +77,10 @@ public class LevelsPanel extends FrameLayout implements ILevelsPanel {
         return instance;
     }
 
+    public Controller getController() {
+        return controller;
+    }
+
     @Override
     public void initialize(ConstraintLayout container) {
         getScroller().showLoadingIcon();

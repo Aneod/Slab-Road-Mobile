@@ -15,14 +15,6 @@ public class TexteAccomplissement extends androidx.appcompat.widget.AppCompatTex
 
     private final String versionTexte;
 
-    public void afficherAccomplissementCampagne() {
-        Context context = getContext();
-        int currentScore = UserData.getUserScore(context.getApplicationContext());
-        int nombreDeNiveau = 0;
-        String texte = "Niveaux terminés : " + currentScore + "/" + nombreDeNiveau;
-        setText(texte);
-    }
-
     public void afficherPseudoUtilisateur() {
         Context context = getContext();
         String userName = UserData.getUsername(context.getApplicationContext());
@@ -31,11 +23,6 @@ public class TexteAccomplissement extends androidx.appcompat.widget.AppCompatTex
 
     public void afficherNumeroDeVersion() {
         setText(versionTexte);
-    }
-
-    public void afficherNombreDeFichiersPerso() {
-        String text = "HS";
-        setText(text);
     }
 
     public TexteAccomplissement(@NonNull Context context, String versionTexte) {

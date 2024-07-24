@@ -6,16 +6,11 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.Indicator;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauBloque;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauMondial;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauNormal;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.BoutonRedirectionNiveauPerso;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.LevelLauncher.LevelLauncher;
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
@@ -26,7 +21,7 @@ import java.util.List;
 public class Scroller extends FrameLayout implements IScroller {
 
     private final LevelsPanel levelsPanel;
-    private final ArrayList<BoutonRedirectionNiveau> listeDesBoutons = new ArrayList<>();
+    private final ArrayList<LevelLauncher> listeDesBoutons = new ArrayList<>();
     private float currentTranslationY;
     private int hauteurTotalDeLaListe;
     private final Indicator indicator;
@@ -51,7 +46,7 @@ public class Scroller extends FrameLayout implements IScroller {
         else translationAFaire = nouvelleTranslationY;
 
         this.currentTranslationY = translationAFaire;
-        for(BoutonRedirectionNiveau boutonRedirectionNiveau : listeDesBoutons) {
+        for(LevelLauncher boutonRedirectionNiveau : listeDesBoutons) {
             boutonRedirectionNiveau.setTranslationY(currentTranslationY);
         }
     }
@@ -61,46 +56,43 @@ public class Scroller extends FrameLayout implements IScroller {
         listeDesBoutons.clear();
     }
 
-    private void afficherBoutonRedirectionNiveau(int hauteur, LevelFile levelFile) {
+    private void addLevel(int hauteur, LevelFile levelFile) {
         if(levelFile == null) return;
 
-        int idLevel = levelFile.id;
-        int scoreActuel = UserData.getUserScore(getContext().getApplicationContext());
-        int dernierNiveauAutorise = scoreActuel + 1;
-        boolean estBloque = idLevel > dernierNiveauAutorise;
         boolean estUnNiveauNormal = levelCategory == LevelCategory.Normal;
         boolean estUnNiveauPerso = levelCategory == LevelCategory.Personal;
-        boolean niveauAutorise = !(estUnNiveauNormal && estBloque);
 
-        BoutonRedirectionNiveau boutonRedirection;
-        if(!niveauAutorise) {
-            boutonRedirection = new BoutonRedirectionNiveauBloque(this, hauteur, levelFile);
-        } else if(estUnNiveauNormal) {
-            boutonRedirection = new BoutonRedirectionNiveauNormal(this, hauteur, levelFile);
+        LevelLauncher boutonRedirection;
+        if(estUnNiveauNormal) {
+            boutonRedirection = LevelLauncher.createNormal(this, hauteur, levelFile);
         } else if(estUnNiveauPerso) {
-            boutonRedirection = new BoutonRedirectionNiveauPerso(this, hauteur, levelFile);
+            boutonRedirection = LevelLauncher.createPersonal(this, hauteur, levelFile);
         } else {
-            boutonRedirection = new BoutonRedirectionNiveauMondial(this, hauteur, levelFile);
+            boutonRedirection = LevelLauncher.createGlobal(this, hauteur, levelFile);
         }
         this.addView(boutonRedirection);
         listeDesBoutons.add(boutonRedirection);
     }
 
-    public void changerLesNiveauxAffiches(List<LevelFile> levelFileList) {
+    public void changeLevels(List<LevelFile> levelFileList) {
         if(levelFileList == null) return;
         this.currentTranslationY = 0;
-        int hauteurBouton = BoutonRedirectionNiveau.getHEIGHT();
+        int hauteurBouton = LevelLauncher.getHEIGHT(getLevelCategory());
         int ecartYEntreBoutons = 1;
         int ecartTotalEntreBoutons = hauteurBouton + ecartYEntreBoutons;
 
         int hauteur = 0;
         for (LevelFile levelFile : levelFileList) {
-            afficherBoutonRedirectionNiveau(hauteur, levelFile);
+            addLevel(hauteur, levelFile);
             hauteur += ecartTotalEntreBoutons;
         }
 
         int nbElements = listeDesBoutons.size();
         hauteurTotalDeLaListe = nbElements * ecartTotalEntreBoutons - ecartYEntreBoutons;
+    }
+
+    public LevelsPanel getLevelsPanel() {
+        return levelsPanel;
     }
 
     @NonNull
@@ -130,6 +122,11 @@ public class Scroller extends FrameLayout implements IScroller {
     }
 
     @Override
+    public LevelCategory getLevelCategory() {
+        return levelCategory;
+    }
+
+    @Override
     public void setLevelCategory(LevelCategory category) {
         this.levelCategory = category;
     }
@@ -142,7 +139,7 @@ public class Scroller extends FrameLayout implements IScroller {
             return;
         }
         indicator.hide();
-        changerLesNiveauxAffiches(levelFiles);
+        changeLevels(levelFiles);
     }
 
     @Override

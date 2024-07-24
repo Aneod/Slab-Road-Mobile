@@ -7,13 +7,14 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
 import com.example.veritablejeu.Game.Board.Board;
-import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.InGame.ATHFinal.ATHFinal;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
+import com.example.veritablejeu.LevelsPanelMVC.Controller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Navigation.Preset.NavigationInGame.NavigationInGame;
 
 public class InGame extends Game implements InterfaceInGame {
@@ -35,7 +36,6 @@ public class InGame extends Game implements InterfaceInGame {
 
     @Override
     public void niveauTermine() {
-        UserData.progressionDansLeScore(this, levelFile);
         enregistrerLeRecord(levelFile);
         popUp.hide();
 
@@ -61,8 +61,9 @@ public class InGame extends Game implements InterfaceInGame {
     }
 
     private void enregistrerLeRecord(@NonNull LevelFile levelFile) {
-        LevelCategory levelCategory = levelFile.levelCategory;
-        boolean pasDeSauvegardeDeRecord = levelCategory == LevelCategory.Perso;
+        Controller controller = Controller.getInstance(this);
+        Scroller.LevelCategory levelCategory = controller.getLevelCategory();
+        boolean pasDeSauvegardeDeRecord = levelCategory == Scroller.LevelCategory.Personal;
         if(pasDeSauvegardeDeRecord) return;
 
         String levelId = String.valueOf(levelFile.id);
@@ -72,7 +73,7 @@ public class InGame extends Game implements InterfaceInGame {
 
         enregistrerRecordPerso(levelId, numberOfMoves, tempsEffectue);
 
-        boolean niveauMondial = levelCategory == LevelCategory.Mondiaux;
+        boolean niveauMondial = levelCategory == Scroller.LevelCategory.Global;
         if(niveauMondial) {
             long recordMondial = levelFile.time;
             boolean recordMondialBattu = tempsEffectue < recordMondial;
@@ -101,7 +102,6 @@ public class InGame extends Game implements InterfaceInGame {
             return;
         }
         new Thread(() -> {
-            levelFile.levelCategory = LevelCategory.Mondiaux;
             levelFile.bestPlayer = UserData.getUsername(this.getApplicationContext());
             int numberOfMoves = 666;
             Chronometre chronometre = new Chronometre();

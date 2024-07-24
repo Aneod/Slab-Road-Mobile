@@ -20,18 +20,24 @@ import java.util.List;
 public class Controller implements IController {
 
     private static Controller instance;
-    private LevelsReader levelsReader;
+    private final AppCompatActivity activity;
     private final LevelsPanel levelsPanel;
+    private LevelsReader levelsReader;
 
-    private Controller(@NonNull Context context) {
-        this.levelsPanel = LevelsPanel.getInstance(context, this);
+    private Controller(@NonNull AppCompatActivity activity) {
+        this.activity = activity;
+        this.levelsPanel = LevelsPanel.getInstance(activity, this);
     }
 
-    public static Controller getInstance(@NonNull Context context) {
+    public static Controller getInstance(@NonNull AppCompatActivity activity) {
         if(instance == null) {
-            instance = new Controller(context);
+            instance = new Controller(activity);
         }
         return instance;
+    }
+
+    public AppCompatActivity getActivity() {
+        return activity;
     }
 
     @Override
@@ -169,5 +175,10 @@ public class Controller implements IController {
     private void makeText(String text) {
         Context context = levelsPanel.getContext();
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    }
+
+    // This metho must be disappear.
+    public Scroller.LevelCategory getLevelCategory() {
+        return levelsPanel.getScroller().getLevelCategory();
     }
 }
