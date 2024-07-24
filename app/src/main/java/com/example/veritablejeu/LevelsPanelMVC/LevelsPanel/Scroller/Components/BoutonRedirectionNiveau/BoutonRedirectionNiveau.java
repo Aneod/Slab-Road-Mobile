@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,6 +14,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.EtoilesNiveauxNormaux;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType.SilhouettePlateau;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;

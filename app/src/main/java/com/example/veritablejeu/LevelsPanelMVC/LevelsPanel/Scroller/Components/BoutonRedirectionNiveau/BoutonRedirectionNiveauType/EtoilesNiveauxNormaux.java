@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

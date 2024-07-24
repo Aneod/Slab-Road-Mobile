@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveauType;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType;
 
 import android.annotation.SuppressLint;
 
@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
-import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveau;
 
 @SuppressLint("ViewConstructor")
 public class BoutonRedirectionNiveauMondial extends BoutonRedirectionNiveau {

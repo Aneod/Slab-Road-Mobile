@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionNiveau;
+package com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Components.BoutonRedirectionNiveau.BoutonRedirectionNiveauType;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.google.gson.Gson;
 
 /**
  * L'objectif de cette classe est d'avoir une méthode avec un code de plateau en paramètre, pour
