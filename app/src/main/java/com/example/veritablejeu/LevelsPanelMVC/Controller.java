@@ -12,7 +12,6 @@ import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.LevelsReader;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.NormalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.BottomBar;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
 
@@ -24,13 +23,13 @@ public class Controller implements IController {
     private LevelsReader levelsReader;
     private final LevelsPanel levelsPanel;
 
-    private Controller(@NonNull AppCompatActivity activity) {
-        this.levelsPanel = LevelsPanel.getInstance(activity, this);
+    private Controller(@NonNull Context context) {
+        this.levelsPanel = LevelsPanel.getInstance(context, this);
     }
 
-    public static Controller getInstance(@NonNull AppCompatActivity activity) {
+    public static Controller getInstance(@NonNull Context context) {
         if(instance == null) {
-            instance = new Controller(activity);
+            instance = new Controller(context);
         }
         return instance;
     }
@@ -42,30 +41,33 @@ public class Controller implements IController {
 
     @Override
     public void showNormalLevels(ConstraintLayout container) {
+        if(container == null) return;
         levelsReader = NormalLevelsReader.getInstance();
         levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Normal);
-        prepareLevelsPanel();
+        levelsPanel.resetTopMargin();
+        prepareLevelsPanel(container);
     }
 
     @Override
-    public void showPersonalLevels(@NonNull ConstraintLayout container) {
+    public void showPersonalLevels(ConstraintLayout container) {
+        if(container == null) return;
         levelsReader = PersonalLevelsReader.getInstance(container.getContext());
         levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Personal);
-        prepareLevelsPanel();
+        levelsPanel.setTopMargin(260);
+        prepareLevelsPanel(container);
     }
 
     @Override
-    public void showGlobalLevels() {
+    public void showGlobalLevels(ConstraintLayout container) {
+        if(container == null) return;
         levelsReader = GlobalLevelsReader.getInstance();
         levelsPanel.getScroller().setLevelCategory(Scroller.LevelCategory.Global);
-        prepareLevelsPanel();
+        levelsPanel.resetTopMargin();
+        prepareLevelsPanel(container);
     }
 
-    private void prepareLevelsPanel() {
-        levelsPanel.getScroller().showLoadingIcon();
-        levelsPanel.getScroller().effacerLaListe();
-        levelsPanel.getBottomBar().clear();
-        levelsPanel.show();
+    private void prepareLevelsPanel(ConstraintLayout container) {
+        levelsPanel.initialize(container);
         getListSize();
     }
 
@@ -78,64 +80,94 @@ public class Controller implements IController {
         levelsReader.getSize(new LevelsReader.CountCallback() {
             @Override
             public void onCallback(int count) {
-                levelsPanel.setLevelsListSize(count);
+                levelsPanel.setNumberOfPages_withListSize(count);
+                levelsPanel.getBottomBar().showPageNumberIndicator();
+                levelsPanel.getBottomBar().showLeftArrow();
                 getFirstPage();
             }
 
             @Override
             public void diconnected() {
+                makeDisconnectedText();
                 levelsPanel.getScroller().showDisconnectedMessage();
+                levelsPanel.getBottomBar().hideRightArrow();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
 
             @Override
             public void localDataNotFound() {
+                makeLoadDataNotFoundText();
                 levelsPanel.getScroller().showLocalDataNotFoundMessage();
+                levelsPanel.getBottomBar().hideRightArrow();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
         });
     }
 
     private void getFirstPage() {
-        int pagesSize = BottomBar.getPagesSize();
+        int pagesSize = LevelsPanel.getPagesSize();
         levelsReader.get(0, pagesSize, new LevelsReader.LevelListCallback() {
             @Override
             public void onCallback(List<LevelFile> list) {
                 levelsPanel.setLevels(list);
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
 
             @Override
             public void diconnected() {
+                makeDisconnectedText();
                 levelsPanel.getScroller().showDisconnectedMessage();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
 
             @Override
             public void localDataNotFound() {
+                makeLoadDataNotFoundText();
                 levelsPanel.getScroller().showLocalDataNotFoundMessage();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
         });
     }
 
     @Override
-    public void getLevels(int from, int to) {
+    public void getLevels(int from, int to, int pageNumber) {
         levelsReader.get(from, to, new LevelsReader.LevelListCallback() {
             @Override
             public void onCallback(List<LevelFile> list) {
                 levelsPanel.setLevels(list);
-                // Seulement a ce moment là que le LevelsPanel modifie son numéro de page actuelle.
+                levelsPanel.getBottomBar().setPageNumber(pageNumber);
+                levelsPanel.getBottomBar().disableLeftArrowLoadingAnimation();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
 
             @Override
             public void diconnected() {
-                Context context = levelsPanel.getContext();
-                String text = "Unstable network. Please, retry later.";
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+                makeDisconnectedText();
+                levelsPanel.getBottomBar().disableLeftArrowLoadingAnimation();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
 
             @Override
             public void localDataNotFound() {
-                Context context = levelsPanel.getContext();
-                String text = "Personal files not found. Please, retry later.";
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+                makeLoadDataNotFoundText();
+                levelsPanel.getBottomBar().disableLeftArrowLoadingAnimation();
+                levelsPanel.getBottomBar().disableRightArrowLoadingAnimation();
             }
         });
+    }
+
+    private void makeDisconnectedText() {
+        String text = "Unstable network. Please, retry later.";
+        makeText(text);
+    }
+
+    private void makeLoadDataNotFoundText() {
+        String text = "Personal files not found. Please, retry later.";
+        makeText(text);
+    }
+
+    private void makeText(String text) {
+        Context context = levelsPanel.getContext();
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 }

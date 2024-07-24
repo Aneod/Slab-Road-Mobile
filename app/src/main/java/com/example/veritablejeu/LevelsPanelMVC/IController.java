@@ -25,13 +25,15 @@ public interface IController {
     /**
      * Setup the {@link LevelsPanel} for the global files.
      */
-    void showGlobalLevels();
+    void showGlobalLevels(ConstraintLayout container);
 
     /**
      * Load and set the showing levels in the panel.
      * @param from the first index in the list of the {@link LevelFile}.
      * @param to the last index in the list of the {@link LevelFile}.
+     * @param pageNumber one the levels are loaded, change the indicated page number of the
+     *                   level panel. <u>Not before !</u>
      */
-    void getLevels(int from, int to);
+    void getLevels(int from, int to, int pageNumber);
 
 }

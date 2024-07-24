@@ -2,11 +2,18 @@ package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
 import android.graphics.Color;
 import android.graphics.Point;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelCategory;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BainDeSavon.BubblesSettings;
 import com.example.veritablejeu.Game.Editeur.Editeur;
+import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.NormalLevelsReader;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
@@ -79,9 +86,18 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void propositionSauvegarde() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = popUp::hide; // Il manque sauvegarderLeLevelFile.
+        Runnable runnableA = this::envoyerLeNiveauDansLeMondial;
         Runnable runnableB = popUp::hide;
         popUp.showQuestion("SAUVEGARDE", "Sauvegarder votre niveau ?", "OUI", runnableA, "NON", runnableB);
+    }
+
+    public void envoyerLeNiveauDansLeMondial() {
+        LevelFile levelFile = LevelFile.getFake();
+        new Thread(() -> LevelFilesFireStoreWriter.addLevel(levelFile, isSuccess -> {
+            String textToPrint = isSuccess ? "Votre niveau est en ligne" : "Echec de la mise en ligne";
+            Toast.makeText(editeur.getApplicationContext(), textToPrint, Toast.LENGTH_LONG)
+                    .show();
+        })).start();
     }
 
     private void propositionEssaiRapide() {

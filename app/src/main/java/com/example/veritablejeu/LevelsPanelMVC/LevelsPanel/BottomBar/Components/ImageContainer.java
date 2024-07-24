@@ -63,7 +63,6 @@ public class ImageContainer extends FrameLayout {
     public void enableLoadingAnimation() {
         imageView.setImageResource(LOADING_RES);
         enableLoopAnimation();
-        setClickable(false);
     }
 
     private void enableLoopAnimation() {
@@ -81,6 +80,5 @@ public class ImageContainer extends FrameLayout {
     public void disableLoadingAnimation() {
         imageView.setImageResource(res);
         imageView.setAnimation(null);
-        setClickable(true);
     }
 }

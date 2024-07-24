@@ -14,7 +14,7 @@ public class Indicator extends AppCompatImageView {
     private final FrameLayout parent;
 
     @NonNull
-    private FrameLayout.LayoutParams get_layoutParams(@NonNull FrameLayout parent) {
+    private FrameLayout.LayoutParams get_layoutParams() {
         int width = 200;
         int leftMargin = (parent.getLayoutParams().width - width) / 2;
         int topMargin = (parent.getLayoutParams().height - width) / 2;
@@ -25,10 +25,14 @@ public class Indicator extends AppCompatImageView {
     public Indicator(@NonNull FrameLayout parent) {
         super(parent.getContext());
         this.parent = parent;
-        FrameLayout.LayoutParams layoutParams1 = get_layoutParams(parent);
-        setLayoutParams(layoutParams1);
+        refreshLayoutParams();
         setElevation(1);
         setAlpha(.1f);
+    }
+
+    public void refreshLayoutParams() {
+        FrameLayout.LayoutParams layoutParams = get_layoutParams();
+        setLayoutParams(layoutParams);
     }
 
     public void setImage_andShow(int res) {

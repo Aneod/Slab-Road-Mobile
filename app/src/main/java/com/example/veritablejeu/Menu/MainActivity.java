@@ -18,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.GlobalLevelsReader;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
@@ -185,12 +186,15 @@ public class MainActivity extends AppCompatActivity {
         colorierBackground(panneau.getBoutonMondial().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
         texteMenuHD.afficherPseudoUtilisateur();
-        Controller.getInstance(this).showGlobalLevels();
+        Controller.getInstance(this).showGlobalLevels(container);
 
         if(boutonRefresh == null) {
             boutonRefresh = new BoutonRefresh(this);
             boutonRefresh.setElevation(1);
-            // No Effect
+            boutonRefresh.setOnClickListener(v -> {
+                GlobalLevelsReader.getInstance().clearLevelsList();
+                Controller.getInstance(this).showGlobalLevels(container);
+            });
         }
         container.addView(boutonRefresh);
     }

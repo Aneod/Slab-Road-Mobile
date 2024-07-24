@@ -8,7 +8,6 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 
-import com.example.veritablejeu.LevelsPanelMVC.Controller;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.Components.ImageContainer;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.BottomBar.Components.PageNumberIndicator;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.LevelsPanel;
@@ -20,14 +19,9 @@ import com.example.veritablejeu.Tools.SimpleBackground;
 public class BottomBar extends FrameLayout implements IBottomBar {
 
     private static final int HEIGHT = 100;
-    private static final int PAGES_SIZE = 12;
 
     public static int getHEIGHT() {
         return HEIGHT;
-    }
-
-    public static int getPagesSize() {
-        return PAGES_SIZE;
     }
 
     private final LevelsPanel levelsPanel;
@@ -42,7 +36,7 @@ public class BottomBar extends FrameLayout implements IBottomBar {
     }
 
     @NonNull
-    private FrameLayout.LayoutParams get_layoutParams(@NonNull LevelsPanel levelsPanel) {
+    private FrameLayout.LayoutParams get_layoutParams() {
         int width = levelsPanel.getLayoutParams().width;
         int topMargin = levelsPanel.getLayoutParams().height - HEIGHT;
         return new LayoutParamsDeBase_pourFrameLayout(width, HEIGHT, 0, topMargin);
@@ -52,16 +46,7 @@ public class BottomBar extends FrameLayout implements IBottomBar {
     private ImageContainer getLeftArrow() {
         ImageContainer leftArrow = new ImageContainer(
                 this, getLayoutParams().height, 0, 0, R.drawable.fleche_gauche);
-        //leftArrow.setOnClickListener(v -> getPrevious());
-        leftArrow.setOnClickListener(v -> {
-            if(rightArrow != null) {
-                if(rightArrow.isClickable()) {
-                    rightArrow.enableLoadingAnimation();
-                } else {
-                    rightArrow.disableLoadingAnimation();
-                }
-            }
-        });
+        leftArrow.setOnClickListener(v -> getPrevious());
         return leftArrow;
     }
 
@@ -81,22 +66,26 @@ public class BottomBar extends FrameLayout implements IBottomBar {
         GradientDrawable background = get_background();
         setBackground(background);
 
-        FrameLayout.LayoutParams layoutParams = get_layoutParams(levelsPanel);
-        setLayoutParams(layoutParams);
+        refreshLayoutParams();
 
         leftArrow = getLeftArrow();
         rightArrow = getRightArrow();
         pageNumberIndicator = new PageNumberIndicator(getContext());
     }
 
-    @Override
-    public void clear() {
-        removeAllViews();
+    public void refreshLayoutParams() {
+        FrameLayout.LayoutParams layoutParams = get_layoutParams();
+        setLayoutParams(layoutParams);
     }
 
     @Override
-    public void showLoadingIcon() {
+    public void showPageNumberIndicator() {
+        safeShow(pageNumberIndicator);
+    }
 
+    @Override
+    public void hidePageNumberIndicator() {
+        removeView(pageNumberIndicator);
     }
 
     @Override
@@ -105,19 +94,67 @@ public class BottomBar extends FrameLayout implements IBottomBar {
     }
 
     @Override
-    public void setNumberOfPages(int levelsListSize) {
-        int min = 1;
-        int numberOfPages = (int) Math.ceil((double) levelsListSize / PAGES_SIZE);
-        int reducedNumberOfPages = Math.max(min, numberOfPages);
-        pageNumberIndicator.setNumberOfPages(reducedNumberOfPages);
-        showAll();
-        setPageNumber(1);
+    public void setNumberOfPages(int numberOfPages) {
+        pageNumberIndicator.setNumberOfPages(numberOfPages);
     }
 
-    private void showAll() {
-        safeShow(pageNumberIndicator);
+    @Override
+    public void showLeftArrow() {
         safeShow(leftArrow);
+    }
+
+    @Override
+    public void hideLeftArrow() {
+        removeView(leftArrow);
+    }
+
+    @Override
+    public void enableLeftArrowLoadingAnimation() {
+        leftArrow.enableLoadingAnimation();
+        setArrowsClickable(false);
+    }
+
+    @Override
+    public void disableLeftArrowLoadingAnimation() {
+        leftArrow.disableLoadingAnimation();
+        setArrowsClickable(true);
+    }
+
+    @Override
+    public void showRightArrow() {
         safeShow(rightArrow);
+    }
+
+    @Override
+    public void hideRightArrow() {
+        removeView(rightArrow);
+    }
+
+    @Override
+    public void enableRightArrowLoadingAnimation() {
+        rightArrow.enableLoadingAnimation();
+        setArrowsClickable(false);
+    }
+
+    @Override
+    public void disableRightArrowLoadingAnimation() {
+        rightArrow.disableLoadingAnimation();
+        setArrowsClickable(true);
+    }
+
+    @Override
+    public void setArrowsClickable(boolean enable) {
+        leftArrow.setClickable(enable);
+        rightArrow.setClickable(enable);
+    }
+
+    @Override
+    public void justShowTheRightLoadingWheel() {
+        levelsPanel.getBottomBar().hidePageNumberIndicator();
+        levelsPanel.getBottomBar().hideLeftArrow();
+        levelsPanel.getBottomBar().disableLeftArrowLoadingAnimation();
+        levelsPanel.getBottomBar().showRightArrow();
+        levelsPanel.getBottomBar().enableRightArrowLoadingAnimation();
     }
 
     private void safeShow(View view) {
@@ -127,26 +164,38 @@ public class BottomBar extends FrameLayout implements IBottomBar {
     }
 
     private void getPrevious() {
-        int currentPageNumber = pageNumberIndicator.getPageNumber();
-        getPage(currentPageNumber - 1);
+        if(!firstPageReached()) {
+            enableLeftArrowLoadingAnimation();
+            int currentPageNumber = pageNumberIndicator.getPageNumber();
+            getPage(currentPageNumber - 1);
+        }
     }
 
     private void getNext() {
+        if(!lastPageReached()) {
+            enableRightArrowLoadingAnimation();
+            int currentPageNumber = pageNumberIndicator.getPageNumber();
+            getPage(currentPageNumber + 1);
+        }
+    }
+
+    private boolean firstPageReached() {
+        int min = 1;
         int currentPageNumber = pageNumberIndicator.getPageNumber();
-        getPage(currentPageNumber + 1);
+        return currentPageNumber <= min;
+    }
+
+    private boolean lastPageReached() {
+        int max = pageNumberIndicator.getNumberOfPages();
+        int currentPageNumber = pageNumberIndicator.getPageNumber();
+        return currentPageNumber >= max;
     }
 
     private void getPage(int pageNumber) {
-        int currentNumberOfPages = pageNumberIndicator.getNumberOfPages();
-        if(pageNumber < 1 || pageNumber > currentNumberOfPages) {
-            return;
-        }
-        pageNumberIndicator.setPageNumber(pageNumber);
-
         int pageNumberBy0 = pageNumber - 1;
-        int firstIndex = pageNumberBy0 * PAGES_SIZE;
-        int lastIndex = firstIndex + PAGES_SIZE;
-        levelsPanel.get(firstIndex, lastIndex);
+        int firstIndex = pageNumberBy0 * LevelsPanel.getPagesSize();
+        int lastIndex = firstIndex + LevelsPanel.getPagesSize();
+        levelsPanel.get(firstIndex, lastIndex, pageNumber);
     }
 
 }

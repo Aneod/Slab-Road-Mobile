@@ -25,6 +25,7 @@ public class GlobalLevelsReader extends LevelsReader {
 
     private static GlobalLevelsReader instance;
     private final List<LevelFile> levelFilesList = new ArrayList<>();
+    private int listSize = -1;
     private DocumentSnapshot lastVisible;
 
     private GlobalLevelsReader(){}
@@ -38,6 +39,7 @@ public class GlobalLevelsReader extends LevelsReader {
 
     public void clearLevelsList() {
         levelFilesList.clear();
+        listSize = -1;
         lastVisible = null;
     }
 
@@ -86,11 +88,8 @@ public class GlobalLevelsReader extends LevelsReader {
         query.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot querySnapshot = task.getResult();
-                if (querySnapshot != null) {
-                    if(querySnapshot.isEmpty()) {
-                        callback.onCallback(Collections.emptyList());
-                        return;
-                    }
+                // The querySnapshot is empty even if there is a connection problem !
+                if (querySnapshot != null && !querySnapshot.isEmpty()) {
                     List<LevelFile> levelFiles = new ArrayList<>();
                     for (DocumentSnapshot document : querySnapshot.getDocuments()) {
                         LevelFile levelFile = document.toObject(LevelFile.class);
@@ -110,6 +109,10 @@ public class GlobalLevelsReader extends LevelsReader {
 
     @Override
     public void getSize(final LevelsReader.CountCallback callback) {
+        if(listSize != -1) {
+            callback.onCallback(listSize);
+            return;
+        }
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
         AggregateQuery countQuery = firebaseFirestore.collection(COLLECTION_PATH).count();
         countQuery.get(AggregateSource.SERVER).addOnCompleteListener(task -> {
@@ -117,6 +120,7 @@ public class GlobalLevelsReader extends LevelsReader {
                 AggregateQuerySnapshot snapshot = task.getResult();
                 long count = snapshot.getCount();
                 int count_int = MathematicTools.long_to_int(count);
+                listSize = count_int;
                 callback.onCallback(count_int);
             } else {
                 Exception exception = task.getException();

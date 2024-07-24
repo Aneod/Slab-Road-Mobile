@@ -25,6 +25,7 @@ import java.util.List;
 @SuppressLint("ViewConstructor")
 public class Scroller extends FrameLayout implements IScroller {
 
+    private final LevelsPanel levelsPanel;
     private final ArrayList<BoutonRedirectionNiveau> listeDesBoutons = new ArrayList<>();
     private float currentTranslationY;
     private int hauteurTotalDeLaListe;
@@ -85,14 +86,15 @@ public class Scroller extends FrameLayout implements IScroller {
         listeDesBoutons.add(boutonRedirection);
     }
 
-    public void changerLesNiveauxAffiches(List<LevelFile> nouveauxNumerosNiveauDeLaPage) {
+    public void changerLesNiveauxAffiches(List<LevelFile> levelFileList) {
+        if(levelFileList == null) return;
         this.currentTranslationY = 0;
         int hauteurBouton = BoutonRedirectionNiveau.getHEIGHT();
         int ecartYEntreBoutons = 1;
         int ecartTotalEntreBoutons = hauteurBouton + ecartYEntreBoutons;
 
         int hauteur = 0;
-        for (LevelFile levelFile : nouveauxNumerosNiveauDeLaPage) {
+        for (LevelFile levelFile : levelFileList) {
             afficherBoutonRedirectionNiveau(hauteur, levelFile);
             hauteur += ecartTotalEntreBoutons;
         }
@@ -102,7 +104,7 @@ public class Scroller extends FrameLayout implements IScroller {
     }
 
     @NonNull
-    private FrameLayout.LayoutParams get_layoutParams(@NonNull LevelsPanel levelsPanel) {
+    private FrameLayout.LayoutParams get_layoutParams() {
         int border = LevelsPanel.getBorderWidth();
         int width = levelsPanel.getLayoutParams().width - 2 * border;
         int height = levelsPanel.getLayoutParams().height - 2 * border - (BottomBar.getHEIGHT() - border);
@@ -113,12 +115,18 @@ public class Scroller extends FrameLayout implements IScroller {
 
     public Scroller(@NonNull LevelsPanel levelsPanel) {
         super(levelsPanel.getContext());
+        this.levelsPanel = levelsPanel;
         this.setBackgroundColor(Color.LTGRAY);
-
-        FrameLayout.LayoutParams layoutParams = get_layoutParams(levelsPanel);
-        this.setLayoutParams(layoutParams);
-
+        refreshLayoutParams();
         indicator = new Indicator(this);
+    }
+
+    public void refreshLayoutParams() {
+        FrameLayout.LayoutParams layoutParams = get_layoutParams();
+        setLayoutParams(layoutParams);
+        if(indicator != null) {
+            indicator.refreshLayoutParams();
+        }
     }
 
     @Override
