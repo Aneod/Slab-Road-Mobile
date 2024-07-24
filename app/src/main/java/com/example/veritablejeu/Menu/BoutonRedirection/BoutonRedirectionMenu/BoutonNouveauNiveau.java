@@ -1,13 +1,11 @@
-package com.example.veritablejeu.Menu.PageDeSelection;
+package com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu;
 
 import android.content.Context;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
-import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonRedirectionMenuType.BoutonRedirectionMenuLeger;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.R;
@@ -53,12 +51,10 @@ public class BoutonNouveauNiveau extends FrameLayout {
 
     public BoutonNouveauNiveau(@NonNull MainActivity context, int width, int height, int leftMargin, int topMargin) {
         super(context);
-        BoutonRedirectionMenuLeger boutonNouveau = new BoutonRedirectionMenuLeger(
-                context, "Nouveau", width, height, leftMargin, topMargin, CouleurDuJeu.Vert.Int()
+        BoutonRedirectionMenu boutonNouveau = new BoutonRedirectionMenu(
+                context, "Create new", width, height, leftMargin, topMargin, CouleurDuJeu.Vert.Int()
         );
-        ImageView image = new ImageView(context);
-        image.setImageResource(R.drawable.plus);
-        boutonNouveau.setImage(image, null);
+        boutonNouveau.setImage(R.drawable.plus);
         boutonNouveau.setOnClickListener(v -> {
             context.goEditeur(levelFileBidonPourSimulerUnFichier); // null en temps normal.
         });

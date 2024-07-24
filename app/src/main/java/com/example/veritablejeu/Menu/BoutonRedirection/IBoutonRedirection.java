@@ -1,7 +1,5 @@
 package com.example.veritablejeu.Menu.BoutonRedirection;
 
-import android.view.View;
-
 import androidx.annotation.Nullable;
 
 public interface IBoutonRedirection {
@@ -15,9 +13,8 @@ public interface IBoutonRedirection {
      * bas à droite en prenant une partie de la hauteur.
      * Ce qui signifie qu'en mettant l'image en bas à droite, mais en laissant le choix de la
      * hauteur il est possible de combiner en un système tous les modèles de boutons existants.
-     * @param image une View. Ou null pour supprimer l'image actuelle.
-     * @param hauteurMaximale un int. Ou null pour prendre la hauteur du bouton.
+     * @param res une View. Ou null pour supprimer l'image actuelle.
      */
-    void setImage(@Nullable View image, @Nullable Integer hauteurMaximale);
+    void setImage(int res);
 
 }

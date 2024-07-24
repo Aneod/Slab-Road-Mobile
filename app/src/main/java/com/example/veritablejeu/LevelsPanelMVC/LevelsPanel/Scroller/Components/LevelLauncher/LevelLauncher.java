@@ -153,7 +153,7 @@ public class LevelLauncher extends BoutonRedirection implements ILevelLauncher {
     @NonNull
     @Contract(pure = true)
     private String recordText(String pseudo, String readableTime, int numberOfMoves) {
-        return pseudo + " : " + readableTime + " [ " + numberOfMoves + " moves ]";
+        return pseudo + " : " + readableTime + " (" + numberOfMoves + " moves)";
     }
 
     public void writeFirstLine(String text) {

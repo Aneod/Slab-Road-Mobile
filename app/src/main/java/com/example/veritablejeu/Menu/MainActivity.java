@@ -26,8 +26,7 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.LevelsPanelMVC.Controller;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
-import com.example.veritablejeu.Menu.PageDeSelection.BoutonNouveauNiveau;
-import com.example.veritablejeu.Menu.PagePrincipale.PanneauDeBoutonsRedirection;
+import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonNouveauNiveau;
 import com.example.veritablejeu.Tools.BackgroundColoration;
 import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.Tools.ScreenUtils;
@@ -131,18 +130,23 @@ public class MainActivity extends AppCompatActivity {
         panneau.getBoutonMondial().setOnClickListener(view -> goMondial());
         panneau.getBoutonMesNiveaux().setOnClickListener(v -> goSelectionDeMesNiveaux());
 
-        imageTitre = new ImageView(this);
+        imageTitre = createMainImage();
+        container.addView(imageTitre);
+    }
+
+    @NonNull
+    private ImageView createMainImage() {
+        ImageView imageTitre = new ImageView(this);
         imageTitre.setImageResource(R.drawable.pixel_art_menu2);
-        int margesHB = 50;
-        int topMargin = 130 + margesHB;
         int margesGD = 100;
         int width = ScreenUtils.getScreenWidth() - 2 * margesGD;
-        int hauteurMinimale = PanneauDeBoutonsRedirection.hauteurGenerale - 2 * margesHB;
-        int height = hauteurMinimale - topMargin;
+        int disponibleHeight = ScreenUtils.getScreenHeight() / 2;
+        int topMargin = disponibleHeight * 3/10;
+        int height = disponibleHeight * 5/10;
         ConstraintLayout.LayoutParams layoutParams =
                 new LayoutParamsDeBase_pourConstraintLayout(width, height, margesGD, topMargin);
         imageTitre.setLayoutParams(layoutParams);
-        container.addView(imageTitre);
+        return imageTitre;
     }
 
     /**

@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.Converters;
-import com.example.veritablejeu.Menu.PageDeSelection.BoutonNouveauNiveau;
-import com.example.veritablejeu.Tools.LongToReadableTime;
+import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonNouveauNiveau;
 
 import org.jetbrains.annotations.Contract;
 
