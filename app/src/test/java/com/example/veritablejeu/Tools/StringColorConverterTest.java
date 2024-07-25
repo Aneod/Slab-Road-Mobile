@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 
 import android.graphics.Color;
 
-import com.example.veritablejeu.Tools.StringColorConverter;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -109,5 +107,60 @@ public class StringColorConverterTest {
         String toConvert = null;
         int[] converted = StringColorConverter.turnIntoColors(toConvert);
         assertArrayEquals(new int[]{}, converted);
+    }
+
+    @Test
+    public void turnIntoCode_justOne() {
+        int theOne = 0xFFFF0000;
+        String actual = StringColorConverter.turnIntoCode(theOne);
+        String expected = "ff0000";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_twoColors() {
+        int one = Color.RED;
+        int two = Color.BLACK;
+        String actual = StringColorConverter.turnIntoCode(one, two);
+        String expected = "ff0000000000";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_empty() {
+        String actual = StringColorConverter.turnIntoCode();
+        String expected = "";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_null() {
+        String actual = StringColorConverter.turnIntoCode(null);
+        String expected = "";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_single_red() {
+        int color = Color.RED;
+        String actual = StringColorConverter.turnIntoCode_single(color);
+        String expected = "ff0000";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_single_black() {
+        int color = Color.BLACK;
+        String actual = StringColorConverter.turnIntoCode_single(color);
+        String expected = "000000";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void turnIntoCode_single_alphaDeleted() {
+        int color = 0x55FFFFFF;
+        String actual = StringColorConverter.turnIntoCode_single(color);
+        String expected = "ffffff";
+        assertEquals(expected, actual);
     }
 }

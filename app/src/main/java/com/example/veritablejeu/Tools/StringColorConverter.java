@@ -4,6 +4,8 @@ import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
+import java.util.Locale;
+
 /**
  * This class exists for convert 6-characters colors groups String into Lists of ready to be used colors.
  */
@@ -81,6 +83,46 @@ public class StringColorConverter {
             colors[index] = turnIntoColor(stringColor);
         }
         return colors;
+    }
+
+    /**
+     * Take some Color objects and return a code like xxxxxxyyyyyyzzzzzz...
+     * @param colors the colors to codify.
+     * @return the code of these colors.
+     */
+    @NonNull
+    public static String turnIntoCode(int... colors) {
+        if (colors == null || colors.length == 0) {
+            return "";
+        }
+
+        String onReturn = "";
+
+        for (int color : colors) {
+            String converted = turnIntoCode_single(color);
+            onReturn = onReturn.concat(converted);
+        }
+        return onReturn;
+    }
+
+    @NonNull
+    public static String turnIntoCode_single(int color) {
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+        String rString = turnInto2CharCode(r);
+        String gString = turnInto2CharCode(g);
+        String bString = turnInto2CharCode(b);
+        return rString + gString + bString;
+    }
+
+    @NonNull
+    private static String turnInto2CharCode(int on255) {
+        String on255String = Integer.toHexString(on255);
+        if(on255String.equals("0")) {
+            return "00";
+        }
+        return on255String;
     }
 
 }

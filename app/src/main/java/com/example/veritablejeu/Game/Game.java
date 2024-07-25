@@ -20,7 +20,6 @@ import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardsMovements.BoardsMovements;
-import com.example.veritablejeu.Tools.StringColorConverter;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
@@ -170,27 +169,6 @@ public class Game extends AppCompatActivity implements IGame {
     }
 
     /**
-     * Manages the background colors.
-     * @param code who containes some colors like : xxxxxxyyyyyyzzzzzz...
-     */
-    public void backgroundColoration(String code) {
-        int[] colors = StringColorConverter.turnIntoColors(code);
-        int topColor;
-        int bottomColor;
-        if(colors.length < 1) {
-            topColor = GameBackgroundColors.getDefaultColor();
-        } else {
-            topColor = colors[0];
-        }
-        if(colors.length < 2) {
-            bottomColor = GameBackgroundColors.getDefaultColor();
-        } else {
-            bottomColor = colors[1];
-        }
-        backgroundColors.setColors(topColor, bottomColor);
-    }
-
-    /**
      * Enable or not the outline of cable with a code.
      * <br>
      * false by default.
@@ -224,6 +202,30 @@ public class Game extends AppCompatActivity implements IGame {
 
     public boolean isCableOutline() {
         return cableOutline;
+    }
+
+    /**
+     * This method rebuild the entire code of the level.
+     * @return ththe entire code of the level.
+     */
+    public String buildCode() {
+        return buildAestheticCode() + buildMusicCode() + buildGameBoardCode();
+    }
+
+    @NonNull
+    private String buildAestheticCode() {
+        String backgroundColoration = backgroundColors.getBackgroundColorationCode();
+        return "";
+    }
+
+    @NonNull
+    private String buildMusicCode() {
+        return "";
+    }
+
+    @NonNull
+    private String buildGameBoardCode() {
+        return "";
     }
 
 }

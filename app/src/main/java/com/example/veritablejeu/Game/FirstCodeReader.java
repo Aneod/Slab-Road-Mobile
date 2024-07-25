@@ -10,6 +10,12 @@ import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 public class FirstCodeReader {
 
+    private static final char KEY_BACKGROUND_COLORATION = 'b';
+
+    public static char getKeyBackgroundColoration() {
+        return KEY_BACKGROUND_COLORATION;
+    }
+
     /**
      * Manages all data of the original code.
      * <p>
@@ -39,16 +45,19 @@ public class FirstCodeReader {
     private static void gameAesthetic(Game game, String code) {
         if(game == null) return;
         Code.apply(code,
-                'b', (Consumer<String>) game::backgroundColoration,
+                KEY_BACKGROUND_COLORATION, (Consumer<String>) codex -> backgroundColoration(game, codex),
                 'p', (Consumer<String>) (string) -> BainDeSavon.getInstance(game).setDesigns(string),
                 'o', (Consumer<String>) game::setCableOutline
         );
     }
 
+    private static void backgroundColoration(Game game, String code) {
+        if(game == null) return;
+        game.getBackgroundColors().setColors_byCode(code);
+    }
+
     private static void playMusic(Game game, @Nullable String musicId) {
-        if(game == null) {
-            return;
-        }
+        if(game == null) return;
         boolean isNumeric = isNumeric(musicId);
         if(isNumeric) {
             int intId = Integer.parseInt(musicId);

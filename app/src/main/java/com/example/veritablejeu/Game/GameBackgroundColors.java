@@ -4,7 +4,9 @@ import android.graphics.Color;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Tools.BackgroundColoration;
+import com.example.veritablejeu.Tools.StringColorConverter;
 
 public class GameBackgroundColors {
 
@@ -41,23 +43,50 @@ public class GameBackgroundColors {
         return backgroundColors[1];
     }
 
+    public String getBackgroundColorationCode() {
+        char key = FirstCodeReader.getKeyBackgroundColoration();
+        String code = StringColorConverter.turnIntoCode(backgroundColors);
+        return CodeBuilder.buildKeyValue(key, code);
+    }
+
+    /**
+     * Manages the background colors.
+     * @param code who containes some colors like : xxxxxxyyyyyyzzzzzz...
+     */
+    public void setColors_byCode(String code) {
+        int[] colors = StringColorConverter.turnIntoColors(code);
+        int topColor;
+        int bottomColor;
+        if(colors.length < 1) {
+            topColor = GameBackgroundColors.getDefaultColor();
+        } else {
+            topColor = colors[0];
+        }
+        if(colors.length < 2) {
+            bottomColor = GameBackgroundColors.getDefaultColor();
+        } else {
+            bottomColor = colors[1];
+        }
+        setColors(topColor, bottomColor);
+    }
+
     public void setColors(int topColor, int bottomColor) {
         backgroundColors[0] = topColor;
         backgroundColors[1] = bottomColor;
-        setGameBackgroundColors();
+        applyColors();
     }
 
     public void setTopColor(int color) {
         backgroundColors[0] = color;
-        setGameBackgroundColors();
+        applyColors();
     }
 
     public void setBottomColor(int color) {
         backgroundColors[1] = color;
-        setGameBackgroundColors();
+        applyColors();
     }
 
-    private void setGameBackgroundColors() {
+    private void applyColors() {
         if(game == null) return;
         ConstraintLayout container = game.getContainer();
         BackgroundColoration.colorierBackground(container, backgroundColors);
