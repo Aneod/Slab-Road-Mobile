@@ -14,7 +14,6 @@ import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Game;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
-import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 import java.util.ArrayList;
@@ -24,7 +23,14 @@ import java.util.Set;
 
 @SuppressLint("ViewConstructor")
 public class CabledSlab extends ModularSlab {
-    private final Set<Cable> connectedCable = new HashSet<>();
+
+    private static final char KEY_CABLE = 'c';
+
+    public static char getKeyCable() {
+        return KEY_CABLE;
+    }
+
+    private final Set<Cable> connectedCables = new HashSet<>();
 
     public CabledSlab(@NonNull ModularSquare modularSquare, int fillColor, @NonNull String code) {
         super(modularSquare, fillColor, code);
@@ -32,41 +38,41 @@ public class CabledSlab extends ModularSlab {
         String subString = code.substring(2);
         if(!subString.isEmpty()) {
             Code.apply(subString,
-                    'c', (Consumer<String>) this::addCable
+                    KEY_CABLE, (Consumer<String>) this::addCable
             );
         }
     }
 
-    public Set<Cable> getConnectedCable() {
-        return connectedCable;
+    public Set<Cable> getConnectedCables() {
+        return connectedCables;
     }
 
     @NonNull
     private Cable addCable(String code) {
         Cable cable = new Cable(this, code);
-        connectedCable.add(cable);
+        connectedCables.add(cable);
         return cable;
     }
 
     public void removeCable(Cable cable) {
-        connectedCable.remove(cable);
+        connectedCables.remove(cable);
     }
 
     public void removeAllCables() {
-        Set<Cable> toDelete = new HashSet<>(connectedCable);
+        Set<Cable> toDelete = new HashSet<>(connectedCables);
         toDelete.forEach(Cable::delete);
     }
 
     public void printCableOutlines() {
-        connectedCable.forEach(completeCable -> completeCable.getMorceauStorage().addBorders());
+        connectedCables.forEach(completeCable -> completeCable.getMorceauStorage().addBorders());
     }
 
     public void hideCableOutlines() {
-        connectedCable.forEach(completeCable -> completeCable.getMorceauStorage().removeBorders());
+        connectedCables.forEach(completeCable -> completeCable.getMorceauStorage().removeBorders());
     }
 
     public void verifyDoors() {
-        for(Cable cable : connectedCable) {
+        for(Cable cable : connectedCables) {
             ModularDoor door = cable.getComponentsStorage().getDoor();
             if(door != null) {
                 door.verify();

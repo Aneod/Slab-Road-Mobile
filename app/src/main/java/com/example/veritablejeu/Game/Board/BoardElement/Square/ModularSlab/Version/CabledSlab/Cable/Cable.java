@@ -10,6 +10,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Versi
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableCodeDiscrambler.CableCodeDiscrambler;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.CableComponentsStorage.ComponentsStorage;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 
 public class Cable implements ICable {
@@ -110,6 +111,28 @@ public class Cable implements ICable {
         componentsStorage.disconnectDoor();
         componentsStorage.getSlab().removeCable(this);
         morceauStorage.deleteMorceaux();
+    }
+
+    public String getCode() {
+        String onReturn = "";
+        for(ZdecimalCoordinates coordinates : componentsStorage.getIntersections()) {
+            char x = coordinates.getX().getCharacter();
+            char y = coordinates.getY().getCharacter();
+            String charCord = "" + x + y;
+            onReturn = onReturn.concat(charCord);
+        }
+
+        ModularDoor door = componentsStorage.getDoor();
+        if(door != null) {
+            WallsOfSquare.Direction direction = door.getDirection();
+            char charDirection = direction.getChar();
+            ZdecimalCoordinates doorCoordinates = door.getSquareCoordinates();
+            char x = doorCoordinates.getX().getCharacter();
+            char y = doorCoordinates.getY().getCharacter();
+            String doorCode = "" + charDirection + x + y;
+            onReturn = onReturn.concat(doorCode);
+        }
+        return onReturn;
     }
 
 }

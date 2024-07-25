@@ -10,6 +10,7 @@ import android.view.animation.LinearInterpolator;
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
@@ -31,6 +32,8 @@ import java.util.stream.Collectors;
 
 @SuppressLint("ViewConstructor")
 public class ModularDoor extends ModularWall {
+
+    private static final char KEY_SEALING = 'c';
 
     private static final int DEFAULT_FILL_COLOR = Color.WHITE;
     private static final int THINKNESS = 15;
@@ -55,9 +58,21 @@ public class ModularDoor extends ModularWall {
         if(code != null && !code.isEmpty()) {
             String subcode = code.substring(1);
             Code.apply(subcode,
-                    'c', (Consumer<String>) codex -> sealing()
+                    KEY_SEALING, (Consumer<String>) codex -> sealing()
             );
         }
+    }
+
+    public int getFillColor() {
+        return fillColor;
+    }
+
+    public String getCode() {
+        String code = "";
+        if(isSealed()) {
+            return CodeBuilder.buildKeyValue(KEY_SEALING, code);
+        }
+        return code;
     }
 
     public boolean isSealed() {

@@ -135,6 +135,15 @@ public class WallsOfSquare {
             }
         }
 
+        public char getChar() {
+            switch (this) {
+                case Top: return 't';
+                case Left: return 'l';
+                case Bottom: return 'b';
+                default: return 'r';
+            }
+        }
+
         @Nullable
         public ModularSquare getNeighbor(ModularSquare modularSquare) {
             switch (this) {

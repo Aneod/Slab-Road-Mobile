@@ -1,6 +1,7 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
 import android.graphics.Point;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -76,9 +77,17 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void saveProposal() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = popUp::hide; // Il manque sauvegarderPuisLancer.
+        Runnable runnableA = () -> {
+            saveAndLaunch();
+            popUp.hide();
+        };
         Runnable runnableB = popUp::hide;
         popUp.showQuestion("SAVE & PLAY", "Save this version of this level and try to solve it ?", "YES", runnableA, "NO", runnableB);
+    }
+
+    private void saveAndLaunch() {
+        String code = editeur.buildCode();
+        Log.e("", code);
     }
 
     @NonNull

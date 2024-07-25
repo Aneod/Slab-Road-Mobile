@@ -12,7 +12,11 @@ import com.example.veritablejeu.R;
 
 public class BoutonNouveauNiveau extends FrameLayout {
 
-    public static final String codeBidon = "a1wp1e00B66230000000b1cFFFFFFaaaaaam115" +
+    public static final String codeBidon = "a1w" +
+            "p1e00B66230000000" +
+            "b1cFFFFFFaaaaaa" +
+            "m115" +
+
             "p26b" +
             "b16990000" +
             "s1k000w1el110t110b13ac0" +

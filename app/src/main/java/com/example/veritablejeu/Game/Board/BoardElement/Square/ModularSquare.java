@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.TransparencySettings.TransparencySettings;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 import com.example.veritablejeu.Game.Board.BoardsMovements.OnTouchForElement;
@@ -38,6 +39,13 @@ import java.util.List;
 
 @SuppressLint("ViewConstructor")
 public abstract class ModularSquare extends BoardElement {
+
+    private static final char KEY_WALL = 'w';
+    private static final char KEY_BLOB = 'b';
+    private static final char KEY_SLAB = 's';
+
+    private static final char NORMAL_TYPE = '0';
+    private static final char GHOST_TYPE = '1';
 
     private final Board board;
     private final FrameLayout.LayoutParams layoutParams;
@@ -74,8 +82,8 @@ public abstract class ModularSquare extends BoardElement {
         }
         char squareType = code.charAt(0);
         switch (squareType) {
-            case '0': return new NormalSquare(board, code);
-            case '1': return new Ghost(board, code);
+            case NORMAL_TYPE: return new NormalSquare(board, code);
+            case GHOST_TYPE: return new Ghost(board, code);
         }
         return null;
     }
@@ -108,9 +116,9 @@ public abstract class ModularSquare extends BoardElement {
         String subString = code.substring(3);
         if(!subString.isEmpty()) {
             Code.apply(subString,
-                    'w', (Consumer<String>) this::addWalls,
-                    'b', (Consumer<String>) t -> createBlob(),
-                    's', (Consumer<String>) this::createSlab
+                    KEY_WALL, (Consumer<String>) this::addWalls,
+                    KEY_BLOB, (Consumer<String>) t -> createBlob(),
+                    KEY_SLAB, (Consumer<String>) this::createSlab
             );
         }
     }
@@ -505,6 +513,73 @@ public abstract class ModularSquare extends BoardElement {
     }
 
     public String getCode() {
+        char type = getTypeKey();
+        String cord = getCordCharacters();
+        String wallCode = getWallCode();
+        String blobCode = getBlobCode();
+        String slabCode = getSlabCode();
+        return type + cord + wallCode + blobCode + slabCode;
+    }
+
+    private char getTypeKey() {
+        if(this instanceof Ghost) {
+            return GHOST_TYPE;
+        }
+        return NORMAL_TYPE;
+    }
+
+    @NonNull
+    private String getCordCharacters() {
+        char x = cord.getX().getCharacter();
+        char y = cord.getY().getCharacter();
+        return "" + x + y;
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private String getWallCode() {
+        String code = "";
+        for(ModularWall wall : walls.getAll()) {
+            boolean isOnTop = wall.getDirection() == WallsOfSquare.Direction.Top;
+            boolean isOnLeft = wall.getDirection() == WallsOfSquare.Direction.Left;
+            if(isOnTop) {
+                boolean thereIsATopSquare = getSquareOfTop() != null;
+                boolean getTopWall = !thereIsATopSquare;
+                if(getTopWall) {
+                    code = code.concat(wall.getEntireCode());
+                }
+            } else if(isOnLeft) {
+                boolean thereIsALeftSquare = getSquareOfLeft() != null;
+                boolean getLeftWall = !thereIsALeftSquare;
+                if(getLeftWall) {
+                    code = code.concat(wall.getEntireCode());
+                }
+            } else {
+                code = code.concat(wall.getEntireCode());
+            }
+        }
+        return CodeBuilder.buildKeyValue(KEY_WALL, code);
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private String getBlobCode() {
+        if(thereIsABlob()) {
+            String code = "";
+            return CodeBuilder.buildKeyValue(KEY_BLOB, code);
+        }
         return "";
     }
+
+    @NonNull
+    @Contract(pure = true)
+    private String getSlabCode() {
+        ModularSlab slab = board.getSlabAt(cord);
+        if(slab == null) {
+            return "";
+        }
+        String code = slab.getCode();
+        return CodeBuilder.buildKeyValue(KEY_SLAB, code);
+    }
+
 }

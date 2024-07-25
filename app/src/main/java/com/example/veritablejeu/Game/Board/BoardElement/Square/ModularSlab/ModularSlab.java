@@ -6,9 +6,11 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.ModularBlob;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.SlabDesign.SlabDesign;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.CabledSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.GreenSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.OrangeSlab;
@@ -75,7 +77,7 @@ public abstract class ModularSlab extends BoardElement {
         this.originSquare = modularSquare;
         this.weight = code.length() < 2 ? 1 : ZdecimalCharacterConverter.charBase36_to_intDecimal(code.charAt(1));
         this.fillColor = fillColor;
-        slabDesign = new SlabDesign(modularSquare, this);
+        this.slabDesign = new SlabDesign(modularSquare, this);
     }
 
     public ModularSquare getOriginSquare() {
@@ -241,6 +243,40 @@ public abstract class ModularSlab extends BoardElement {
     public void remove() {
         super.remove();
         board.removeSlab(this);
+    }
+
+    public String getCode() {
+        char type = getType();
+        String onReturn = "" + type + weight;
+        if(this instanceof CabledSlab) {
+            Set<Cable> cables = ((CabledSlab) this).getConnectedCables();
+            for(Cable cable : cables) {
+                String cryptedCable = cable.getCode();
+                char key = CabledSlab.getKeyCable();
+                String codeCable = CodeBuilder.buildKeyValue(key, cryptedCable);
+                onReturn = onReturn.concat(codeCable);
+            }
+        }
+        return onReturn;
+    }
+
+    public char getType() {
+        if(fillColor == CouleurDuJeu.BleuClair.Int()) {
+            return '0';
+        } else if(fillColor == CouleurDuJeu.BleuFonce.Int()) {
+            return '1';
+        } else if(fillColor == CouleurDuJeu.Rouge.Int()) {
+            return '2';
+        } else if(fillColor == CouleurDuJeu.Vert.Int()) {
+            return '3';
+        } else if(fillColor == CouleurDuJeu.Jaune.Int()) {
+            return '4';
+        } else if(fillColor == CouleurDuJeu.Orange.Int()) {
+            return '5';
+        } else if(fillColor == CouleurDuJeu.Violet.Int()) {
+            return '6';
+        }
+        return '0';
     }
 
     public abstract void whenActivation();

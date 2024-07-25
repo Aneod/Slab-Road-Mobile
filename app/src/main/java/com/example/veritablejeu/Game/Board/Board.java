@@ -246,7 +246,7 @@ public class Board extends FrameLayout {
     private void connectDoors_and_cables() {
         groupOfSlabs.stream()
                 .filter(CabledSlab.class::isInstance)
-                .map(modularSlab -> ((CabledSlab) modularSlab).getConnectedCable())
+                .map(modularSlab -> ((CabledSlab) modularSlab).getConnectedCables())
                 .flatMap(Set::stream)
                 .forEach(Cable::connectCorrespondingDoor);
     }

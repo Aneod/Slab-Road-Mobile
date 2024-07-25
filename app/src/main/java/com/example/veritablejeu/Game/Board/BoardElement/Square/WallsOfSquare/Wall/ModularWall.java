@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
@@ -23,6 +24,13 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 
 @SuppressLint("ViewConstructor")
 public abstract class ModularWall extends BoardElement {
+
+    private static final char SIMPLE_WALL_TYPE = '0';
+    private static final char OUTLINE_WALL_TYPE = '1';
+    private static final char LB_DOOR_TYPE = 'a';
+    private static final char DB_DOOR_TYPE = 'b';
+    private static final char RED_DOOR_TYPE = 'c';
+
     public static final int TOTAL_HEIGHT = Board.BORDER_WIDTH * 2;
 
     protected final ModularSquare modularSquare;
@@ -46,11 +54,11 @@ public abstract class ModularWall extends BoardElement {
         }
         char wallType = code.charAt(0);
         switch (wallType) {
-            case '0': return new SimpleWall(modularSquare, direction);
-            case '1': return new OutlineWall(modularSquare, direction);
-            case 'a': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuClair, 1);
-            case 'b': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuFonce, 2);
-            case 'c': return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.Rouge, 1);
+            case SIMPLE_WALL_TYPE: return new SimpleWall(modularSquare, direction);
+            case OUTLINE_WALL_TYPE: return new OutlineWall(modularSquare, direction);
+            case LB_DOOR_TYPE: return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuClair, 1);
+            case DB_DOOR_TYPE: return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.BleuFonce, 2);
+            case RED_DOOR_TYPE: return new ModularDoor(modularSquare, direction, code, CouleurDuJeu.Rouge, 1);
         }
         return new SimpleWall(modularSquare, direction);
     }
@@ -150,5 +158,32 @@ public abstract class ModularWall extends BoardElement {
     public void remove() {
         super.remove();
         modularSquare.getWalls().remove(direction);
+    }
+
+    public String getEntireCode() {
+        if(this instanceof OutlineWall) {
+            return "";
+        }
+        char direction = getDirection().getChar();
+        char type = getType();
+        String code = this instanceof ModularDoor ? ((ModularDoor) this).getCode() : "";
+        String entireCode = type + code;
+        return CodeBuilder.buildKeyValue(direction, entireCode);
+    }
+
+    private char getType() {
+        if(this instanceof SimpleWall) {
+            return SIMPLE_WALL_TYPE;
+        } else if(this instanceof ModularDoor) {
+            int fillColor = ((ModularDoor) this).getFillColor();
+            if(fillColor == CouleurDuJeu.BleuClair.Int()) {
+                return LB_DOOR_TYPE;
+            } else if(fillColor == CouleurDuJeu.BleuFonce.Int()) {
+                return DB_DOOR_TYPE;
+            } else if(fillColor == CouleurDuJeu.Rouge.Int()) {
+                return RED_DOOR_TYPE;
+            }
+        }
+        return SIMPLE_WALL_TYPE;
     }
 }
