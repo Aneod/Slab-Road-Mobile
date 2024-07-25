@@ -37,9 +37,7 @@ public class FirstCodeReader {
      * </p>
      */
     private static void gameAesthetic(Game game, String code) {
-        if(game == null) {
-            return;
-        }
+        if(game == null) return;
         Code.apply(code,
                 'b', (Consumer<String>) game::backgroundColoration,
                 'p', (Consumer<String>) (string) -> BainDeSavon.getInstance(game).setDesigns(string),

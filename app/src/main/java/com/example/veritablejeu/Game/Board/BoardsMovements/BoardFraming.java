@@ -321,7 +321,7 @@ public class BoardFraming {
          * <br>
          * 'hhh' -> h.hhf for heightPorcentage.
          * <br>
-         * 'L' -> the numLocation.
+         * 'L' -> the numLocation. Check {@link Location#getLocationOfNum(int)}.
          * </p>
          * @param code the code for by which create a {@link Preset}.
          * @return a new {@link Preset} with the paramters given by the code.

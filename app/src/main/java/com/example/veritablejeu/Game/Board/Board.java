@@ -131,7 +131,7 @@ public class Board extends FrameLayout {
         Code.apply(code,
                 's', (Consumer<String>) this::createSquare,
                 'b', (Consumer<String>) this::setBlobsColorByCode,
-                'v', (Consumer<String>) (String codex) -> preset = BoardFraming.Preset.createPreset_byCode(this, codex)
+                'v', (Consumer<String>) this::setPreset
         );
 
         connectDoors_and_cables();
@@ -142,6 +142,10 @@ public class Board extends FrameLayout {
 
         setVision();
         normalScale = getScaleX();
+    }
+
+    private void setPreset(String code) {
+        preset = BoardFraming.Preset.createPreset_byCode(this, code);
     }
 
     public void cropping() {
@@ -315,7 +319,7 @@ public class Board extends FrameLayout {
         return groupOfBlobsOfBoard.getBlobsColor();
     }
 
-    public void setBlobsColorByCode(String blobsColor) {
+    private void setBlobsColorByCode(String blobsColor) {
         int color = StringColorConverter.turnIntoColor(blobsColor);
         groupOfBlobsOfBoard.setBlobsColor(color);
     }
