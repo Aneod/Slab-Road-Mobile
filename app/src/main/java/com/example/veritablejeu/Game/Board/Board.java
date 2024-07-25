@@ -45,6 +45,7 @@ public class Board extends FrameLayout {
     private static final char KEY_PRESET = 'v';
     private static final char KEY_BLOBS_COLOR = 'b';
     private static final char KEY_SQUARE_CODE = 's';
+    private static final char KEY_TRANSPARENCY = 't';
 
     public static final int SQUARE_SIZE = 240;
     public static final int BORDER_WIDTH = 50;
@@ -137,8 +138,10 @@ public class Board extends FrameLayout {
         Code.apply(code,
                 KEY_SQUARE_CODE, (Consumer<String>) this::createSquare,
                 KEY_BLOBS_COLOR, (Consumer<String>) this::setBlobsColorByCode,
-                KEY_PRESET, (Consumer<String>) this::setPreset
+                KEY_PRESET, (Consumer<String>) this::setPreset,
+                KEY_TRANSPARENCY, (Consumer<String>) this::setTransparency
         );
+        boardTransparency.setAllSquaresTransparency(this);
 
         connectDoors_and_cables();
 
@@ -148,6 +151,10 @@ public class Board extends FrameLayout {
 
         setVision();
         normalScale = getScaleX();
+    }
+
+    private void setTransparency(String code) {
+        boardTransparency.setTransparencyByCode(this, code);
     }
 
     private void setPreset(String code) {
@@ -445,7 +452,8 @@ public class Board extends FrameLayout {
     }
 
     public String getCode() {
-        return getPresetCode() + getBlobsColorCode() + getSquaresCode();
+        return getTransparencyCode() + getPresetCode() +
+                getBlobsColorCode() + getSquaresCode();
     }
 
     @NonNull
@@ -471,5 +479,11 @@ public class Board extends FrameLayout {
             onReturn = onReturn.concat(code);
         }
         return onReturn;
+    }
+
+    @NonNull
+    private String getTransparencyCode() {
+        String transparency = boardTransparency.getTransparencyToTwoChar();
+        return CodeBuilder.buildKeyValue(KEY_TRANSPARENCY, transparency);
     }
 }

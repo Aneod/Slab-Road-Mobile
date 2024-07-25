@@ -21,8 +21,8 @@ public class BubblesSettings {
         SimpleText AGroupTitle = new SimpleText(popUp, "Type A", Gravity.CENTER);
         OnOffComponent AGroupeShape = new OnOffComponent(popUp, "Shape",
                 bainDeSavon.isATypeCircle(),
-                "CIRCLE", () -> bainDeSavon.setATypeAsCircle(false),
-                "RECTANGLE", () -> bainDeSavon.setATypeAsCircle(true)
+                "CIRCLE", () -> bainDeSavon.setATypeAsCircle(true),
+                "RECTANGLE", () -> bainDeSavon.setATypeAsCircle(false)
         );
         RGBPanel rgbPanelA = new RGBPanel(popUp, bainDeSavon.getATypeColor(), bainDeSavon::setATypeColor);
         CursorComponent[] rgbListA = rgbPanelA.getCursors();
@@ -31,8 +31,8 @@ public class BubblesSettings {
         SimpleText BGroupTitle = new SimpleText(popUp, "Type B", Gravity.CENTER);
         OnOffComponent BGroupeShape = new OnOffComponent(popUp, "Shape",
                 bainDeSavon.isBTypeCircle(),
-                "CIRCLE", () -> bainDeSavon.setBTypeAsCircle(false),
-                "RECTANGLE", () -> bainDeSavon.setBTypeAsCircle(true)
+                "CIRCLE", () -> bainDeSavon.setBTypeAsCircle(true),
+                "RECTANGLE", () -> bainDeSavon.setBTypeAsCircle(false)
         );
         RGBPanel rgbPanelB = new RGBPanel(popUp, bainDeSavon.getBTypeColor(), bainDeSavon::setBTypeColor);
         CursorComponent[] rgbListB = rgbPanelB.getCursors();

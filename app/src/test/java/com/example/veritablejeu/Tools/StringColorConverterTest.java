@@ -163,4 +163,12 @@ public class StringColorConverterTest {
         String expected = "ffffff";
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void turnIntoCode_single_1_turnInto_01() {
+        int color = 0xFF010900;
+        String actual = StringColorConverter.turnIntoCode_single(color);
+        String expected = "010900";
+        assertEquals(expected, actual);
+    }
 }

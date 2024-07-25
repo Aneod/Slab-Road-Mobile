@@ -58,12 +58,12 @@ public class GameBackgroundColors {
         int topColor;
         int bottomColor;
         if(colors.length < 1) {
-            topColor = GameBackgroundColors.getDefaultColor();
+            topColor = DEFAULT_COLOR;
         } else {
             topColor = colors[0];
         }
         if(colors.length < 2) {
-            bottomColor = GameBackgroundColors.getDefaultColor();
+            bottomColor = DEFAULT_COLOR;
         } else {
             bottomColor = colors[1];
         }

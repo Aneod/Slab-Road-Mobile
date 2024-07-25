@@ -35,6 +35,7 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameL
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressLint("ViewConstructor")
@@ -539,26 +540,19 @@ public abstract class ModularSquare extends BoardElement {
     @Contract(pure = true)
     private String getWallCode() {
         String code = "";
-        for(ModularWall wall : walls.getAll()) {
-            boolean isOnTop = wall.getDirection() == WallsOfSquare.Direction.Top;
-            boolean isOnLeft = wall.getDirection() == WallsOfSquare.Direction.Left;
-            if(isOnTop) {
-                boolean thereIsATopSquare = getSquareOfTop() != null;
-                boolean getTopWall = !thereIsATopSquare;
-                if(getTopWall) {
-                    code = code.concat(wall.getEntireCode());
-                }
-            } else if(isOnLeft) {
-                boolean thereIsALeftSquare = getSquareOfLeft() != null;
-                boolean getLeftWall = !thereIsALeftSquare;
-                if(getLeftWall) {
-                    code = code.concat(wall.getEntireCode());
-                }
-            } else {
-                code = code.concat(wall.getEntireCode());
-            }
+        for(WallsOfSquare.Direction direction : WallsOfSquare.Direction.getAllDirections()) {
+            code = code.concat(getEntireCodeOfDirectionalDoor(direction));
         }
         return CodeBuilder.buildKeyValue(KEY_WALL, code);
+    }
+
+    @NonNull
+    private String getEntireCodeOfDirectionalDoor(WallsOfSquare.Direction direction) {
+        ModularWall topWall = walls.get(direction);
+        if(topWall != null && topWall.getDirection() == direction) {
+            return topWall.getEntireCode();
+        }
+        return "";
     }
 
     @NonNull
@@ -575,7 +569,7 @@ public abstract class ModularSquare extends BoardElement {
     @Contract(pure = true)
     private String getSlabCode() {
         ModularSlab slab = board.getSlabAt(cord);
-        if(slab == null) {
+        if(slab == null || slab.getOriginSquare() != this) {
             return "";
         }
         String code = slab.getCode();

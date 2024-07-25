@@ -105,7 +105,7 @@ public class BainDeSavon implements IBainDeSavon {
 
     @Override
     public void setATypeAsCircle(boolean circle) {
-        int shape = circle ? 0 : 1;
+        int shape = circle ? GradientDrawable.OVAL : GradientDrawable.RECTANGLE;
         for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
             int selection = bulleDeSavon.getGroupe();
             boolean isAGroup = selection == 0;
@@ -118,7 +118,7 @@ public class BainDeSavon implements IBainDeSavon {
 
     @Override
     public void setBTypeAsCircle(boolean circle) {
-        int shape = circle ? 0 : 1;
+        int shape = circle ? GradientDrawable.OVAL : GradientDrawable.RECTANGLE;
         for(BulleDeSavon bulleDeSavon : this.toutesLesBulles) {
             int selection = bulleDeSavon.getGroupe();
             boolean isBGroup = selection == 1;

@@ -91,6 +91,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void saveAndLaunch() {
         saveNew();
+        Log.e("", editeur.buildCode());
         PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur);
     }
 

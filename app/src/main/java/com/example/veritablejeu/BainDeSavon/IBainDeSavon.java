@@ -75,10 +75,7 @@ public interface IBainDeSavon {
      *                 cccccc -> The hexadecimal RGB color.
      *             </p>
      */
-    void
-
-
-    setDesigns(String code);
+    void setDesigns(String code);
 
     /**
      * Reprendre l'animation de toutes les bulles.

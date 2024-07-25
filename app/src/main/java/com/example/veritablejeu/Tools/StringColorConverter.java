@@ -119,8 +119,8 @@ public class StringColorConverter {
     @NonNull
     private static String turnInto2CharCode(int on255) {
         String on255String = Integer.toHexString(on255);
-        if(on255String.equals("0")) {
-            return "00";
+        if(on255String.length() == 1) {
+            return "0" + on255String;
         }
         return on255String;
     }

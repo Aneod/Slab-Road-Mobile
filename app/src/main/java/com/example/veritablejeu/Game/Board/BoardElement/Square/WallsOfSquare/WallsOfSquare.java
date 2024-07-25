@@ -6,8 +6,10 @@ import androidx.annotation.Nullable;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumMap;
+import java.util.List;
 
 /**
  * This class is designed to manage the group of four walls around a squares.
@@ -163,6 +165,16 @@ public class WallsOfSquare {
                 case Right: return Left;
                 default: return DEFAULT;
             }
+        }
+
+        @NonNull
+        public static List<Direction> getAllDirections() {
+            return Arrays.asList(
+                    WallsOfSquare.Direction.Top,
+                    WallsOfSquare.Direction.Left,
+                    WallsOfSquare.Direction.Bottom,
+                    WallsOfSquare.Direction.Right
+            );
         }
     }
 
