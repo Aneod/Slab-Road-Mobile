@@ -503,4 +503,8 @@ public abstract class ModularSquare extends BoardElement {
             blob.remove();
         }
     }
+
+    public String getCode() {
+        return "";
+    }
 }

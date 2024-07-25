@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.util.Consumer;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Fence.SpecSquare.SpecSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
@@ -33,15 +34,20 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstr
 import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.StringColorConverter;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.HashSet;
 import java.util.Set;
 
 @SuppressLint("ViewConstructor")
 public class Board extends FrameLayout {
 
+    private static final char KEY_PRESET = 'v';
+    private static final char KEY_BLOBS_COLOR = 'b';
+    private static final char KEY_SQUARE_CODE = 's';
+
     public static final int SQUARE_SIZE = 240;
     public static final int BORDER_WIDTH = 50;
-
 
     private final Game game;
     private ConstraintLayout.LayoutParams layoutParams;
@@ -129,9 +135,9 @@ public class Board extends FrameLayout {
         container.addView(this);
 
         Code.apply(code,
-                's', (Consumer<String>) this::createSquare,
-                'b', (Consumer<String>) this::setBlobsColorByCode,
-                'v', (Consumer<String>) this::setPreset
+                KEY_SQUARE_CODE, (Consumer<String>) this::createSquare,
+                KEY_BLOBS_COLOR, (Consumer<String>) this::setBlobsColorByCode,
+                KEY_PRESET, (Consumer<String>) this::setPreset
         );
 
         connectDoors_and_cables();
@@ -439,6 +445,31 @@ public class Board extends FrameLayout {
     }
 
     public String getCode() {
+        return getPresetCode() + getBlobsColorCode() + getSquaresCode();
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private String getPresetCode() {
+        // Until there is only one board by which level, define a preset is useless.
         return "";
+    }
+
+    @NonNull
+    private String getBlobsColorCode() {
+        int blobsColor = groupOfBlobsOfBoard.getBlobsColor();
+        String codeColor = StringColorConverter.turnIntoCode(blobsColor);
+        return CodeBuilder.buildKeyValue(KEY_BLOBS_COLOR, codeColor);
+    }
+
+    @NonNull
+    private String getSquaresCode() {
+        String onReturn = "";
+        for(ModularSquare square : modularSquareSet) {
+            String squareCode = square.getCode();
+            String code = CodeBuilder.buildKeyValue(KEY_SQUARE_CODE, squareCode);
+            onReturn = onReturn.concat(code);
+        }
+        return onReturn;
     }
 }
