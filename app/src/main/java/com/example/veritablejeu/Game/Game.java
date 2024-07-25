@@ -94,7 +94,6 @@ public class Game extends AppCompatActivity implements IGame {
         bainDeSavon.setContainerDeToutesLesBulles(this);
 
         FirstCodeReader.read(this, levelFile.sequentialCode);
-        verifyCompletion();
     }
 
     @Override

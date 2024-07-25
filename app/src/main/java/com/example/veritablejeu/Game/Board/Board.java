@@ -12,6 +12,7 @@ import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.Game.Board.BoardElement.BoardElement;
 import com.example.veritablejeu.Game.Board.BoardElement.Fence.SpecSquare.SpecSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.Version.CabledSlab.Cable.Cable;
+import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCharacter.ZdecimalCharacterConverter;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.Board.BoardElement.Fence.Fence;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.GroupOfBlobsOfBoard;
@@ -47,8 +48,13 @@ public class Board extends FrameLayout {
     private static final char KEY_SQUARE_CODE = 's';
     private static final char KEY_TRANSPARENCY = 't';
 
+    private static final int BOARD_SIZE = 15;
     public static final int SQUARE_SIZE = 240;
     public static final int BORDER_WIDTH = 50;
+
+    public static int getBoardSize() {
+        return BOARD_SIZE;
+    }
 
     private final Game game;
     private ConstraintLayout.LayoutParams layoutParams;
@@ -93,7 +99,8 @@ public class Board extends FrameLayout {
      * @return the smallest left margin.
      */
     public int getNearestLeftMargin() {
-        return 0;
+        int leftLimitRanq = ZdecimalCharacterConverter.zdecimalCharacter_to_intDecimal(leftLimit);
+        return SQUARE_SIZE * leftLimitRanq;
     }
 
     /**
@@ -101,7 +108,8 @@ public class Board extends FrameLayout {
      * @return the smallest top margin.
      */
     public int getNearestTopMargin() {
-        return 0;
+        int topLimitRanq = ZdecimalCharacterConverter.zdecimalCharacter_to_intDecimal(topLimit);
+        return SQUARE_SIZE * topLimitRanq;
     }
 
     /**
@@ -120,7 +128,7 @@ public class Board extends FrameLayout {
      * 0 for now.
      */
     private void setLayoutParams() {
-        int widthHeight = 36 * SQUARE_SIZE + 2 * BORDER_WIDTH;
+        int widthHeight = BOARD_SIZE * SQUARE_SIZE + 2 * BORDER_WIDTH;
         layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
                 widthHeight, widthHeight, 0, 0
         );
@@ -173,8 +181,9 @@ public class Board extends FrameLayout {
         if(game instanceof Editeur) {
             topLimit = new ZdecimalCharacter(ZdecimalCharacter.getMinValidChar());
             leftLimit = new ZdecimalCharacter(ZdecimalCharacter.getMinValidChar());
-            bottomLimit = new ZdecimalCharacter(ZdecimalCharacter.getMaxValidChar());
-            rightLimit = new ZdecimalCharacter(ZdecimalCharacter.getMaxValidChar());
+            ZdecimalCharacter max = new ZdecimalCharacter(BOARD_SIZE - 1);
+            bottomLimit = max;
+            rightLimit = max;
         } else {
             for (ModularSquare modularSquare : modularSquareSet) {
                 ZdecimalCharacter cordXSquare = modularSquare.getCord().getX();

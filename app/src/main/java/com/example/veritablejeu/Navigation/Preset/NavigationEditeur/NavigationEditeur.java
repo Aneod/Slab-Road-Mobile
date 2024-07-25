@@ -1,18 +1,20 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.text.Editable;
 
 import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
-import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BainDeSavon.BubblesSettings;
 import com.example.veritablejeu.Game.Editeur.Editeur;
+import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
+import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
 import com.example.veritablejeu.Navigation.BoutonNavigation.BoutonNavigation;
 import com.example.veritablejeu.Navigation.Preset.NavigationEditeur.Input_NomDuNiveau.Input_NomDuNiveau;
@@ -90,18 +92,20 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     }
 
     private void saveAndLaunch() {
-        save();
+        LevelFile savedFile = save();
+        launch(savedFile);
     }
 
-    private void save() {
+    @NonNull
+    private LevelFile save() {
         LevelFile originalLevelFile = editeur.getLevelFiles();
         int id = originalLevelFile.id;
         Editable editable = inputNomDuNiveau.getText();
         String levelName;
-        if(editable != null) {
-            levelName = editable.toString();
-        } else {
+        if(editable == null || editable.length() == 0) {
             levelName = "No name";
+        } else {
+            levelName = editable.toString();
         }
         String userName = originalLevelFile.autor;
         String code = editeur.buildCode();
@@ -110,6 +114,15 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         personalFiles.set(levelFile, () ->
                 PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur)
         );
+        return levelFile;
+    }
+
+    private void launch(LevelFile levelFile) {
+        MainActivity.Bus.getInstance().setLevelFile(levelFile);
+        Intent mainActivity = new Intent(editeur.getApplicationContext(), InGame.class);
+        editeur.startActivity(mainActivity);
+        editeur.finish();
+        editeur.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @NonNull

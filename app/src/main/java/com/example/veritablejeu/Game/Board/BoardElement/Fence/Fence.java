@@ -18,12 +18,13 @@ public class Fence {
     private void createAllSpecSquares(Board board) {
         if(board == null) return;
 
-        char firstChar = ZdecimalCharacter.getMinValidChar();
-        ZdecimalCharacter firstZdecimalCharacter = new ZdecimalCharacter(firstChar);
-
-        for(ZdecimalCharacter x = firstZdecimalCharacter; !ZdecimalCharacterSequencer.isMaxChar(x); x = ZdecimalCharacterSequencer.getNextChar(x)) {
-            for(ZdecimalCharacter y = firstZdecimalCharacter; !ZdecimalCharacterSequencer.isMaxChar(y); y = ZdecimalCharacterSequencer.getNextChar(y)) {
-                ZdecimalCoordinates coordinates = new ZdecimalCoordinates(x, y);
+        int boardSize = Board.getBoardSize();
+        for(int x = 0; x < boardSize; x++) {
+            for(int y = 0; y < boardSize; y++) {
+                ZdecimalCoordinates coordinates = new ZdecimalCoordinates(
+                        new ZdecimalCharacter(x),
+                        new ZdecimalCharacter(y)
+                );
                 SpecSquare specSquare = new SpecSquare(board, coordinates);
                 specSquareSet.add(specSquare);
             }

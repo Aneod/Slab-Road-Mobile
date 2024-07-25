@@ -28,6 +28,7 @@ public class InGame extends Game implements InterfaceInGame {
         new NavigationInGame(this);
         athFinal = new ATHFinal(this);
         addExternalWalls();
+        verifyCompletion();
     }
 
     private void addExternalWalls() {

@@ -122,6 +122,8 @@ public class BoardsMovements {
                     for(Board board : originalPlateauModulaireSet) {
                         float boardWidth = board.getTotalWidthPlateau() * board.getScaleX();
                         float boardHeight = board.getTotalHeightPlateau() * board.getScaleX();
+                        float boardLeftMargin = board.getNearestLeftMargin() * board.getScaleX();
+                        float boardTopMargin = board.getNearestTopMargin() * board.getScaleX();
 
                         int[] location = new int[2];
                         board.getLocationOnScreen(location);
@@ -129,13 +131,13 @@ public class BoardsMovements {
                         int y = location[1];
 
                         float decalage = (Board.BORDER_WIDTH + (float) Board.SQUARE_SIZE * 2) * board.getScaleX();
-                        if (y + boardHeight - decalage - StatusBar.getHeight(board.getGame()) < 0 && deltaY < 0)
+                        if (y + boardTopMargin + boardHeight - decalage - StatusBar.getHeight(board.getGame()) < 0 && deltaY < 0)
                             deltaY = 0;
-                        else if (y + decalage - StatusBar.getHeight(board.getGame()) > ScreenUtils.getScreenHeight() && deltaY > 0)
+                        else if (y + boardTopMargin + decalage - StatusBar.getHeight(board.getGame()) > ScreenUtils.getScreenHeight() && deltaY > 0)
                             deltaY = 0;
-                        if (x + boardWidth - decalage < 0 && deltaX < 0)
+                        if (x + boardLeftMargin + boardWidth - decalage < 0 && deltaX < 0)
                             deltaX = 0;
-                        else if (x + decalage > ScreenUtils.getScreenWidth() && deltaX > 0)
+                        else if (x + boardLeftMargin + decalage > ScreenUtils.getScreenWidth() && deltaX > 0)
                             deltaX = 0;
                     }
 
