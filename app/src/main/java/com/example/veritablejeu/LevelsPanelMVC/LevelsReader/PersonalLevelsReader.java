@@ -14,12 +14,16 @@ public class PersonalLevelsReader extends LevelsReader {
     private static PersonalLevelsReader instance;
     private List<LevelFile> levelsList;
 
-    private PersonalLevelsReader(Context context) {
+    public void refreshLevelList(Context context) {
         PersonalFilesDao personalFilesDao = PersonalFilesDatabase.getInstance(context)
                 .personalFilesDao();
         new Thread(() ->
                 levelsList = personalFilesDao.getAll()
         ).start();
+    }
+
+    private PersonalLevelsReader(Context context) {
+        refreshLevelList(context);
     }
 
     public static PersonalLevelsReader getInstance(Context context) {

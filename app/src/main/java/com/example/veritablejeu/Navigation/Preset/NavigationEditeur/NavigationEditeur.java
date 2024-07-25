@@ -5,8 +5,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BainDeSavon.BubblesSettings;
 import com.example.veritablejeu.Game.Editeur.Editeur;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.Navigation.Association_Symbole_Fonction.Association_Symbole_Fonction;
@@ -86,8 +90,16 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     }
 
     private void saveAndLaunch() {
+        saveNew();
+        PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur);
+    }
+
+    private void saveNew() {
+        String userName = UserData.getUsername(editeur);
         String code = editeur.buildCode();
-        Log.e("", code);
+        LevelFile levelFile = new LevelFile("TestName", userName, 0L, 0, code);
+        PersonalFiles personalFiles = PersonalFiles.getInstance(editeur);
+        personalFiles.set(levelFile);
     }
 
     @NonNull
