@@ -21,6 +21,7 @@ public class Input_NomDuNiveau extends AppCompatEditText implements IInput_NomDu
     private final ConstraintLayout constraintLayout;
     long TEMPS_APPARITION_DISPARITION = 200;
 
+    @NonNull
     private AlphaAnimation alphaAnimation(float from, float to, long startOffSet, long duration) {
         AlphaAnimation alphaAnimation = new AlphaAnimation(from, to);
         alphaAnimation.setFillAfter(true);
@@ -93,10 +94,10 @@ public class Input_NomDuNiveau extends AppCompatEditText implements IInput_NomDu
         constraintLayout = context.findViewById(R.id.main);
         constraintLayout.addView(this);
 
-        String nomActuel = "levelFiles.name";
-        boolean pasDeNom = nomActuel.isEmpty();
-        String texteDansEditText = pasDeNom ? null : nomActuel;
-        setText(texteDansEditText);
+        String name = context.getLevelFiles().name;
+        boolean noName = name == null || name.isEmpty();
+        String text = noName ? null : name;
+        setText(text);
 
         int margesHGD;
         BoutonPrincipal boutonPrincipale = navigationEditeur.getBoutonPrincipal();

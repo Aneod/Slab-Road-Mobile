@@ -10,7 +10,7 @@ public interface IPersonalFiles {
      * Or update it if it already exist.
      * @param levelFile the level to add in the database.
      */
-    void set(LevelFile levelFile);
+    void set(LevelFile levelFile, final PersonalFiles.BooleanCallback booleanCallback);
 
     /**
      * Remove of the database the given level.

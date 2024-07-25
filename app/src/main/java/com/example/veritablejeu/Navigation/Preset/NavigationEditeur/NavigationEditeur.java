@@ -1,7 +1,7 @@
 package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 
 import android.graphics.Point;
-import android.util.Log;
+import android.text.Editable;
 
 import androidx.annotation.NonNull;
 
@@ -90,17 +90,26 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     }
 
     private void saveAndLaunch() {
-        saveNew();
-        Log.e("", editeur.buildCode());
-        PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur);
+        save();
     }
 
-    private void saveNew() {
-        String userName = UserData.getUsername(editeur);
+    private void save() {
+        LevelFile originalLevelFile = editeur.getLevelFiles();
+        int id = originalLevelFile.id;
+        Editable editable = inputNomDuNiveau.getText();
+        String levelName;
+        if(editable != null) {
+            levelName = editable.toString();
+        } else {
+            levelName = "No name";
+        }
+        String userName = originalLevelFile.autor;
         String code = editeur.buildCode();
-        LevelFile levelFile = new LevelFile("TestName", userName, 0L, 0, code);
+        LevelFile levelFile = new LevelFile(id, levelName, userName, 0L, 0, code);
         PersonalFiles personalFiles = PersonalFiles.getInstance(editeur);
-        personalFiles.set(levelFile);
+        personalFiles.set(levelFile, () ->
+                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur)
+        );
     }
 
     @NonNull

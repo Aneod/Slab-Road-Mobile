@@ -59,9 +59,7 @@ public class BoutonNouveauNiveau extends FrameLayout {
                 mainActivity, "Create new", width, height, leftMargin, topMargin, CouleurDuJeu.Vert.Int()
         );
         boutonNouveau.setImage(R.drawable.plus);
-        boutonNouveau.setOnClickListener(v -> {
-            mainActivity.goEditeur(levelFileBidonPourSimulerUnFichier); // null en temps normal.
-        });
+        boutonNouveau.setOnClickListener(v -> mainActivity.goEditeur(LevelFile.getNew(mainActivity)));
         addView(boutonNouveau);
     }
 }

@@ -69,11 +69,20 @@ public class LevelLauncher extends BoutonRedirection implements ILevelLauncher {
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        if(!moveEffectue) goInGame();
+                        if(!moveEffectue) openLevel();
                 }
                 return true;
             }
         });
+    }
+
+    private void openLevel() {
+        boolean isPersonal = scroller.getLevelCategory() == Scroller.LevelCategory.Personal;
+        if(isPersonal) {
+            goEditeur();
+        } else {
+            goInGame();
+        }
     }
 
     private void goInGame() {
@@ -81,6 +90,14 @@ public class LevelLauncher extends BoutonRedirection implements ILevelLauncher {
         Context context = getContext();
         if(context instanceof MainActivity) {
             ((MainActivity) context).goInGame(levelFileAOuvrir);
+        }
+    }
+
+    private void goEditeur() {
+        if(levelFileAOuvrir == null) return;
+        Context context = getContext();
+        if(context instanceof MainActivity) {
+            ((MainActivity) context).goEditeur(levelFileAOuvrir);
         }
     }
 

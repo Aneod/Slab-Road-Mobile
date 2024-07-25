@@ -25,14 +25,9 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
      * @return un ConstraintLayout.LayoutParams.
      */
     protected ConstraintLayout.LayoutParams getLayoutParamsTitre() {
-        ConstraintLayout.LayoutParams layoutParamsTitre = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT
+        return new LayoutParamsDeBase_pourConstraintLayout(
+                ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.MATCH_PARENT, 3 + 20, 3
         );
-        layoutParamsTitre.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsTitre.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParamsTitre.leftMargin = 3 + 20;
-        layoutParamsTitre.topMargin = 3;
-        return layoutParamsTitre;
     }
 
     /**
@@ -46,6 +41,7 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
         textViewTitre.setText(titre);
         textViewTitre.setTextColor(Color.BLACK);
         textViewTitre.setTextSize(26);
+        textViewTitre.setSingleLine();
         ConstraintLayout.LayoutParams layoutParamsTitre = getLayoutParamsTitre();
         textViewTitre.setLayoutParams(layoutParamsTitre);
         return textViewTitre;

@@ -1,11 +1,14 @@
 package com.example.veritablejeu.BackEnd.LevelFile;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.Converters;
+import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirectionMenu.BoutonNouveauNiveau;
 
 import org.jetbrains.annotations.Contract;
@@ -64,6 +67,18 @@ public class LevelFile {
                 1_000_000_000_000L,
                 5,
                 BoutonNouveauNiveau.codeBidon
+        );
+    }
+
+    @NonNull
+    public static LevelFile getNew(Context context) {
+        String userName = UserData.getUsername(context);
+        return new LevelFile(
+                null,
+                userName,
+                0L,
+                0,
+                null
         );
     }
 }

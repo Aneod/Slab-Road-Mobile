@@ -23,7 +23,7 @@ public class PersonalFiles implements IPersonalFiles {
     }
 
     @Override
-    public void set(LevelFile levelFile) {
+    public void set(LevelFile levelFile, final BooleanCallback booleanCallback) {
         if(levelFile == null) {
             return;
         }
@@ -35,7 +35,12 @@ public class PersonalFiles implements IPersonalFiles {
             } else {
                 personalFilesDao.insert(levelFile);
             }
+            booleanCallback.onSuccess();
         });
+    }
+
+    public interface BooleanCallback {
+        void onSuccess();
     }
 
     @Override

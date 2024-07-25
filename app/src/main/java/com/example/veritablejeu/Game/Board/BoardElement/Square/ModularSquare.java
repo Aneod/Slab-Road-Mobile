@@ -497,6 +497,7 @@ public abstract class ModularSquare extends BoardElement {
         super.remove();
         removeSlabOn();
         removeBlobOn();
+        board.getModularSquareSet().remove(this);
     }
 
     private void removeSlabOn() {

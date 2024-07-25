@@ -177,7 +177,7 @@ public class Controller implements IController {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
-    // This metho must be disappear.
+    // This method must be disappear.
     public Scroller.LevelCategory getLevelCategory() {
         return levelsPanel.getScroller().getLevelCategory();
     }
