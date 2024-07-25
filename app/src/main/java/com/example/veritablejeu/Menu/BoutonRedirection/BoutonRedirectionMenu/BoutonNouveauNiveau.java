@@ -49,14 +49,14 @@ public class BoutonNouveauNiveau extends FrameLayout {
         super(context);
     }
 
-    public BoutonNouveauNiveau(@NonNull MainActivity context, int width, int height, int leftMargin, int topMargin) {
-        super(context);
+    public BoutonNouveauNiveau(@NonNull MainActivity mainActivity, int width, int height, int leftMargin, int topMargin) {
+        super(mainActivity);
         BoutonRedirectionMenu boutonNouveau = new BoutonRedirectionMenu(
-                context, "Create new", width, height, leftMargin, topMargin, CouleurDuJeu.Vert.Int()
+                mainActivity, "Create new", width, height, leftMargin, topMargin, CouleurDuJeu.Vert.Int()
         );
         boutonNouveau.setImage(R.drawable.plus);
         boutonNouveau.setOnClickListener(v -> {
-            context.goEditeur(levelFileBidonPourSimulerUnFichier); // null en temps normal.
+            mainActivity.goEditeur(levelFileBidonPourSimulerUnFichier); // null en temps normal.
         });
         addView(boutonNouveau);
     }

@@ -1,8 +1,6 @@
 package com.example.veritablejeu.Menu;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -43,12 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private BoutonExit boutonExit;
     private BoutonRefresh boutonRefresh;
     private ImageView imageTitre;
-    private TexteAccomplissement texteMenuHD;
     private BoutonNouveauNiveau boutonNouveauNiveau;
-
-    public TexteAccomplissement getTexteMenuHD() {
-        return texteMenuHD;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,15 +105,7 @@ public class MainActivity extends AppCompatActivity {
         boutonExit.setOnClickListener(view -> finishAffinity());
         boutonExit.setElevation(2);
 
-        String versionTexte;
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            versionTexte = packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            versionTexte = "";
-        }
-
-        texteMenuHD = new TexteAccomplissement(this, versionTexte);
+        VersionText texteMenuHD = new VersionText(this);
         container.addView(texteMenuHD);
 
         panneau = new PanneauDeBoutonsRedirection(this);
@@ -162,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(boutonRefresh);
         Controller.getInstance(this).hide();
         container.removeView(boutonNouveauNiveau);
-        texteMenuHD.afficherNumeroDeVersion();
 
         colorierBackground(Color.WHITE);
         boutonExit.setOnClickListener(view -> finishAffinity());
@@ -185,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
         container.removeView(panneau);
         colorierBackground(panneau.getBoutonMondial().getColor());
         boutonExit.setOnClickListener(view -> goMenu());
-        texteMenuHD.afficherPseudoUtilisateur();
         Controller.getInstance(this).showGlobalLevels(container);
 
         if(boutonRefresh == null) {

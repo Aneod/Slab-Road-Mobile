@@ -43,8 +43,7 @@ public class DemanderUnUserName extends FrameLayout {
 
         // TextView
         AppCompatTextView textView = new AppCompatTextView(mainActivity);
-        String texte = "Bienvenue sur Slab Road !\n\n" +
-                "Avant d'aller plus loin, veuillez nous donner votre pseudonyme (Vous ne pourrez pas le changer !) :";
+        String texte = "How do you want to be called ?";
         textView.setText(texte);
         textView.setTextColor(Color.BLACK);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);

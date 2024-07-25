@@ -2,33 +2,30 @@ package com.example.veritablejeu.Menu;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
-import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
-
 @SuppressLint("ViewConstructor")
-public class TexteAccomplissement extends androidx.appcompat.widget.AppCompatTextView {
+public class VersionText extends androidx.appcompat.widget.AppCompatTextView {
 
-    private final String versionTexte;
-
-    public void afficherPseudoUtilisateur() {
-        Context context = getContext();
-        String userName = UserData.getUsername(context.getApplicationContext());
-        setText(userName);
+    private String getVersionText(@NonNull Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            String packageName = context.getPackageName();
+            PackageInfo packageInfo = packageManager.getPackageInfo(packageName, 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
     }
 
-    public void afficherNumeroDeVersion() {
-        setText(versionTexte);
-    }
-
-    public TexteAccomplissement(@NonNull Context context, String versionTexte) {
+    public VersionText(@NonNull Context context) {
         super(context);
-        this.versionTexte = versionTexte;
-        afficherNumeroDeVersion();
+        setText(getVersionText(context));
         setTextSize(20);
         setTextColor(Color.BLACK);
 

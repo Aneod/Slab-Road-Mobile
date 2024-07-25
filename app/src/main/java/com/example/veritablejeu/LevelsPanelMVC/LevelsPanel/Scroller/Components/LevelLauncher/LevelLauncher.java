@@ -104,7 +104,7 @@ public class LevelLauncher extends BoutonRedirection implements ILevelLauncher {
         String auteur = levelFileAOuvrir.autor;
         Date date = levelFileAOuvrir.date;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        return "By " + auteur + " at " + dateFormat.format(date);
+        return "By " + auteur + " on " + dateFormat.format(date);
     }
 
     public void writePersonalBestText(int lineNumber) {

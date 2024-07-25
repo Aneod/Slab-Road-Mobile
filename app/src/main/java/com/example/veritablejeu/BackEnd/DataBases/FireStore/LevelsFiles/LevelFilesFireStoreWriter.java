@@ -23,6 +23,10 @@ public class LevelFilesFireStoreWriter {
                 .addOnFailureListener(e -> booleanCallback.onCallback(false));
     }
 
+    public interface BooleanCallback {
+        void onCallback(boolean result);
+    }
+
     /**
      * Update the best record and the best player pseudo of a {@link LevelFile}.
      * @param levelId the id of the {@link LevelFile} to change.
@@ -38,9 +42,5 @@ public class LevelFilesFireStoreWriter {
                 "time", time,
                 "movesNumber", numberOfMoves
         );
-    }
-
-    public interface BooleanCallback {
-        void onCallback(boolean result);
     }
 }

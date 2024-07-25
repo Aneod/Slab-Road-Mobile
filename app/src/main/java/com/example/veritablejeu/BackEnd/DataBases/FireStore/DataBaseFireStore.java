@@ -15,8 +15,6 @@ public class DataBaseFireStore {
         return PSEUDO_COLLECTION_PATH;
     }
 
-
-
     private static DataBaseFireStore instance;
     private final FirebaseFirestore firebaseFirestore;
 

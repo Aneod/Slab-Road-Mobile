@@ -38,31 +38,27 @@ public class PanneauDeBoutonsRedirection extends FrameLayout {
         // 4 * MARGINS + bouton1 (2/10) + bouton2 (3/10) + bouton3 (5/10)
 
         int maxWidth = ScreenUtils.getScreenWidth() - 2 * HORIZONTAL_MARGINS;
-        int totalHeight = ScreenUtils.getScreenHeight() / 2;
-        int heightForButtons = totalHeight - 4 * VERTICAL_MARGINS;
 
-        int height1 = heightForButtons * 2/10;
-        int topMargin1 = ScreenUtils.getScreenHeight() - VERTICAL_MARGINS - height1;
+        int heightButtons = 100;
+        int topMargin1 = ScreenUtils.getScreenHeight() - VERTICAL_MARGINS - heightButtons;
         this.boutonMesNiveaux = new BoutonRedirectionMenu(
-                context, "Personal", maxWidth, height1, HORIZONTAL_MARGINS, topMargin1, CouleurDuJeu.Orange.Int()
+                context, "Personal", maxWidth, heightButtons, HORIZONTAL_MARGINS, topMargin1, CouleurDuJeu.Orange.Int()
         );
         boutonMesNiveaux.setImage(R.drawable.dossier);
         this.addView(boutonMesNiveaux);
 
-        int height2 = heightForButtons * 3/10;
-        int topMargin2 = ScreenUtils.getScreenHeight() - 2 * VERTICAL_MARGINS - height1 - height2;
+        int topMargin2 = ScreenUtils.getScreenHeight() - 2 * VERTICAL_MARGINS - 2 * heightButtons;
         this.boutonMondial = new BoutonRedirectionMenu(
-                context, "Global", maxWidth, height2, HORIZONTAL_MARGINS, topMargin2, CouleurDuJeu.Violet.Int()
+                context, "Global", maxWidth, heightButtons, HORIZONTAL_MARGINS, topMargin2, CouleurDuJeu.Violet.Int()
         );
-        boutonMondial.setImage(R.drawable.planete);
+        boutonMondial.setImage(R.drawable.ring);
         this.addView(boutonMondial);
 
-        int height3 = heightForButtons * 5/10;
-        int topMargin3 = ScreenUtils.getScreenHeight() - 3 * VERTICAL_MARGINS - height1 - height2 - height3;
+        int topMargin3 = ScreenUtils.getScreenHeight() - 3 * VERTICAL_MARGINS - 3 * heightButtons;
         this.boutonJouer = new BoutonRedirectionMenu(
-                context, "Normal levels", maxWidth, height3, HORIZONTAL_MARGINS, topMargin3, CouleurDuJeu.BleuClair.Int()
+                context, "Normal levels", maxWidth, heightButtons, HORIZONTAL_MARGINS, topMargin3, CouleurDuJeu.BleuClair.Int()
         );
-        boutonJouer.setImage(R.drawable.logo_jouer);
+        boutonJouer.setImage(R.drawable.blob_shape);
         this.addView(boutonJouer);
     }
 

@@ -64,7 +64,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     }
 
     private void activerDesactiverGrille(){
-        editeur.showHideFences();
+        editeur.swapFences();
     }
 
     private void deletionProposal() {

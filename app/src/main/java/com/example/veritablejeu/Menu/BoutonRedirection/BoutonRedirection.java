@@ -2,28 +2,23 @@ package com.example.veritablejeu.Menu.BoutonRedirection;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.veritablejeu.R;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstraintLayout;
 import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourFrameLayout;
 
-import org.jetbrains.annotations.Contract;
-
 public class BoutonRedirection extends FrameLayout implements IBoutonRedirection {
 
-    protected final int width;
-    protected final int height;
+    private static final int LOGO_MARGINS = 20;
+
     protected final TextView textViewTitre;
-    private View imageView;
+    private ImageView imageView;
 
     /**
      * Crée le layoutParams du titre du bouton.
@@ -63,9 +58,8 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
     public BoutonRedirection(@NonNull Context context, String titre, int width, int height, int leftMargin, int topMargin) {
         super(context);
 
-        this.width = Math.abs(width);
-        this.height = Math.abs(height);
-        FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(this.width, this.height, leftMargin, topMargin);
+        FrameLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourFrameLayout(
+                width, height, leftMargin, topMargin);
         setLayoutParams(layoutParams);
 
         textViewTitre = creationTitreDuBouton(titre);
@@ -74,32 +68,21 @@ public class BoutonRedirection extends FrameLayout implements IBoutonRedirection
 
     @Override
     public void setImage(int res) {
-        int plusPetitCote = Math.min(width, height);
-        int leftMargin = width - plusPetitCote;
-        int topMargin = height - plusPetitCote;
-
-        if(imageView != null) this.removeView(imageView);
-
-        ImageView image = new ImageView(getContext());
-        image.setImageResource(res);
-        imageView = creationLogo(plusPetitCote, plusPetitCote, leftMargin, topMargin, image);
-        this.addView(imageView);
+        if(imageView == null) {
+            imageView = new ImageView(getContext());
+            ConstraintLayout.LayoutParams layoutParams = getLayoutParamsLogo();
+            imageView.setLayoutParams(layoutParams);
+            addView(imageView);
+        }
+        imageView.setImageResource(res);
     }
 
     @NonNull
-    @Contract("_, _, _, _, _ -> param5")
-    private View creationLogo(int width, int height, int leftMargin, int topMargin, @NonNull View logo) {
-        int margeLogo = 20;
-        int largeurLogo = width - 2 * margeLogo;
-        int hauteurLogo = height - 2 * margeLogo;
-        int leftMarginLogo = leftMargin + margeLogo;
-        int topMarginLogo = topMargin + margeLogo;
-
-        ConstraintLayout.LayoutParams layoutParams = new LayoutParamsDeBase_pourConstraintLayout(
-                largeurLogo, hauteurLogo, leftMarginLogo, topMarginLogo
+    private ConstraintLayout.LayoutParams getLayoutParamsLogo() {
+        int size = getLayoutParams().height - 2 * LOGO_MARGINS;
+        int leftMarginLogo = getLayoutParams().width - getLayoutParams().height + LOGO_MARGINS;
+        return new LayoutParamsDeBase_pourConstraintLayout(
+                size, size, leftMarginLogo, LOGO_MARGINS
         );
-        logo.setLayoutParams(layoutParams);
-
-        return logo;
     }
 }

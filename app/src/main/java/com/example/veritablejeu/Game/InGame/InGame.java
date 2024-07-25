@@ -63,8 +63,8 @@ public class InGame extends Game implements InterfaceInGame {
     private void enregistrerLeRecord(@NonNull LevelFile levelFile) {
         Controller controller = Controller.getInstance(this);
         Scroller.LevelCategory levelCategory = controller.getLevelCategory();
-        boolean pasDeSauvegardeDeRecord = levelCategory == Scroller.LevelCategory.Personal;
-        if(pasDeSauvegardeDeRecord) return;
+        boolean noRecord = levelCategory == Scroller.LevelCategory.Personal;
+        if(noRecord) return;
 
         String levelId = String.valueOf(levelFile.id);
         int numberOfMoves = 777;

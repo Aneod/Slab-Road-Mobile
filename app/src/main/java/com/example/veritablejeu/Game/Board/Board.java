@@ -57,7 +57,7 @@ public class Board extends FrameLayout {
     private final Set<ModularSquare> modularSquareSet = new HashSet<>();
     private final GroupOfBlobsOfBoard groupOfBlobsOfBoard = new GroupOfBlobsOfBoard(this);
     private final Set<ModularSlab> groupOfSlabs = new HashSet<>();
-    private final Fence fence;
+    private Fence fence;
     private final BoardTransparency boardTransparency = new BoardTransparency();
 
     @Override
@@ -140,8 +140,6 @@ public class Board extends FrameLayout {
         width = getNumberOf_squarePerLines() * SQUARE_SIZE + BORDER_WIDTH * 2;
         height = getNumberOf_squarePerColumns() * SQUARE_SIZE + BORDER_WIDTH * 2;
 
-        fence = new Fence(this);
-
         setVision();
         normalScale = getScaleX();
     }
@@ -183,6 +181,10 @@ public class Board extends FrameLayout {
 
     public Set<BoardElement> getBoardElementSet() {
         return boardElementSet;
+    }
+
+    public void createFences() {
+        fence = new Fence(this);
     }
 
     public void enableEditorListeners() {
@@ -240,11 +242,15 @@ public class Board extends FrameLayout {
     }
 
     public void showFence() {
-        fence.showFence();
+        if(fence != null) {
+            fence.showFence();
+        }
     }
 
     public void hideFence() {
-        fence.hideFence();
+        if(fence != null) {
+            fence.hideFence();
+        }
     }
 
     public void addBlob(ModularBlob blob) {

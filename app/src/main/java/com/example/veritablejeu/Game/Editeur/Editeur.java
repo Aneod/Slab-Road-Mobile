@@ -19,10 +19,11 @@ public class Editeur extends Game {
         super.onCreate(savedInstanceState);
         navigationEditeur = new NavigationEditeur(this);
         boutonNavigationRetour = new BoutonNavigationRetour(this);
-        showHideFences();
+        createFences();
+        swapFences();
     }
 
-    public void showHideFences() {
+    public void swapFences() {
         fencesShown = !fencesShown;
         if(fencesShown) {
             showFences();
@@ -37,6 +38,10 @@ public class Editeur extends Game {
 
     public void hideFences() {
         plateauModulaireSet.forEach(Board::hideFence);
+    }
+
+    public void createFences() {
+        plateauModulaireSet.forEach(Board::createFences);
     }
 
     /**
