@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
+import com.example.veritablejeu.Game.FirstCodeReader;
 import com.example.veritablejeu.MediaPlayerInstance.BanqueDeSon.BanqueDeSon;
 
 public class MediaPlayerInstance implements IMediaPlayerInstance {
@@ -98,4 +100,5 @@ public class MediaPlayerInstance implements IMediaPlayerInstance {
         BanqueDeSon banqueDeSon = BanqueDeSon.getInstance();
         return banqueDeSon.getNumberOf(currentTrack);
     }
+
 }

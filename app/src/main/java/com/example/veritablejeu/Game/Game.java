@@ -14,12 +14,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardsMovements.BoardsMovements;
+import com.example.veritablejeu.MediaPlayerInstance.MediaPlayerInstance;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.BackgroundColoration;
@@ -31,9 +33,7 @@ import java.util.Objects;
 public class Game extends AppCompatActivity implements IGame {
 
     protected ConstraintLayout container;
-
     protected LevelFile levelFile;
-
     protected PopUp popUp;
     protected LittleWindow littleWindow;
     public final Chronometre chronometre = new Chronometre();
@@ -204,6 +204,12 @@ public class Game extends AppCompatActivity implements IGame {
         return cableOutline;
     }
 
+    public String getCableOutlineCode() {
+        String code = isCableOutline() ? "t" : "f";
+        char key = FirstCodeReader.getKeyCableOutline();
+        return CodeBuilder.buildKeyValue(key, code);
+    }
+
     /**
      * This method rebuild the entire code of the level.
      * @return ththe entire code of the level.
@@ -214,18 +220,32 @@ public class Game extends AppCompatActivity implements IGame {
 
     @NonNull
     private String buildAestheticCode() {
+        char key = FirstCodeReader.getKeyAesthetic();
         String backgroundColoration = backgroundColors.getBackgroundColorationCode();
-        return "";
+        String bubbles = BainDeSavon.getInstance(this).getCode();
+        String cableOutline = getCableOutlineCode();
+        String code = backgroundColoration + bubbles + cableOutline;
+        return CodeBuilder.buildKeyValue(key, code);
     }
 
     @NonNull
     private String buildMusicCode() {
-        return "";
+        char key = FirstCodeReader.getKeyMusic();
+        MediaPlayerInstance mediaPlayerInstance = MediaPlayerInstance.getInstance(this);
+        String code = "" + mediaPlayerInstance.getCurrentTrackNumber();
+        return CodeBuilder.buildKeyValue(key, code);
     }
 
     @NonNull
     private String buildGameBoardCode() {
-        return "";
+        String onReturn = "";
+        char key = FirstCodeReader.getKeyGameboard();
+        for(Board board : plateauModulaireSet) {
+            String code = board.getCode();
+            String boardCode = CodeBuilder.buildKeyValue(key, code);
+            onReturn = onReturn.concat(boardCode);
+        }
+        return onReturn;
     }
 
 }

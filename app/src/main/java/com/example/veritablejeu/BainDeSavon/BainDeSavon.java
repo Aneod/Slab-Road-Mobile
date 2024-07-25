@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.BainDeSavon.BulleDeSavon.BulleDeSavon;
+import com.example.veritablejeu.Game.FirstCodeReader;
 import com.example.veritablejeu.Tools.StringColorConverter;
 
 import java.util.HashSet;
@@ -24,11 +26,11 @@ public class BainDeSavon implements IBainDeSavon {
     private int ATypeColor = Color.BLACK;
     private int BTypeColor = Color.WHITE;
 
-    public boolean isATypeIsCircle() {
+    public boolean isATypeCircle() {
         return ATypeIsCircle;
     }
 
-    public boolean isBTypeIsCircle() {
+    public boolean isBTypeCircle() {
         return BTypeIsCircle;
     }
 
@@ -213,5 +215,15 @@ public class BainDeSavon implements IBainDeSavon {
     @Override
     public boolean areBubblesVisible() {
         return visible;
+    }
+
+    public String getCode() {
+        char shapeA = isATypeCircle() ? '0' : '1';
+        char shapeB = isBTypeCircle() ? '0' : '1';
+        String colorA = StringColorConverter.turnIntoCode(ATypeColor);
+        String colorB = StringColorConverter.turnIntoCode(BTypeColor);
+        String code = shapeA + colorA + shapeB + colorB;
+        char key = FirstCodeReader.getKeyBubblesStyle();
+        return CodeBuilder.buildKeyValue(key, code);
     }
 }

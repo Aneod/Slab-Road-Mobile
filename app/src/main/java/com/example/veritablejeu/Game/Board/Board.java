@@ -437,4 +437,8 @@ public class Board extends FrameLayout {
     public BoardTransparency getBoardTransparency() {
         return boardTransparency;
     }
+
+    public String getCode() {
+        return "";
+    }
 }

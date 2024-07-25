@@ -10,10 +10,36 @@ import com.example.veritablejeu.BackEnd.sequentialCode.Code;
 
 public class FirstCodeReader {
 
+    private static final char KEY_AESTHETIC = 'a';
+    private static final char KEY_MUSIC = 'm';
+    private static final char KEY_GAMEBOARD = 'p';
+
+    public static char getKeyAesthetic() {
+        return KEY_AESTHETIC;
+    }
+
+    public static char getKeyMusic() {
+        return KEY_MUSIC;
+    }
+
+    public static char getKeyGameboard() {
+        return KEY_GAMEBOARD;
+    }
+
     private static final char KEY_BACKGROUND_COLORATION = 'b';
+    private static final char KEY_BUBBLES_STYLE = 'p';
+    private static final char KEY_CABLE_OUTLINE = 'o';
 
     public static char getKeyBackgroundColoration() {
         return KEY_BACKGROUND_COLORATION;
+    }
+
+    public static char getKeyBubblesStyle() {
+        return KEY_BUBBLES_STYLE;
+    }
+
+    public static char getKeyCableOutline() {
+        return KEY_CABLE_OUTLINE;
     }
 
     /**
@@ -28,9 +54,9 @@ public class FirstCodeReader {
      */
     public static void read(Game game, String code) {
         Code.apply(code,
-                'a', (Consumer<String>) codex -> gameAesthetic(game, codex),
-                'm', (Consumer<String>) codex -> playMusic(game, codex),
-                'p', (Consumer<String>) codex -> createGameboard(game, codex)
+                KEY_AESTHETIC, (Consumer<String>) codex -> gameAesthetic(game, codex),
+                KEY_MUSIC, (Consumer<String>) codex -> playMusic(game, codex),
+                KEY_GAMEBOARD, (Consumer<String>) codex -> createGameboard(game, codex)
         );
     }
 
@@ -46,8 +72,8 @@ public class FirstCodeReader {
         if(game == null) return;
         Code.apply(code,
                 KEY_BACKGROUND_COLORATION, (Consumer<String>) codex -> backgroundColoration(game, codex),
-                'p', (Consumer<String>) (string) -> BainDeSavon.getInstance(game).setDesigns(string),
-                'o', (Consumer<String>) game::setCableOutline
+                KEY_BUBBLES_STYLE, (Consumer<String>) (string) -> BainDeSavon.getInstance(game).setDesigns(string),
+                KEY_CABLE_OUTLINE, (Consumer<String>) game::setCableOutline
         );
     }
 
