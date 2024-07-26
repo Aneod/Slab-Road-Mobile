@@ -82,7 +82,8 @@ public class BoardsMovements {
         if(board == null) {
             return true;
         }
-        float nombreMinDeSquareSurLaLargeur = 4;
+        int numberOfSquaresPerLines = board.getNumberOf_squarePerLines();
+        float nombreMinDeSquareSurLaLargeur = Math.min(numberOfSquaresPerLines, 4);
         float nbCaseSurLaHauteurMin = (float) ScreenUtils.getScreenHeight() / ScreenUtils.getScreenWidth() * nombreMinDeSquareSurLaLargeur;
         float scaleXmax = ScreenUtils.getScreenWidth() / (Board.SQUARE_SIZE * nombreMinDeSquareSurLaLargeur);
         float scaleYmax = ScreenUtils.getScreenHeight() / (Board.SQUARE_SIZE * nbCaseSurLaHauteurMin);

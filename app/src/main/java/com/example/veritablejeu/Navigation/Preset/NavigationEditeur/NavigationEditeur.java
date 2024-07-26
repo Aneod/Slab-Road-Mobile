@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BainDeSavon.BubblesSettings;
+import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Editeur.Editeur;
 import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
@@ -108,12 +109,37 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void saveProposal() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = () -> {
-            saveAndLaunch();
-            popUp.hide();
-        };
+        Runnable runnableA = this::saveIfThereIsAOrangeSlab;
         Runnable runnableB = popUp::hide;
-        popUp.showQuestion("SAVE & PLAY", "Save this version of this level and try to solve it ?", "YES", runnableA, "NO", runnableB);
+        popUp.showQuestion("SAVE & PLAY",
+                "Save this version of this level and try to solve it ?",
+                "YES", runnableA, "NO", runnableB
+        );
+    }
+
+    private void saveIfThereIsAOrangeSlab() {
+        if(isThereAtLeastOneOrangeSlab()) {
+            saveAndLaunch();
+            PopUp popUp = editeur.getPopUp();
+            popUp.hide();
+        } else {
+            showNotOrangeSlabPopUp();
+        }
+    }
+
+    private void showNotOrangeSlabPopUp() {
+        PopUp popUp = editeur.getPopUp();
+        popUp.showMessage("ORANGE MISSING", "Each level must have at least one orange slab. " +
+                "Please add an orange slab to continue.");
+    }
+
+    private boolean isThereAtLeastOneOrangeSlab() {
+        for(Board board : editeur.getPlateauModulaireSet()) {
+            if(board.isThereAtLeastOneOrangeSlab()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void saveAndLaunch() {
@@ -164,9 +190,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     }
 
     private void showToast(String text) {
-        editeur.runOnUiThread(() -> {
-            Toast.makeText(editeur, text, Toast.LENGTH_SHORT).show();
-        });
+        editeur.runOnUiThread(() -> Toast.makeText(editeur, text, Toast.LENGTH_SHORT).show());
     }
 
     @NonNull

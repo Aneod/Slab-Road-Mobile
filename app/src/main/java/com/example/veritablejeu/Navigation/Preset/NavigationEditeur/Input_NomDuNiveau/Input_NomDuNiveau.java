@@ -89,7 +89,7 @@ public class Input_NomDuNiveau extends AppCompatEditText implements IInput_NomDu
 
     public Input_NomDuNiveau(@NonNull Game context, @NonNull NavigationEditeur navigationEditeur) {
         super(context);
-        setHint("Nom du niveau...");
+        setHint("Level name...");
 
         constraintLayout = context.findViewById(R.id.main);
         constraintLayout.addView(this);

@@ -479,6 +479,10 @@ public abstract class ModularSquare extends BoardElement {
             game.getPopUp().showMessage("WARNING", "There is already a blob on this place.");
             return;
         }
+        if(thereIsAlreadyASlab()) {
+            game.getPopUp().showMessage("WARNING", "There is already a slab on this place.");
+            return;
+        }
         createBlob();
     }
 

@@ -111,6 +111,10 @@ public abstract class ModularSlab extends BoardElement {
         slabDesign.refresh();
     }
 
+    public boolean isOrange() {
+        return this instanceof OrangeSlab;
+    }
+
     private boolean enoughSpace(int weight) {
         boolean isYellow = this instanceof YellowSlab;
         int nombreTotalDeCase = weight + (isYellow ? 1 : 0);

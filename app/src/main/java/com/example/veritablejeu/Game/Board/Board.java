@@ -373,6 +373,15 @@ public class Board extends FrameLayout {
         groupOfSlabs.remove(modularSlab);
     }
 
+    public boolean isThereAtLeastOneOrangeSlab() {
+        for(ModularSlab modularSlab : groupOfSlabs) {
+            if(modularSlab.isOrange()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Nullable
     public ModularSlab getSlabAt(ZdecimalCoordinates coordinates) {
         for(ModularSlab modularSlab : groupOfSlabs) {
