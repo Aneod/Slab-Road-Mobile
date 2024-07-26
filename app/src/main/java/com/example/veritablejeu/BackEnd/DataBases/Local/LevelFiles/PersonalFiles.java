@@ -39,13 +39,16 @@ public class PersonalFiles implements IPersonalFiles {
         });
     }
 
-    public interface BooleanCallback {
-        void onSuccess();
+    @Override
+    public void remove(LevelFile levelFile, BooleanCallback booleanCallback) {
+        new Thread(() -> {
+            personalFilesDao.delete(levelFile);
+            booleanCallback.onSuccess();
+        });
     }
 
-    @Override
-    public void remove(LevelFile levelFile) {
-        personalFilesDao.delete(levelFile);
+    public interface BooleanCallback {
+        void onSuccess();
     }
 
     @Override

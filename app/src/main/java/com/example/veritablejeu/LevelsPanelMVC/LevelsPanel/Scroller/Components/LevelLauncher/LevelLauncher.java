@@ -11,9 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDao;
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDatabase;
+import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.Menu.BoutonRedirection.BoutonRedirection;
 import com.example.veritablejeu.Menu.MainActivity;
 import com.example.veritablejeu.Tools.LongToReadableTime;

@@ -93,7 +93,11 @@ public class Game extends AppCompatActivity implements IGame {
         BainDeSavon bainDeSavon = BainDeSavon.getInstance(this);
         bainDeSavon.setContainerDeToutesLesBulles(this);
 
-        FirstCodeReader.read(this, levelFile.sequentialCode);
+        try {
+            FirstCodeReader.read(this, levelFile.sequentialCode);
+        } catch (Exception ignored) {
+
+        }
     }
 
     @Override

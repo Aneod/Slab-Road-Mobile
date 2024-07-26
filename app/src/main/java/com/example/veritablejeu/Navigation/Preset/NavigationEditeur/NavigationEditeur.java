@@ -76,9 +76,22 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void deletionProposal() {
         PopUp popUp = editeur.getPopUp();
-        Runnable runnableA = popUp::hide; // Supprimer des fichiers locaux.
+        Runnable runnableA = () -> {
+            delete();
+            popUp.hide();
+        };
         Runnable runnableB = popUp::hide;
-        popUp.showQuestion("DELETE", "Delete this level from your personal files ? As long as you are in the editor you can save it again.", "DELETE", runnableA, "NO", runnableB);
+        popUp.showQuestion("DELETE",
+                "Delete this level from your personal files ? " +
+                        "As long as you are in the editor you can save it again.",
+                "DELETE", runnableA, "NO", runnableB);
+    }
+
+    private void delete() {
+        PersonalFiles personalFiles = PersonalFiles.getInstance(editeur);
+        personalFiles.remove(editeur.getLevelFiles(), () ->
+                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur)
+        );
     }
 
     private void saveProposal() {

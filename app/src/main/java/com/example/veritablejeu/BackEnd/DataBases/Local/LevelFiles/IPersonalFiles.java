@@ -14,9 +14,10 @@ public interface IPersonalFiles {
 
     /**
      * Remove of the database the given level.
+     *
      * @param levelFile the level to delete.
      */
-    void remove(LevelFile levelFile);
+    void remove(LevelFile levelFile, final PersonalFiles.BooleanCallback booleanCallback);
 
     /**
      * Returns the level of the database with the given id.
