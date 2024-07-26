@@ -15,6 +15,7 @@ import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularBlob.Cadra
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
+import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.LittleWindow.WindowProposal.WindowProposal;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.Elevation;
@@ -115,7 +116,9 @@ public class ModularBlob extends BoardElement {
             estEnDeplacement = false;
         } else {
             movesTo(itinerary);
-            game.nombreDeCoups++;
+            if(game instanceof InGame) {
+                ((InGame) game).nombreDeCoups++;
+            }
         }
     }
 

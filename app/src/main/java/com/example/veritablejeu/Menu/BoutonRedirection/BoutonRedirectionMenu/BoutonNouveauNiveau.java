@@ -24,7 +24,7 @@ public class BoutonNouveauNiveau extends FrameLayout {
             "s1a002w14r110" +
             "s13003" +
             "s18010s1251" +
-            "s1e011w18t110l110" +
+            "s1e011w18r110l110" +
             "s1c012w14r110b0" +
             "s1s013s1m01c1503t01c19142421r31" +
             "s18020s1231" +

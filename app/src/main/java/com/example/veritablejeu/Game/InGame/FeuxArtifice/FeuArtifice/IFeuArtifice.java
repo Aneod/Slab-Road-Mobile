@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Game.InGame.ATHFinal.FeuxArtifice.FeuArtifice;
+package com.example.veritablejeu.Game.InGame.FeuxArtifice.FeuArtifice;
 
 public interface IFeuArtifice {
 

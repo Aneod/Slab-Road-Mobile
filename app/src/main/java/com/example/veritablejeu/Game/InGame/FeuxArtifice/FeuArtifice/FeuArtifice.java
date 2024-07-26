@@ -1,4 +1,4 @@
-package com.example.veritablejeu.Game.InGame.ATHFinal.FeuxArtifice.FeuArtifice;
+package com.example.veritablejeu.Game.InGame.FeuxArtifice.FeuArtifice;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
@@ -56,7 +56,9 @@ public class FeuArtifice extends View implements IFeuArtifice {
         boomAnimation.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(@NonNull Animator animation) {
-                context.getContainer().addView(FeuArtifice.this);
+                if(getParent() == null) {
+                    context.getContainer().addView(FeuArtifice.this);
+                }
             }
 
             @Override

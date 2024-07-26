@@ -20,7 +20,7 @@ public class NavigationInGame extends Navigation {
     private void propositionQuitter() {
         PopUp popUp = inGame.getPopUp();
         Runnable runnableA = () -> {
-            inGame.retourAuMenu();
+            inGame.goMenu();
             popUp.hide();
         };
         Runnable runnableB = popUp::hide;

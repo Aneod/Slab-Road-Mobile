@@ -23,7 +23,12 @@ public interface IGame {
     /**
      * Quitter l'activité pour celle du menu.
      */
-    void retourAuMenu();
+    void goMenu();
+
+    /**
+     * Restart level.
+     */
+    void restart();
 
     /**
      * Effectue un flash de la couleur souhaité.

@@ -3,7 +3,6 @@ package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 import android.content.Intent;
 import android.graphics.Point;
 import android.text.Editable;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,7 +37,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     private void propositionQuitter() {
         PopUp popUp = editeur.getPopUp();
         Runnable runnableA = () -> {
-            editeur.retourAuMenu();
+            editeur.goMenu();
             popUp.hide();
         };
         Runnable runnableB = popUp::hide;

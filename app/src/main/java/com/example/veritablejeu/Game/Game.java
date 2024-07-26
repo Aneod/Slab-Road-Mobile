@@ -34,10 +34,8 @@ public class Game extends AppCompatActivity implements IGame {
 
     protected ConstraintLayout container;
     protected LevelFile levelFile;
-    protected PopUp popUp;
+    private PopUp popUp;
     protected LittleWindow littleWindow;
-    public final Chronometre chronometre = new Chronometre();
-    public int nombreDeCoups = 0;
     protected BoardsMovements onToucheListenerPlateauModulaire;
     protected final ArrayList<Board> plateauModulaireSet = new ArrayList<>();
     private Board plateauADeplacer;
@@ -95,9 +93,7 @@ public class Game extends AppCompatActivity implements IGame {
 
         try {
             FirstCodeReader.read(this, levelFile.sequentialCode);
-        } catch (Exception ignored) {
-
-        }
+        } catch (Exception ignored) {}
     }
 
     @Override
@@ -120,11 +116,16 @@ public class Game extends AppCompatActivity implements IGame {
     }
 
     @Override
-    public void retourAuMenu() {
+    public void goMenu() {
         Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(mainActivity);
         this.finish();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
+    public void restart() {
+
     }
 
     @Override
@@ -147,16 +148,6 @@ public class Game extends AppCompatActivity implements IGame {
         popUp.hide();
         onToucheListenerPlateauModulaire.onTouchEvent(event, plateauADeplacer);
         return true;
-    }
-
-    public void verifyCompletion() {
-        if(isComplete()) {
-            retourAuMenu();
-        }
-    }
-
-    public boolean isComplete() {
-        return plateauModulaireSet.stream().allMatch(Board::isComplete);
     }
 
     public ArrayList<Board> getPlateauModulaireSet() {

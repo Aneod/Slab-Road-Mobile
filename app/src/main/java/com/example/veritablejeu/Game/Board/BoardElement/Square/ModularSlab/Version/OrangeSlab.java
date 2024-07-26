@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSlab.ModularSlab;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
+import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 
 @SuppressLint("ViewConstructor")
@@ -17,7 +18,9 @@ public class OrangeSlab extends ModularSlab {
 
     @Override
     public void whenActivation() {
-        game.verifyCompletion();
+        if(game instanceof InGame) {
+            ((InGame) game).verifyCompletion();
+        }
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface IPersonalBests {
      * @param numberOfMoves how many moves are indicates in the record.
      * @param time the time indicate in the record.
      */
-    void set(String levelId, int numberOfMoves, long time);
+    void set_ifBestOf(String levelId, int numberOfMoves, long time, final PersonalBests.BooleanCallback booleanCallback);
 
     /**
      * Get the record of the board with the given id.
