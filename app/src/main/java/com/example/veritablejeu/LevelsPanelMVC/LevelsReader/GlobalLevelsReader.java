@@ -76,11 +76,11 @@ public class GlobalLevelsReader extends LevelsReader {
         Query query;
         if (lastVisible == null) {
             query = firebaseFirestore.collection(COLLECTION_PATH)
-                    .orderBy("id")
+                    .orderBy("date", Query.Direction.DESCENDING)
                     .limit(howManyLevelsToLoad);
         } else {
             query = firebaseFirestore.collection(COLLECTION_PATH)
-                    .orderBy("id")
+                    .orderBy("date", Query.Direction.DESCENDING)
                     .startAfter(lastVisible)
                     .limit(howManyLevelsToLoad);
         }

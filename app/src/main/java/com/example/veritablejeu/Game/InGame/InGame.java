@@ -14,6 +14,7 @@ import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
 import com.example.veritablejeu.Game.InGame.FeuxArtifice.FeuxArtifice;
 import com.example.veritablejeu.LevelsPanelMVC.Controller;
 import com.example.veritablejeu.LevelsPanelMVC.LevelsPanel.Scroller.Scroller;
+import com.example.veritablejeu.LevelsPanelMVC.LevelsReader.PersonalLevelsReader;
 import com.example.veritablejeu.Navigation.Preset.NavigationInGame.NavigationInGame;
 import com.example.veritablejeu.PopUp.PopUp;
 import com.example.veritablejeu.Tools.LongToReadableTime;
@@ -119,9 +120,8 @@ public class InGame extends Game implements InterfaceInGame {
                 "Time : " + getReadableTime() + "\n" +
                 "Number of moves : " + nombreDeCoups;
         if(worldRecordBroken()) {
-            String bonus = "\n\n" +
-                    "NEW WORD RECORD !";
-            return normalText + bonus;
+            String bonus = "NEW WORLD RECORD !\n\n";
+            return bonus + normalText;
         }
         return normalText;
     }
@@ -173,7 +173,9 @@ public class InGame extends Game implements InterfaceInGame {
         PersonalFiles personalFiles = PersonalFiles.getInstance(this);
         personalFiles.remove(levelFile, new PersonalFiles.BooleanCallback() {
             @Override
-            public void onSuccess() {}
+            public void onSuccess() {
+                PersonalLevelsReader.getInstance(InGame.this).refreshLevelList(InGame.this);
+            }
 
             @Override
             public void onFailure() {}
