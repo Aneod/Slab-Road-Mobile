@@ -1,6 +1,7 @@
 package com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDao;
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDatabase;
@@ -29,8 +30,7 @@ public class PersonalFiles implements IPersonalFiles {
         }
         int id = levelFile.id;
         get(id, callback -> {
-            boolean alreadyExists = callback != null;
-            if(alreadyExists) {
+            if(callback != null) {
                 personalFilesDao.update(levelFile);
             } else {
                 personalFilesDao.insert(levelFile);
@@ -42,13 +42,18 @@ public class PersonalFiles implements IPersonalFiles {
     @Override
     public void remove(LevelFile levelFile, BooleanCallback booleanCallback) {
         new Thread(() -> {
-            personalFilesDao.delete(levelFile);
-            booleanCallback.onSuccess();
-        });
+            try {
+                personalFilesDao.delete(levelFile);
+                booleanCallback.onSuccess();
+            } catch (Exception ignored) {
+                booleanCallback.onFailure();
+            }
+        }).start();
     }
 
     public interface BooleanCallback {
         void onSuccess();
+        void onFailure();
     }
 
     @Override

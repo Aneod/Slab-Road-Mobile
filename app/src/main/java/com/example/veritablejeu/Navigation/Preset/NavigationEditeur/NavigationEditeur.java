@@ -3,6 +3,8 @@ package com.example.veritablejeu.Navigation.Preset.NavigationEditeur;
 import android.content.Intent;
 import android.graphics.Point;
 import android.text.Editable;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -89,9 +91,19 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
 
     private void delete() {
         PersonalFiles personalFiles = PersonalFiles.getInstance(editeur);
-        personalFiles.remove(editeur.getLevelFiles(), () ->
-                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur)
-        );
+        LevelFile levelFile = editeur.getLevelFiles();
+        personalFiles.remove(levelFile, new PersonalFiles.BooleanCallback() {
+            @Override
+            public void onSuccess() {
+                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur);
+                showToast("File deleted successfully.");
+            }
+
+            @Override
+            public void onFailure() {
+                showToast("Unable to delete level.");
+            }
+        });
     }
 
     private void saveProposal() {
@@ -113,21 +125,34 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     private LevelFile save() {
         LevelFile originalLevelFile = editeur.getLevelFiles();
         int id = originalLevelFile.id;
-        Editable editable = inputNomDuNiveau.getText();
-        String levelName;
-        if(editable == null || editable.length() == 0) {
-            levelName = "No name";
-        } else {
-            levelName = editable.toString();
-        }
         String userName = originalLevelFile.autor;
         String code = editeur.buildCode();
-        LevelFile levelFile = new LevelFile(id, levelName, userName, 0L, 0, code);
+        LevelFile levelFile = new LevelFile(
+                id, getLevelName(), userName, 0L, 0, code);
         PersonalFiles personalFiles = PersonalFiles.getInstance(editeur);
-        personalFiles.set(levelFile, () ->
-                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur)
-        );
+        personalFiles.set(levelFile, new PersonalFiles.BooleanCallback() {
+            @Override
+            public void onSuccess() {
+                PersonalLevelsReader.getInstance(editeur).refreshLevelList(editeur);
+                showToast("File saved successfully.");
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
         return levelFile;
+    }
+
+    @NonNull
+    private String getLevelName() {
+        Editable editable = inputNomDuNiveau.getText();
+        if(editable == null || editable.length() == 0) {
+            return  "No name";
+        } else {
+            return editable.toString();
+        }
     }
 
     private void launch(LevelFile levelFile) {
@@ -136,6 +161,12 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
         editeur.startActivity(mainActivity);
         editeur.finish();
         editeur.overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void showToast(String text) {
+        editeur.runOnUiThread(() -> {
+            Toast.makeText(editeur, text, Toast.LENGTH_SHORT).show();
+        });
     }
 
     @NonNull
