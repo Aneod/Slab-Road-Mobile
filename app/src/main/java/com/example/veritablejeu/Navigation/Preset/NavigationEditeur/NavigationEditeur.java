@@ -149,7 +149,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
     @NonNull
     private LevelFile save() {
         LevelFile originalLevelFile = editeur.getLevelFiles();
-        int id = originalLevelFile.id;
+        String id = originalLevelFile.id;
         String userName = originalLevelFile.autor;
         String code = editeur.buildCode();
         LevelFile levelFile = new LevelFile(

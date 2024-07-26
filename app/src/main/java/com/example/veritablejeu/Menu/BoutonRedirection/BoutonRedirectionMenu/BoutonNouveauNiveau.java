@@ -41,7 +41,7 @@ public class BoutonNouveauNiveau extends FrameLayout {
             "s13016";
 
     public static final LevelFile levelFileBidonPourSimulerUnFichier = new LevelFile(
-            0,
+            "0",
             "TestName",
             "TestAutor",
             1000000000L,

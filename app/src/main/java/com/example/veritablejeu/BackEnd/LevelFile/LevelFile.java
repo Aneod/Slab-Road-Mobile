@@ -19,8 +19,10 @@ import java.util.Date;
 @TypeConverters(Converters.class)
 public class LevelFile {
 
-    @PrimaryKey(autoGenerate = true)
-    public int id;
+    @NonNull
+    @PrimaryKey
+    public String id = "0";
+
     public String name;
     public String autor;
     public Date date;
@@ -34,7 +36,7 @@ public class LevelFile {
     /**
      * Génération d'un LevelFiles avec un id présélectionné.
      */
-    public LevelFile(int id, String name, String autor, long time, int movesNumber, String code) {
+    public LevelFile(@NonNull String id, String name, String autor, long time, int movesNumber, String code) {
         this.id = id;
         this.name = name;
         this.autor = autor;
@@ -45,23 +47,11 @@ public class LevelFile {
         this.sequentialCode = code;
     }
 
-    /**
-     * Génération d'un LevelFiles avec un id aléatoire.
-     */
-    public LevelFile(String name, String autor, long time, int movesNumber, String code) {
-        this.name = name;
-        this.autor = autor;
-        this.date = new Date();
-        this.bestPlayer = autor;
-        this.time = time;
-        this.movesNumber = movesNumber;
-        this.sequentialCode = code;
-    }
-
     @NonNull
     @Contract(" -> new")
     public static LevelFile getFake() {
         return new LevelFile(
+                "0",
                 "Name",
                 "Autor",
                 1_000_000_000_000L,
@@ -74,6 +64,7 @@ public class LevelFile {
     public static LevelFile getNew(Context context) {
         String userName = UserData.getUsername(context);
         return new LevelFile(
+                "0",
                 null,
                 userName,
                 0L,

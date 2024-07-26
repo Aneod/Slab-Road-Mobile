@@ -18,7 +18,7 @@ public interface PersonalFilesDao {
     List<LevelFile> getAll();
 
     @Query("SELECT * FROM LevelFile WHERE id = :id")
-    LevelFile get(int id);
+    LevelFile get(String id);
 
     @Query("SELECT COUNT(*) FROM LevelFile")
     int getSize();

@@ -24,6 +24,6 @@ public interface IPersonalFiles {
      * @param id the id of the searched level.
      * @param callback this object returns the levelfile of the id.
      */
-    void get(int id, final PersonalFiles.Callback callback);
+    void get(String id, final PersonalFiles.Callback callback);
 
 }

@@ -115,10 +115,10 @@ public class ModularBlob extends BoardElement {
             showImpossibleTravelMessage();
             estEnDeplacement = false;
         } else {
-            movesTo(itinerary);
             if(game instanceof InGame) {
                 ((InGame) game).nombreDeCoups++;
             }
+            movesTo(itinerary);
         }
     }
 

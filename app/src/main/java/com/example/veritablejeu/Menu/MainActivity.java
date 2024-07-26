@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         bainDeSavon.setContainerDeToutesLesBulles(this);
         bainDeSavon.setDesignDeBase();
 
+        // On commence dès maintenant a charger les données personnelles pour les avoir a disposition
+        // quand nécessaire.
+        PersonalLevelsReader.getInstance(this);
+
         String userName = UserData.getUsername(this.getApplicationContext());
         boolean userNamePasEncoreDefini = Objects.equals(userName, "");
         if(userNamePasEncoreDefini) {
@@ -83,10 +87,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         creationPageAccueil();
-
-        // On commence dès maintenant a charger les données personnelles pour les avoir a disposition
-        // quand nécessaire.
-        PersonalLevelsReader.getInstance(this);
     }
 
     private void demanderUnUserName() {

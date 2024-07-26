@@ -28,7 +28,7 @@ public class PersonalFiles implements IPersonalFiles {
         if(levelFile == null) {
             return;
         }
-        int id = levelFile.id;
+        String id = levelFile.id;
         get(id, callback -> {
             if(callback != null) {
                 personalFilesDao.update(levelFile);
@@ -57,7 +57,7 @@ public class PersonalFiles implements IPersonalFiles {
     }
 
     @Override
-    public void get(int id, final Callback callback) {
+    public void get(String id, final Callback callback) {
         new Thread(() -> {
             LevelFile levelData = personalFilesDao.get(id);
             callback.onDataLoaded(levelData);

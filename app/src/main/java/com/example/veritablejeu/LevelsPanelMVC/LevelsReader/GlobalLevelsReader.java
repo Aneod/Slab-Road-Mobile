@@ -46,7 +46,7 @@ public class GlobalLevelsReader extends LevelsReader {
     @Override
     public void get(int from, int to, final LevelListCallback callback) {
         int lastKnownIndex = levelFilesList.size();
-        boolean lastIndexIsKnown = lastKnownIndex >= to;
+        boolean lastIndexIsKnown = lastKnownIndex >= Math.min(to, listSize);
         if(!lastIndexIsKnown) {
             int howManyLevelsToResearch = to - lastKnownIndex;
             loadNextLevels(howManyLevelsToResearch, new LevelListCallback() {

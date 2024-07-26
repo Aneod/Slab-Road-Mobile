@@ -2,6 +2,7 @@ package com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.DataBaseFireStore;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -17,9 +18,16 @@ public class LevelFilesFireStoreWriter {
      */
     public static void addLevel(LevelFile levelFile, final BooleanCallback booleanCallback) {
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
-        firebaseFirestore.collection(COLLECTION_PATH).document()
-                .set(levelFile)
-                .addOnSuccessListener(e -> booleanCallback.onCallback(true))
+        CollectionReference collectionReference = firebaseFirestore.collection(COLLECTION_PATH);
+        DocumentReference documentReference = collectionReference.document();
+
+        documentReference.set(levelFile)
+                .addOnSuccessListener(e -> {
+                    levelFile.id = documentReference.getId();
+                    documentReference.set(levelFile)
+                            .addOnSuccessListener(updateE -> booleanCallback.onCallback(true))
+                            .addOnFailureListener(updateE -> booleanCallback.onCallback(false));
+                })
                 .addOnFailureListener(e -> booleanCallback.onCallback(false));
     }
 

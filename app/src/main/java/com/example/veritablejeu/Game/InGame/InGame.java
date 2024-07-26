@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.PersonalFiles;
+import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 import com.example.veritablejeu.Game.Game;
@@ -153,6 +154,7 @@ public class InGame extends Game implements InterfaceInGame {
     }
 
     public void sendToGlobal() {
+        String idBeforeGlobalization = levelFile.id;
         levelFile.bestPlayer = UserData.getUsername(this.getApplicationContext());
         levelFile.time = chronometre.getElapsedTime();
         levelFile.movesNumber = nombreDeCoups;
@@ -160,7 +162,7 @@ public class InGame extends Game implements InterfaceInGame {
                 LevelFilesFireStoreWriter.addLevel(levelFile, isSuccess -> {
                     if(isSuccess) {
                         showToast("Level shared successfully");
-                        deleteLevelFromPersonal();
+                        deleteLevelFromPersonal(idBeforeGlobalization);
                         goMenu();
                     } else {
                         showToast("Unable to shared level. Please retry later.");
@@ -169,9 +171,10 @@ public class InGame extends Game implements InterfaceInGame {
         ).start();
     }
 
-    private void deleteLevelFromPersonal() {
+    private void deleteLevelFromPersonal(String id) {
         PersonalFiles personalFiles = PersonalFiles.getInstance(this);
-        personalFiles.remove(levelFile, new PersonalFiles.BooleanCallback() {
+        personalFiles.get(id, levelFile ->
+                personalFiles.remove(levelFile, new PersonalFiles.BooleanCallback() {
             @Override
             public void onSuccess() {
                 PersonalLevelsReader.getInstance(InGame.this).refreshLevelList(InGame.this);
@@ -179,7 +182,7 @@ public class InGame extends Game implements InterfaceInGame {
 
             @Override
             public void onFailure() {}
-        });
+        }));
     }
 
     public void showToast(String text) {
