@@ -41,7 +41,7 @@ public class NavigationEditeur extends Navigation implements INavigationEditeur 
             popUp.hide();
         };
         Runnable runnableB = popUp::hide;
-        popUp.showQuestion("RECOMMENCER", "Retourner à la page principale ?", "OUI", runnableA, "NON", runnableB);
+        popUp.showQuestion("EXIT", "Return to main page ?", "YES", runnableA, "NO", runnableB);
     }
 
     private void openVisualEffectsTools() {
