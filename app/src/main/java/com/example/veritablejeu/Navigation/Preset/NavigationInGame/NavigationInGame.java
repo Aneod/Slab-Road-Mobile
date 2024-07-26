@@ -29,7 +29,10 @@ public class NavigationInGame extends Navigation {
 
     private void propositionReset() {
         PopUp popUp = inGame.getPopUp();
-        Runnable runnableA = popUp::hide;
+        Runnable runnableA = () -> {
+            inGame.restart();
+            popUp.hide();
+        };
         Runnable runnableB = popUp::hide;
         popUp.showQuestion("RESET", "Do you want to reset progress ?", "YES", runnableA, "NO", runnableB);
     }

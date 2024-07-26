@@ -18,6 +18,7 @@ import com.example.veritablejeu.BackEnd.sequentialCode.CodeBuilder;
 import com.example.veritablejeu.BainDeSavon.BainDeSavon;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.example.veritablejeu.Game.InGame.Chronometre.Chronometre;
+import com.example.veritablejeu.Game.InGame.InGame;
 import com.example.veritablejeu.LittleWindow.LittleWindow;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardsMovements.BoardsMovements;
@@ -125,7 +126,11 @@ public class Game extends AppCompatActivity implements IGame {
 
     @Override
     public void restart() {
-
+        MainActivity.Bus.getInstance().setLevelFile(levelFile);
+        Intent intent = new Intent(getApplicationContext(), InGame.class);
+        startActivity(intent);
+        this.finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
