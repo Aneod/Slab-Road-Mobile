@@ -39,7 +39,8 @@ public class ModularBlob extends BoardElement {
     private ModularSquare currentLocation;
     private final ModularBlobDesign modularBlobDesign;
     private final CadrageMaster cadrageMaster;
-    private boolean estEnDeplacement = false;
+    private ArrayList<ZdecimalCoordinates> coordinates = new ArrayList<>();
+    private boolean onMovement = false;
 
     public ModularBlob(@NonNull ModularSquare squareOfStart) {
         super(squareOfStart.getBoard());
@@ -103,44 +104,42 @@ public class ModularBlob extends BoardElement {
         popUp.showMessage("WARNING", "Can't go here.");
     }
 
-    public void moveTo(ZdecimalCoordinates coordinates) {
-        if(estEnDeplacement) return;
-        ArrayList<ZdecimalCoordinates> itinerary = BestItinerary.get(getBoard(), currentLocation.getCord(), coordinates);
-        estEnDeplacement = true;
-        ModularSlab slab = getBoard().getSlabAt(currentLocation.getCord());
-        if(slab != null) {
-            slab.removeBlob(this);
-        }
-        if(itinerary.isEmpty()) {
+    public void moveTo(ZdecimalCoordinates to) {
+        coordinates = BestItinerary.get(getBoard(), currentLocation.getCord(), to);
+        boolean impossibleTravel = coordinates.isEmpty();
+        if(impossibleTravel) {
             showImpossibleTravelMessage();
-            estEnDeplacement = false;
         } else {
             if(game instanceof InGame) {
                 ((InGame) game).nombreDeCoups++;
             }
-            movesTo(itinerary);
+            if(!onMovement) {
+                movesTo();
+            }
         }
     }
 
-    public void movesTo(ArrayList<ZdecimalCoordinates> coordinates) {
-        if(coordinates == null || coordinates.isEmpty()) {
-            estEnDeplacement = false;
-            return;
-        }
+    public void movesTo() {
+        onMovement = true;
 
         ModularSquare destinationSquare = getBoard().getSquareAt(coordinates.get(0));
         if(destinationSquare == null) {
-            movesTo(new ArrayList<>());
+            coordinates.clear();
+            onMovement = false;
             return;
         }
 
-        boolean accessible = BestItinerary.sontAdjacentsSansMur(currentLocation.getBoard(),
-                currentLocation.getCord(), destinationSquare.getCord()
+        // Si master, vérifie si adjacent sans mur qui tient justement grâce au master.
+        // Sinon vérifie si adjacent sans mur fermé.
+        boolean accessible = BestItinerary.sontAdjacentsSansMurNul(currentLocation.getBoard(),
+                this, currentLocation.getCord(), destinationSquare.getCord()
         );
         if(!accessible) {
-            movesTo(new ArrayList<>());
+            coordinates.clear();
+            onMovement = false;
             return;
         }
+        coordinates.remove(0);
 
         int leftMarginDestination = destinationSquare.getLayoutParams().leftMargin;
         int topMarginDestination = destinationSquare.getLayoutParams().topMargin;
@@ -157,9 +156,13 @@ public class ModularBlob extends BoardElement {
             layoutParams.topMargin = (int) (currentTopMargin + topMarginToBrowse * current);
             setLayoutParams(layoutParams);
 
-            if(current == 1.0) {
-                coordinates.remove(0);
-                movesTo(coordinates);
+            boolean animationEnded = current >= 1.0f;
+            if(animationEnded) {
+                if(coordinates.isEmpty()) {
+                    onMovement = false;
+                } else {
+                    movesTo();
+                }
             }
         });
         marginsAnimator.start();
@@ -173,12 +176,6 @@ public class ModularBlob extends BoardElement {
         if(arrivalSlab != null) {
             arrivalSlab.addBlob(this);
         }
-    }
-
-    public void birdFlyTo(@NonNull ZdecimalCoordinates coordinates) {
-        ArrayList<ZdecimalCoordinates> moves = new ArrayList<>();
-        moves.add(coordinates);
-        movesTo(moves);
     }
 
     @Override

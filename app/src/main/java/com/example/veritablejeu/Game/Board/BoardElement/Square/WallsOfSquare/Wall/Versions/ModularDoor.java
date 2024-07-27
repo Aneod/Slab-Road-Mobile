@@ -39,6 +39,7 @@ public class ModularDoor extends ModularWall {
     private static final int THINKNESS = 15;
     private static final int ELEVATION = Elevation.Door.getElevation();
 
+    private final ModularSquare square;
     private final int necessarySlabNumber;
     private final Set<ComponentsStorage> connectedCables = new HashSet<>();
     protected WallAspect wallAspect;
@@ -49,6 +50,7 @@ public class ModularDoor extends ModularWall {
     public ModularDoor(@NonNull ModularSquare modularSquare, WallsOfSquare.Direction direction, String code, CouleurDuJeu fillColor, int necessarySlab) {
         super(modularSquare, direction);
 
+        square = modularSquare;
         necessarySlabNumber = necessarySlab;
         this.fillColor = fillColor == null ? DEFAULT_FILL_COLOR : fillColor.Int();
         GradientDrawable background = SimpleBackground.create(this.fillColor, Color.BLACK, 2);
@@ -127,6 +129,10 @@ public class ModularDoor extends ModularWall {
         return !sealed && isOpenWithoutMaster();
     }
 
+    public boolean isTraversableNul() {
+        return !sealed && getHowManyActiveSlabs() >= necessarySlabNumber;
+    }
+
     public boolean isOpenWithoutMaster() {
         return getHowManyActiveSlabs_withoutMaster() >= necessarySlabNumber;
     }
@@ -154,6 +160,7 @@ public class ModularDoor extends ModularWall {
         } else {
             closingAnimation();
         }
+        square.getBoard().setSquaresAccessibilities();
     }
 
     public void openingAnimation() {
@@ -170,7 +177,6 @@ public class ModularDoor extends ModularWall {
         ValueAnimator valueAnimator = ValueAnimator.ofInt(layoutParams.width, nouvelleLargeur);
         valueAnimator.setDuration(duree);
         valueAnimator.setInterpolator(new LinearInterpolator());
-
         valueAnimator.addUpdateListener(animation -> layoutParams.width = (int) animation.getAnimatedValue());
         valueAnimator.start();
     }

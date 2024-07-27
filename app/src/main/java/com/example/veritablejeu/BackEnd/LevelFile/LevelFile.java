@@ -48,19 +48,6 @@ public class LevelFile {
     }
 
     @NonNull
-    @Contract(" -> new")
-    public static LevelFile getFake() {
-        return new LevelFile(
-                "0",
-                "Name",
-                "Autor",
-                1_000_000_000_000L,
-                5,
-                BoutonNouveauNiveau.codeBidon
-        );
-    }
-
-    @NonNull
     public static LevelFile getNew(Context context) {
         String userName = UserData.getUsername(context);
         return new LevelFile(

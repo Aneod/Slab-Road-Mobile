@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.example.veritablejeu.Game.Board.Board;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.ModularSquare;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.ModularWall;
+import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.Wall.Versions.ModularDoor;
 import com.example.veritablejeu.Game.Board.BoardElement.Square.WallsOfSquare.WallsOfSquare;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinates;
 import com.example.veritablejeu.Game.Board.ZdecimalCoordinates.ZdecimalCoordinatesManager;
@@ -95,6 +96,48 @@ public class BestItinerary {
         if(onRight) {
             ModularWall wall = hereSquare.getWalls().get(WallsOfSquare.Direction.Right);
             return wall == null || wall.isTraversable();
+        }
+        return false;
+    }
+
+    public static boolean sontAdjacentsSansMurNul(@NonNull Board board, @NonNull ModularBlob blob, ZdecimalCoordinates here, ZdecimalCoordinates to) {
+
+        ModularSquare hereSquare = board.getSquareAt(here);
+        if(hereSquare == null) return false;
+
+        boolean onTop = ZdecimalCoordinatesManager.isAdjacentTopOf(to, here);
+        if(onTop) {
+            ModularWall wall = hereSquare.getWalls().get(WallsOfSquare.Direction.Top);
+            return wall == null || nulNul(blob, wall);
+        }
+
+        boolean onLeft = ZdecimalCoordinatesManager.isAdjacentLeftOf(to, here);
+        if(onLeft) {
+            ModularWall wall = hereSquare.getWalls().get(WallsOfSquare.Direction.Left);
+            return wall == null || nulNul(blob, wall);
+        }
+
+        boolean onBottom = ZdecimalCoordinatesManager.isAdjacentBottomOf(to, here);
+        if(onBottom) {
+            ModularWall wall = hereSquare.getWalls().get(WallsOfSquare.Direction.Bottom);
+            return wall == null || nulNul(blob, wall);
+        }
+
+        boolean onRight = ZdecimalCoordinatesManager.isAdjacentRightOf(to, here);
+        if(onRight) {
+            ModularWall wall = hereSquare.getWalls().get(WallsOfSquare.Direction.Right);
+            return wall == null || nulNul(blob, wall);
+        }
+        return false;
+    }
+
+    private static boolean nulNul(@NonNull ModularBlob modularBlob, ModularWall wall) {
+        if(modularBlob.isMaster()) {
+            return wall.isTraversable();
+        } else {
+            if(wall instanceof ModularDoor) {
+                return ((ModularDoor) wall).isTraversableNul();
+            }
         }
         return false;
     }
