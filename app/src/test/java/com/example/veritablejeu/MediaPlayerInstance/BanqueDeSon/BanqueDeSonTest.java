@@ -29,8 +29,8 @@ public class BanqueDeSonTest {
     }
 
     @Test
-    public void getTrackOf_fifthTrack() {
-        int number = 5;
+    public void getTrackOf_secondTrack() {
+        int number = 2;
         int actualTrack = banqueDeSon.getTrackOf(number);
         int expected = BanqueDeSon.getPistesAudio().get(number);
         assertEquals(expected, actualTrack);
@@ -88,7 +88,7 @@ public class BanqueDeSonTest {
 
     @Test
     public void getNumberOf_common() {
-        int number = 5;
+        int number = 2;
         int track = banqueDeSon.getTrackOf(number);
         int actualNumber = banqueDeSon.getNumberOf(track);
         assertEquals(number, actualNumber);
@@ -143,7 +143,7 @@ public class BanqueDeSonTest {
 
     @Test
     public void getPreviousOf_normal() {
-        int number = 5;
+        int number = 2;
         int track = banqueDeSon.getTrackOf(number);
         int actual = banqueDeSon.getPreviousOf(track);
         int expected = banqueDeSon.getTrackOf(number - 1);
@@ -185,7 +185,7 @@ public class BanqueDeSonTest {
 
     @Test
     public void getNextOf_normal() {
-        int number = 5;
+        int number = 2;
         int track = banqueDeSon.getTrackOf(number);
         int actual = banqueDeSon.getNextOf(track);
         int expected = banqueDeSon.getTrackOf(number + 1);

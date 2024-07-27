@@ -33,23 +33,20 @@ public class PersonalBests implements IPersonalBests {
     }
 
     @Override
-    public void set_ifBestOf(String levelId, int numberOfMoves, long time, final BooleanCallback booleanCallback) {
-        if(levelId == null) {
+    public void set_ifBestOf(Association_id_record association, final BooleanCallback booleanCallback) {
+        if(association == null) {
             booleanCallback.onFailure();
             return;
         }
-        Association_id_record associationidrecord =
-                new Association_id_record(levelId, numberOfMoves, time);
-
-        get(levelId, callback -> {
+        get(association.id, callback -> {
             boolean alreadyExists = callback != null;
             if(alreadyExists) {
-                if(associationidrecord.isBestOf(callback)) {
-                    update(associationidrecord);
+                if(association.isBestOf(callback)) {
+                    update(association);
                     booleanCallback.onSuccess();
                 }
             } else {
-                add(associationidrecord);
+                add(association);
                 booleanCallback.onSuccess();
             }
         });

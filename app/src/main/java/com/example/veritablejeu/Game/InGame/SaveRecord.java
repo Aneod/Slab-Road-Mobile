@@ -1,6 +1,7 @@
 package com.example.veritablejeu.Game.InGame;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles.LevelFilesFireStoreWriter;
+import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.Association_id_record.Association_id_record;
 import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.PersonalBests;
 import com.example.veritablejeu.BackEnd.DataBases.Local.UserData;
 
@@ -8,18 +9,20 @@ public class SaveRecord {
 
     public static void saveRecord(InGame inGame) {
         if(inGame == null || inGame.isPersonalLevel()) return;
-        String levelId = String.valueOf(inGame.getLevelFiles().id);
+        String levelId = inGame.getLevelFiles().id;
         long time = inGame.getChronometre().getElapsedTime();
         int numberOfMoves = inGame.getNombreDeCoups();
 
-        savePersonalBest(levelId, numberOfMoves, time, inGame);
-        saveGlobalBest(levelId, numberOfMoves, time, inGame);
+        Association_id_record association =
+                new Association_id_record(levelId, numberOfMoves, time);
+        savePersonalBest(association, inGame);
+        saveGlobalBest(association, inGame);
     }
 
-    private static void savePersonalBest(String levelId, int numberOfMoves, long time, InGame inGame) {
+    private static void savePersonalBest(Association_id_record association, InGame inGame) {
         if(inGame == null) return;
         PersonalBests repository = PersonalBests.getInstance(inGame.getApplicationContext());
-        repository.set_ifBestOf(levelId, numberOfMoves, time, new PersonalBests.BooleanCallback() {
+        repository.set_ifBestOf(association, new PersonalBests.BooleanCallback() {
             @Override
             public void onSuccess() {
                 inGame.showToast("New record saved successfully");
@@ -32,13 +35,11 @@ public class SaveRecord {
         });
     }
 
-    private static void saveGlobalBest(String levelId, int numberOfMoves, long time, InGame inGame) {
+    private static void saveGlobalBest(Association_id_record association, InGame inGame) {
         if(inGame == null) return;
         if(inGame.worldRecordBroken()) {
             String pseudoDUNouveauChampion = UserData.getUsername(inGame.getApplicationContext());
-            LevelFilesFireStoreWriter.saveNewWorldRecord(
-                    levelId, pseudoDUNouveauChampion, numberOfMoves, time
-            );
+            LevelFilesFireStoreWriter.saveNewWorldRecord(pseudoDUNouveauChampion, association);
         }
     }
 

@@ -9,22 +9,12 @@ public class BanqueDeSon implements IBanqueDeSon {
 
     private static BanqueDeSon instance;
     private static final int MAIN_PAGE_TRACK = R.raw.son_trois;
+
     private static final List<Integer> pistesAudio = Arrays.asList(
-            R.raw.son_un,
             R.raw.son_deux,
             R.raw.son_trois,
-            R.raw.son_quatre,
-            R.raw.son_cinq,
-            R.raw.son_six,
-            R.raw.son_sept,
-            R.raw.son_huit,
-            R.raw.son_neuf,
-            R.raw.son_dix,
-            R.raw.son_onze,
             R.raw.son_douze,
-            R.raw.son_treize,
-            R.raw.son_quatorze,
-            R.raw.son_quize
+            R.raw.son_treize
     );
 
     public static List<Integer> getPistesAudio() {

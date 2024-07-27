@@ -21,13 +21,12 @@ import com.example.veritablejeu.Tools.LayoutParams.LayoutParamsDeBase_pourConstr
 import com.example.veritablejeu.Tools.CouleurDuJeu;
 import com.example.veritablejeu.Tools.ScreenUtils;
 
-import org.jetbrains.annotations.Contract;
-
 @SuppressLint("ViewConstructor")
 public class DemanderUnUserName extends FrameLayout {
 
     private final MainActivity mainActivity;
     private final AppCompatButton buttonSubmit;
+    private final AppCompatEditText editTextUserInput;
 
     public DemanderUnUserName(@NonNull MainActivity mainActivity) {
         super(mainActivity);
@@ -43,7 +42,8 @@ public class DemanderUnUserName extends FrameLayout {
 
         // TextView
         AppCompatTextView textView = new AppCompatTextView(mainActivity);
-        String texte = "How do you want to be called ?";
+        String texte = "How do you want to be called ? " +
+                "Each user has a unique nickname, so you won't be able to change it later.";
         textView.setText(texte);
         textView.setTextColor(Color.BLACK);
         textView.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -60,8 +60,8 @@ public class DemanderUnUserName extends FrameLayout {
         this.addView(textView);
 
         // EditText
-        AppCompatEditText editTextUserInput = new AppCompatEditText(mainActivity);
-        editTextUserInput.setHint("Votre pseudonyme...");
+        editTextUserInput = new AppCompatEditText(mainActivity);
+        editTextUserInput.setHint("Your nickname...");
 
         ConstraintLayout.LayoutParams layoutParamsEditText = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
@@ -90,65 +90,42 @@ public class DemanderUnUserName extends FrameLayout {
                 widthBoutonSubmit, heightBoutonSubmit, leftMarginBoutonSubmit, 550
         );
         buttonSubmit.setLayoutParams(layoutParamsButton);
+        buttonSubmit.setOnClickListener(v -> submit());
         this.addView(buttonSubmit);
-
-        buttonSubmit.setOnClickListener(v -> {
-            buttonSubmit.setText("...");
-            String texteRetry = "Réessayer";
-
-            Editable editable = editTextUserInput.getText();
-            if(editable == null) {
-                Toast.makeText(mainActivity, "Veuillez entrer un pseudonyme", Toast.LENGTH_SHORT).show();
-                buttonSubmit.setText(texteRetry);
-                return;
-            }
-
-            String userInput = editable.toString();
-            if(userInput.isEmpty()) {
-                Toast.makeText(mainActivity, "Veuillez entrer un pseudonyme", Toast.LENGTH_SHORT).show();
-                buttonSubmit.setText(texteRetry);
-                return;
-            }
-
-            verifierPseudo(userInput);
-        });
     }
 
-    private void verifierPseudo(String pseudo) {
-        Pseudonym pseudonym = new Pseudonym(pseudo);
-        DatabaseFirestorePseudo.add(pseudonym, isSuccess -> {
-            if(isSuccess) {
-                if(mainActivity != null) {
-                    UserData.saveUsername(mainActivity, pseudo);
-                    ((MainActivity) mainActivity).userNameValide();
-                }
+    private void submit() {
+        buttonSubmit.setText("...");
+        Editable editable = editTextUserInput.getText();
+        String pseudonym = editable == null ? "" : editable.toString();
+        DatabaseFirestorePseudo.add(pseudonym, new DatabaseFirestorePseudo.Callback() {
+            @Override
+            public void onSuccess() {
+                UserData.saveUsername(mainActivity, pseudonym);
+                mainActivity.userNameValide();
             }
-            else {
-                String texteRetry = "Réessayer";
-                buttonSubmit.setText(texteRetry);
+
+            @Override
+            public void invalidePseudonym() {
+                submitUncorrect("Uncorrect pseudnym. Please try another one.");
+            }
+
+            @Override
+            public void alreadyTaken() {
+                submitUncorrect("Pseudonym already taken. Please try another one.");
+            }
+
+            @Override
+            public void disconnected() {
+                submitUncorrect("Unstable connection. Please retry later.");
             }
         });
     }
 
-    /**
-     * This class should be developped (and tested), with a max length, some unauthorized characters, etc.
-     */
-    public static class Pseudonym {
-        private static final String DEFAULT_PSEUDONYM = "Anonymous";
-        private final String pseudo;
-
-        @NonNull
-        @Contract(value = "!null -> param1", pure = true)
-        private String getCorrectedPseudo(String pseudo) {
-            return pseudo == null ? DEFAULT_PSEUDONYM : pseudo;
-        }
-
-        public Pseudonym(String pseudo) {
-            this.pseudo = getCorrectedPseudo(pseudo);
-        }
-
-        public String getPseudo() {
-            return pseudo;
-        }
+    private void submitUncorrect(String message) {
+        String texteRetry = "Retry";
+        buttonSubmit.setText(texteRetry);
+        Toast.makeText(mainActivity, message, Toast.LENGTH_SHORT).show();
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.veritablejeu.BackEnd.DataBases.FireStore.LevelsFiles;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.DataBaseFireStore;
+import com.example.veritablejeu.BackEnd.DataBases.Local.PersonalBests.Association_id_record.Association_id_record;
 import com.example.veritablejeu.BackEnd.LevelFile.LevelFile;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,18 +38,16 @@ public class LevelFilesFireStoreWriter {
 
     /**
      * Update the best record and the best player pseudo of a {@link LevelFile}.
-     * @param levelId the id of the {@link LevelFile} to change.
      * @param pseudo the new best player pseudo.
-     * @param numberOfMoves the number of moves to indicates.
-     * @param time the time to indicates.
      */
-    public static void saveNewWorldRecord(String levelId, String pseudo, int numberOfMoves, long time) {
+    public static void saveNewWorldRecord(String pseudo, Association_id_record association) {
+        if(association == null) return;
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
-        DocumentReference docRef = firebaseFirestore.collection(COLLECTION_PATH).document(levelId);
+        DocumentReference docRef = firebaseFirestore.collection(COLLECTION_PATH).document(association.id);
         docRef.update(
                 "bestPlayer", pseudo,
-                "time", time,
-                "movesNumber", numberOfMoves
+                "time", association.time,
+                "movesNumber", association.numberOfMoves
         );
     }
 }

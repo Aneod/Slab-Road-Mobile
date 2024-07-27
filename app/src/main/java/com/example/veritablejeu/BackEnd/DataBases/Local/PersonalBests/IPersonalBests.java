@@ -8,11 +8,8 @@ public interface IPersonalBests {
      * Add a personal record in the local database.
      * <br>
      * If the given id is already known, update the data only if the new record is the best.
-     * @param levelId the id of the board of the new record.
-     * @param numberOfMoves how many moves are indicates in the record.
-     * @param time the time indicate in the record.
      */
-    void set_ifBestOf(String levelId, int numberOfMoves, long time, final PersonalBests.BooleanCallback booleanCallback);
+    void set_ifBestOf(Association_id_record association, final PersonalBests.BooleanCallback booleanCallback);
 
     /**
      * Get the record of the board with the given id.

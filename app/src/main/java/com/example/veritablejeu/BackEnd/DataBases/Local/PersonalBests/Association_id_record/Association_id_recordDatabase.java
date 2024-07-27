@@ -13,9 +13,7 @@ public abstract class Association_id_recordDatabase extends RoomDatabase {
 
     // Si tu veux changer la base de données, ne pas faire comme moi à galérer pour rien. Voici ce qu'il faut faire :
     // 1. Supprimer les fichiers _Impl.
-    // 2. Clean puis rebuild le projet.
-    // 3. Supprimer les données locales de l'application directement depuis le téléphone. Ou juste désinstaller l'app.
-    // 4. Et enfin réinstaller l'app.
+    // 2. Supprimer les données locales de l'application directement depuis le téléphone.
 
     private static Association_id_recordDatabase instance;
     public abstract Association_id_recordDao levelDataDao();

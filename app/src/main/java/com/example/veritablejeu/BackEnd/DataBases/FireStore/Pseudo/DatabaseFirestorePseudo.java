@@ -1,46 +1,62 @@
 package com.example.veritablejeu.BackEnd.DataBases.FireStore.Pseudo;
 
 import com.example.veritablejeu.BackEnd.DataBases.FireStore.DataBaseFireStore;
-import com.example.veritablejeu.Menu.DemanderUnUserName;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DatabaseFirestorePseudo {
 
     private static final String COLLECTION_PATH = DataBaseFireStore.getPseudoCollectionPath();
+    private static final String KEY = "name";
 
 
     /**
      * Take a pseudonym and try to add it in the FireStore database.
-     * Then the {@link BooleanCallback} return <i>true</i> if is a success, <i>false</i> otherwise.
-     * @param pseudonym the pseudonym to add. It's a {@link DemanderUnUserName.Pseudonym} object.
-     * @param booleanCallback the {@link BooleanCallback} who return the results of the operation.
+     * @param pseudonym the pseudonym to add.
+     * @param callback who return the results of the operation.
      */
-    public static void add(DemanderUnUserName.Pseudonym pseudonym, final BooleanCallback booleanCallback) {
+    public static void add(String pseudonym, final Callback callback) {
         if(pseudonym == null) {
-            booleanCallback.onCallback(false);
+            callback.invalidePseudonym();
             return;
         }
         FirebaseFirestore firebaseFirestore = DataBaseFireStore.getInstance().getFirebaseFirestore();
         CollectionReference usersRef = firebaseFirestore.collection(COLLECTION_PATH);
-        String pseudo = pseudonym.getPseudo();
-        usersRef.whereEqualTo(COLLECTION_PATH, pseudo).get().addOnCompleteListener(task -> {
+
+        Map<String, Object> pseudonymData = new HashMap<>();
+        pseudonymData.put(KEY, pseudonym);
+
+        usersRef.whereEqualTo(KEY, pseudonym).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot querySnapshot = task.getResult();
                 if (querySnapshot.isEmpty()) {
-                    usersRef.document().set(pseudonym).addOnCompleteListener(setTask -> booleanCallback.onCallback(setTask.isSuccessful()));
+                    usersRef.document().set(pseudonymData)
+                            .addOnCompleteListener(setTask -> {
+                                if(setTask.isSuccessful()) {
+                                    callback.onSuccess();
+                                } else {
+                                    callback.disconnected();
+                                }
+                            }
+                    );
                 } else {
-                    booleanCallback.onCallback(false);
+                    callback.alreadyTaken();
                 }
             } else {
-                booleanCallback.onCallback(false);
+                callback.disconnected();
             }
         });
     }
 
-    public interface BooleanCallback {
-        void onCallback(boolean result);
+    public interface Callback {
+        void onSuccess();
+        void invalidePseudonym();
+        void alreadyTaken();
+        void disconnected();
     }
 
 }

@@ -1,7 +1,8 @@
 package com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles;
 
 import android.content.Context;
-import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDao;
 import com.example.veritablejeu.BackEnd.DataBases.Local.LevelFiles.DAO.PersonalFilesDatabase;
@@ -12,11 +13,11 @@ public class PersonalFiles implements IPersonalFiles {
     private static PersonalFiles instance;
     private final PersonalFilesDao personalFilesDao;
 
-    private PersonalFiles(Context context){
+    private PersonalFiles(@NonNull Context context){
         personalFilesDao = PersonalFilesDatabase.getInstance(context).personalFilesDao();
     }
 
-    public static PersonalFiles getInstance(Context context) {
+    public static PersonalFiles getInstance(@NonNull Context context) {
         if(instance == null) {
             instance = new PersonalFiles(context);
         }

@@ -56,7 +56,7 @@ public class LevelFile {
                 userName,
                 0L,
                 0,
-                "p0" // For can create fences and then add board elements, there must is a board.
+                "p0" // For can create fences and then add board elements, there must be a board.
         );
     }
 }
