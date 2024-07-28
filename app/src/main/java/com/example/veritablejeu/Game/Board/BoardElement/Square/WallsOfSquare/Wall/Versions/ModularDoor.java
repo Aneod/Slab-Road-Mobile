@@ -284,4 +284,5 @@ public class ModularDoor extends ModularWall {
         super.remove();
         deleteAllConnectedCables();
     }
+
 }
