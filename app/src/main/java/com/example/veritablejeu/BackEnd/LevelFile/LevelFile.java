@@ -1,6 +1,7 @@
 package com.example.veritablejeu.BackEnd.LevelFile;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -50,8 +51,12 @@ public class LevelFile {
     @NonNull
     public static LevelFile getNew(Context context) {
         String userName = UserData.getUsername(context);
+        int nextLevelId = UserData.getNextPersonalLevelId(context);
+        String id = Integer.toString(nextLevelId);
+        UserData.incrementNextPersonalLevelId(context);
+        Log.e("", id);
         return new LevelFile(
-                "0",
+                id,
                 null,
                 userName,
                 0L,
