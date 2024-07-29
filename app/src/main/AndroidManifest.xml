@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.veritablejeu">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -14,16 +13,16 @@
         android:theme="@style/Theme.VeritableJeu"
         tools:targetApi="31">
         <activity
-            android:name=".Game.InGame.InGame"
+            android:name="com.slabroad.veritablejeu.Game.InGame.InGame"
             android:exported="false" />
         <activity
-            android:name=".Game.Editeur.Editeur"
+            android:name="com.slabroad.veritablejeu.Game.Editeur.Editeur"
             android:exported="false" />
         <activity
-            android:name=".Game.Game"
+            android:name="com.slabroad.veritablejeu.Game.Game"
             android:exported="false" />
         <activity
-            android:name=".Menu.MainActivity"
+            android:name="com.slabroad.veritablejeu.Menu.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

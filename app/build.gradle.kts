@@ -8,7 +8,7 @@ android {
     namespace = "com.example.veritablejeu"
 
     defaultConfig {
-        applicationId = "com.example.veritablejeu"
+        applicationId = "com.slabroad.veritablejeu"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -45,7 +45,6 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation (libs.mockito.core)
     testImplementation (libs.robolectric)
-    androidTestImplementation(libs.extJunit)
     androidTestImplementation(libs.espressoCore)
     androidTestImplementation (libs.junit.v113)
     androidTestImplementation (libs.espresso.core.v340)
